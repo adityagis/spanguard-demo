@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SpanGuard · LiDAR span clearance</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312614f'/%3E%3Cpath d='M7 26 11 6l4 20M17 26l4-20 4 20M8 17h6m4 0h6M9 10c5 4 9 4 14 0' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="vendor/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="vendor/leaflet.js"></script>
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.js" } }
+  </script>
+</head>
+<body>
+  <canvas id="scene" aria-label="3D LiDAR point cloud"></canvas>
+  <div id="labelLayer" class="label-layer" aria-hidden="true"></div>
+  <div id="map" class="map2d" hidden aria-label="2D GIS map"></div>
+
+  <!-- Left rail: project card and layers stack, so they can never overlap -->
+  <div class="rail rail-left" id="railLeft">
+    <header class="panel card-project" aria-label="Project">
+      <div class="brand">
+        <span class="logo" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 26 11 6l4 20M17 26l4-20 4 20M8 17h6m4 0h6M9 10c5 4 9 4 14 0" /></svg></span>
+        <span class="brand-text"><span class="brand-name">SpanGuard</span><span class="brand-sub">Network viewer</span></span>
+      </div>
+      <label class="field" id="projectField">
+        <span class="label">Project</span>
+        <select id="projectSelect"></select>
+      </label>
+      <div class="project-title" id="projectTitle" hidden></div>
+      <dl class="meta" id="projectMeta"></dl>
+      <div class="status-note" id="statusNote" role="status"></div>
+    </header>
+
+    <aside class="panel side side-left" aria-label="Layers">
+      <h2>Layers</h2>
+      <h3 title="Results computed by SpanGuard, drawn over the point cloud">Analysis overlays</h3>
+      <ul class="layers" id="modelLayers"></ul>
+      <h3 title="Text tags drawn in the 3D scene. Press L to hide or show all of them.">Labels in scene</h3>
+      <ul class="layers" id="labelLayers"></ul>
+      <div class="h3-row">
+        <h3 title="Point classes from the classified LiDAR survey">LiDAR classes</h3>
+        <span class="mini-actions"><button type="button" id="classesAll">All</button><button type="button" id="classesNone">None</button></span>
+      </div>
+      <ul class="layers" id="layerList"></ul>
+    </aside>
+  </div>
+
+  <!-- View and colour mode -->
+  <div class="panel toolbar" role="toolbar" aria-label="View and colour mode">
+    <div class="segmented" id="viewMode" role="radiogroup" aria-label="View">
+      <button role="radio" aria-checked="true" data-view="3d">3D scene</button>
+      <button role="radio" aria-checked="false" data-view="2d">2D map</button>
+    </div>
+    <span class="tb-sep" aria-hidden="true"></span>
+    <span class="tb-label" id="colorLabel">Colour by</span>
+    <div class="segmented" id="colorMode" role="radiogroup" aria-labelledby="colorLabel">
+      <button role="radio" aria-checked="true" data-mode="0" title="Colour each point by its LiDAR class">Class</button>
+      <button role="radio" aria-checked="false" data-mode="1" title="Colour from the survey imagery">True colour</button>
+      <button role="radio" aria-checked="false" data-mode="2" title="Colour by elevation">Height</button>
+    </div>
+  </div>
+
+  <!-- Details -->
+  <aside class="panel side side-right" aria-label="Project details">
+    <div class="tabs" id="rightTabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="network">Network</button>
+      <button role="tab" aria-selected="false" data-tab="clearance">Clearance <span class="pill" id="clrCount"></span></button>
+      <button role="tab" aria-selected="false" data-tab="qa">Issues <span class="pill" id="qaCount"></span></button>
+      <button role="tab" aria-selected="false" data-tab="audit">Data</button>
+      <button role="tab" aria-selected="false" data-tab="files">Files</button>
+    </div>
+
+    <div class="tab-body">
+      <section data-pane="network" id="modelSection">
+        <div class="kpis" id="modelKpis"></div>
+        <label class="asset-search"><span>Find a span or tower</span>
+          <span class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.2-4.2" /></svg>
+          <input id="assetSearch" type="search" placeholder="e.g. T01 or T01-T02" autocomplete="off"></span></label>
+        <p id="assetSearchStatus" role="status" class="asset-search-status" hidden></p>
+        <h3>Spans <span class="h-note">click to inspect</span></h3>
+        <ul class="spans" id="spanList"></ul>
+        <h3>Towers <span class="h-note">click to locate</span></h3>
+        <ul class="towers" id="towerList"></ul>
+      </section>
+
+      <section data-pane="clearance" hidden>
+        <div class="kpis kpis-3" id="clrKpis"></div>
+        <p class="pane-note" id="clrNote"></p>
+        <ul class="clear-list" id="clearList"></ul>
+      </section>
+
+      <section data-pane="qa" hidden>
+        <div class="kpis kpis-3" id="qaKpis"></div>
+        <div class="chips" id="qaFilters" role="group" aria-label="Filter by severity"></div>
+        <h3>Data quality checks</h3>
+        <ul class="issues" id="issueList"></ul>
+        <h3>Findings</h3>
+        <div id="findingsBox" class="gis"></div>
+        <h3>GIS reconciliation</h3>
+        <div id="gisSummary" class="gis"></div>
+      </section>
+
+      <section data-pane="audit" hidden>
+        <div class="kpis" id="kpis"></div>
+        <h3>Survey checks</h3>
+        <ul class="warnings" id="warnings"></ul>
+        <h3>Processing time</h3>
+        <ul class="timings" id="timings"></ul>
+      </section>
+
+      <section data-pane="files" hidden>
+        <h3>Deliverables</h3>
+        <div id="downloads" class="gis"></div>
+        <h3>Method</h3>
+        <div class="gis"><div class="row muted">Formulas, assumptions and limits: <a href="https://github.com/adityagis/SpanGuard/blob/main/docs/methodology.md" target="_blank" rel="noopener">methodology.md</a>. Not engineering-grade: the conductor is assumed and every result says so.</div></div>
+      </section>
+    </div>
+  </aside>
+
+  <!-- View controls -->
+  <div class="panel controls" aria-label="View controls">
+    <button class="icon-btn panel-toggle" id="panelToggle" title="Show details" aria-label="Show details panel" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" /></svg>
+    </button>
+    <label class="slider" title="Size of each LiDAR point">
+      <span class="label">Point size</span>
+      <input type="range" id="pointSize" min="0.02" max="0.4" step="0.01" value="0.12" />
+    </label>
+    <span class="tb-sep" aria-hidden="true"></span>
+    <button class="icon-btn" id="labelsBtn" title="Hide labels (L)" aria-label="Labels in scene" aria-pressed="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9-9-9z" /><circle cx="8" cy="8" r="1.4" /></svg>
+    </button>
+    <button class="icon-btn" id="measureBtn" title="Measure distance (M)" aria-label="Measure distance" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17L17 3l4 4L7 21zM7 13l2 2M10 10l2 2M13 7l2 2" /></svg>
+    </button>
+    <button class="icon-btn" id="resetView" title="Reset view" aria-label="Reset view">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4" /></svg>
+    </button>
+    <button class="icon-btn" id="themeToggle" title="Dark appearance" aria-label="Toggle dark appearance" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z" /></svg>
+    </button>
+  </div>
+
+  <!-- Scenario -->
+  <div class="panel envbar" id="envBar" role="toolbar" aria-label="Weather scenario" hidden>
+    <span class="label" title="Conditions the wires are simulated in. Clearance distances update for each scenario.">Scenario</span>
+    <div class="segmented" id="envMode" role="radiogroup" aria-label="Weather scenario">
+      <button role="radio" aria-checked="true" data-env="survey" title="Wires as captured by the survey">Survey</button>
+      <button role="radio" aria-checked="false" data-env="hot" title="Conductor at its hottest: maximum sag">Hot</button>
+      <button role="radio" aria-checked="false" data-env="ice" title="Ice loading on the wires">Ice</button>
+      <button role="radio" aria-checked="false" data-env="blowout_left" title="Wind blowing the wires to the left">Wind ←</button>
+      <button role="radio" aria-checked="false" data-env="blowout_right" title="Wind blowing the wires to the right">Wind →</button>
+    </div>
+    <span class="env-desc" id="envDesc"></span>
+  </div>
+
+  <!-- Span inspector: live what-if -->
+  <section class="panel inspector" id="inspector" hidden aria-label="Span inspector">
+    <header class="insp-head">
+      <div>
+        <div class="insp-kicker">Span what-if</div>
+        <div class="insp-title" id="inspTitle">Span</div>
+        <div class="insp-sub" id="inspSub"></div>
+      </div>
+      <span class="verdict" id="inspVerdict"></span>
+      <button class="icon-btn" id="inspClose" aria-label="Close inspector" title="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+    </header>
+    <div class="insp-body">
+      <div class="insp-chart">
+        <div class="insp-cap">Lowest conductor profile</div>
+        <svg id="inspProfile" viewBox="0 0 520 230" role="img" aria-label="Live span profile"></svg>
+        <div class="insp-legend"><span><i class="l-survey"></i>As surveyed</span><span><i class="l-live"></i>What-if</span><span><i class="l-limit"></i>Ground limit</span><span><i class="l-veg"></i>Vegetation</span></div>
+        <div class="insp-note" id="inspNote"></div>
+      </div>
+      <div class="insp-ctrl">
+        <div class="presets" role="group" aria-label="Quick scenarios">
+          <span class="label">Quick scenario</span>
+          <button type="button" class="chip" data-preset="survey">Survey</button>
+          <button type="button" class="chip" data-preset="hot">Hot</button>
+          <button type="button" class="chip" data-preset="storm">Storm</button>
+          <button type="button" class="chip" data-preset="ice">Ice</button>
+        </div>
+        <label class="rng"><span>Conductor temperature <b id="tempVal"></b></span>
+          <input type="range" id="tempSlider" min="-10" max="100" step="1" /></label>
+        <label class="rng"><span>Wind pressure <b id="windVal"></b></span>
+          <input type="range" id="windSlider" min="0" max="1500" step="25" /></label>
+        <div class="row">
+          <span class="label">Wind from</span>
+          <div class="segmented small" id="windSide" role="radiogroup" aria-label="Wind direction">
+            <button role="radio" aria-checked="true" data-side="1">← Left</button>
+            <button role="radio" aria-checked="false" data-side="-1">Right →</button>
+          </div>
+        </div>
+        <label class="rng"><span>Radial ice <b id="iceVal"></b></span>
+          <input type="range" id="iceSlider" min="0" max="30" step="1" value="0" /></label>
+        <div class="readouts" id="inspReadouts"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="panel measure-status" id="measureStatus" role="status" hidden></div>
+
+  <div class="hint" id="hint" aria-hidden="true"><kbd>Drag</kbd> orbit <kbd>Right-drag</kbd> pan <kbd>Scroll</kbd> zoom <kbd>L</kbd> labels <kbd>M</kbd> measure</div>
+
+  <div class="loading" id="loading" role="status">
+    <div class="loading-card">
+      <span class="logo lg" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 26 11 6l4 20M17 26l4-20 4 20M8 17h6m4 0h6M9 10c5 4 9 4 14 0" /></svg></span>
+      <div class="loading-title">SpanGuard</div>
+      <div id="loadingText">Loading point cloud…</div>
+      <div class="bar"><div id="loadingBar"></div></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

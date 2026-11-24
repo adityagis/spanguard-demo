@@ -1,0 +1,153 @@
+{
+  "file": "t5b5.las",
+  "points": 63538408,
+  "point_format": 3,
+  "las_version": "1.2",
+  "crs": "EPSG:32632",
+  "bounds": {
+    "min": [
+      362045.085,
+      5106732.514,
+      1535.481
+    ],
+    "max": [
+      362389.813,
+      5107521.633,
+      1809.282
+    ],
+    "extent_m": [
+      344.73,
+      789.12,
+      273.8
+    ]
+  },
+  "footprint_area_m2": 125916.0,
+  "density_pts_per_m2": {
+    "mean": 504.6,
+    "median": 433.0,
+    "p5": 101.0,
+    "p95": 1095.0,
+    "cell_m": 1.0
+  },
+  "terrain_hole_pct": 0.95,
+  "classes": [
+    {
+      "code": 0,
+      "name": "unassigned",
+      "points": 133263,
+      "pct": 0.21,
+      "z_min": 1543.84,
+      "z_max": 1760.9
+    },
+    {
+      "code": 1,
+      "name": "tower",
+      "points": 697491,
+      "pct": 1.098,
+      "z_min": 1555.01,
+      "z_max": 1776.12
+    },
+    {
+      "code": 2,
+      "name": "conductor",
+      "points": 300606,
+      "pct": 0.473,
+      "z_min": 1549.94,
+      "z_max": 1804.08
+    },
+    {
+      "code": 3,
+      "name": "structural_cable",
+      "points": 70126,
+      "pct": 0.11,
+      "z_min": 1574.04,
+      "z_max": 1809.28
+    },
+    {
+      "code": 4,
+      "name": "insulator",
+      "points": 36846,
+      "pct": 0.058,
+      "z_min": 1576.39,
+      "z_max": 1771.01
+    },
+    {
+      "code": 5,
+      "name": "veg_high",
+      "points": 2685170,
+      "pct": 4.226,
+      "z_min": 1541.84,
+      "z_max": 1766.16
+    },
+    {
+      "code": 6,
+      "name": "veg_low",
+      "points": 786610,
+      "pct": 1.238,
+      "z_min": 1541.77,
+      "z_max": 1788.52
+    },
+    {
+      "code": 7,
+      "name": "veg_herb",
+      "points": 56605922,
+      "pct": 89.089,
+      "z_min": 1535.48,
+      "z_max": 1788.43
+    },
+    {
+      "code": 8,
+      "name": "ground",
+      "points": 756520,
+      "pct": 1.191,
+      "z_min": 1539.61,
+      "z_max": 1782.97
+    },
+    {
+      "code": 9,
+      "name": "road",
+      "points": 739994,
+      "pct": 1.165,
+      "z_min": 1569.82,
+      "z_max": 1707.79
+    },
+    {
+      "code": 11,
+      "name": "building",
+      "points": 725860,
+      "pct": 1.142,
+      "z_min": 1543.52,
+      "z_max": 1769.62
+    }
+  ],
+  "source_label_counts": {
+    "0": 14696,
+    "2": 682795,
+    "5": 300606,
+    "6": 70126,
+    "10": 36846,
+    "14": 2685170,
+    "15": 786610,
+    "16": 56605922,
+    "17": 226342,
+    "18": 530178,
+    "19": 739994,
+    "21": 725860,
+    "255": 133263
+  },
+  "warnings": [],
+  "timings": [
+    {
+      "stage": "ingest",
+      "seconds": 93.74,
+      "points": 63538408,
+      "points_per_s": 677798
+    },
+    {
+      "stage": "export3d",
+      "seconds": 1.25,
+      "points": 2000000,
+      "points_per_s": 1594115
+    }
+  ]
+}

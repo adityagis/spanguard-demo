@@ -1,0 +1,10506 @@
+{
+ "assumptions": {
+  "conductors": {
+   "aaac_570": {
+    "name": "AAAC ~570 mm\u00b2",
+    "diameter_mm": 31.099999999999998,
+    "mass_kg_m": 1.57,
+    "ea_mn": 31.35,
+    "alpha_per_c": 2.3e-05,
+    "source": "typical catalogue values"
+   },
+   "earth_95_55": {
+    "name": "Earth wire ~95/55",
+    "diameter_mm": 16.0,
+    "mass_kg_m": 0.707,
+    "ea_mn": 16.35,
+    "alpha_per_c": 1.53e-05,
+    "source": "typical catalogue values"
+   }
+  },
+  "survey_temp_c": 15.0,
+  "survey_temp_method": "fixed config value (assumed)",
+  "environments": {
+   "survey": {
+    "temp_c": 15.0,
+    "wind_pa": 0.0,
+    "ice_mm": 0.0
+   },
+   "hot": {
+    "temp_c": "max_operating",
+    "wind_pa": 0.0,
+    "ice_mm": 0.0
+   },
+   "blowout": {
+    "temp_c": 15.0,
+    "wind_pa": 500.0,
+    "ice_mm": 0.0
+   },
+   "ice": {
+    "temp_c": 0.0,
+    "wind_pa": 0.0,
+    "ice_mm": 10.0
+   }
+  },
+  "warnings": [],
+  "clearance_preset": "cea_2023",
+  "clearance_source": "Central Electricity Authority (Measures relating to Safety and Electric Supply) Regulations, 2023, Gazette of India Part III Sec. 4, 8 June 2023. Ground: Reg. 60(1) and Schedule VIII A, 'Elsewhere' column (PDF p. 79). Roads, railways and rivers: the matching Schedule VIII A column, chosen by clearance.road / railway / river (default: highway, normal OHE, non-navigable river; where the Schedule requires an underground cable, the next voltage class's value is applied). Water is measured to the surface at capture, not to the high flood level. Buildings: Reg. 63(2) vertical 3.7 m + 0.3 m per additional 33 kV, Reg. 63(3) horizontal 2.0 m + 0.3 m per additional 33 kV (PDF p. 26). Trees: Reg. 66(3) refers to Regs. 62 and 63, so the building clearance is applied (PDF p. 28).",
+  "clearance_rules_m": {
+   "11": {
+    "vegetation": 3.7,
+    "building": 3.7,
+    "building_horizontal": 1.2,
+    "ground": 4.6,
+    "road": 11.6,
+    "railway": 15.56,
+    "water": 6.5
+   },
+   "22": {
+    "vegetation": 3.7,
+    "building": 3.7,
+    "building_horizontal": 2.0,
+    "ground": 5.2,
+    "road": 11.6,
+    "railway": 15.56,
+    "water": 6.5
+   },
+   "33": {
+    "vegetation": 3.7,
+    "building": 3.7,
+    "building_horizontal": 2.0,
+    "ground": 5.2,
+    "road": 11.6,
+    "railway": 15.56,
+    "water": 6.5
+   },
+   "66": {
+    "vegetation": 4.0,
+    "building": 4.0,
+    "building_horizontal": 2.3,
+    "ground": 5.5,
+    "road": 11.6,
+    "railway": 15.56,
+    "water": 6.5
+   },
+   "110": {
+    "vegetation": 4.6,
+    "building": 4.6,
+    "building_horizontal": 2.9,
+    "ground": 6.1,
+    "road": 11.6,
+    "railway": 15.56,
+    "water": 6.5
+   },
+   "132": {
+    "vegetation": 4.6,
+    "building": 4.6,
+    "building_horizontal": 2.9,
+    "ground": 6.1,
+    "road": 11.6,
+    "railway": 15.56,
+    "water": 6.5
+   },
+   "220": {
+    "vegetation": 5.5,
+    "building": 5.5,
+    "building_horizontal": 3.8,
+    "ground": 7.02,
+    "road": 12.52,
+    "railway": 16.46,
+    "water": 7.02
+   },
+   "400": {
+    "vegetation": 7.3,
+    "building": 7.3,
+    "building_horizontal": 5.6,
+    "ground": 8.84,
+    "road": 14.0,
+    "railway": 18.26,
+    "water": 8.84
+   },
+   "765": {
+    "vegetation": 10.6,
+    "building": 10.6,
+    "building_horizontal": 8.9,
+    "ground": 18.0,
+    "road": 18.8,
+    "railway": 21.86,
+    "water": 18.0
+   }
+  },
+  "note": "Demo clearance values and assumed conductor data; not an engineering assessment."
+ },
+ "fall_in": {
+  "method": "Tree tops are local maxima of a canopy height model; a tree can strike a wire when the nearest point of any simulated wire lies within its height plus a lean allowance of its base.",
+  "settings": {
+   "min_tree_height_m": 4.0,
+   "chm_cell_m": 1.0,
+   "peak_window_m": 4.0,
+   "buffer_m": 1.0,
+   "watch_band_m": 2.0,
+   "cut_buffer_m": 1.5,
+   "trim_cost_per_tree": 4000.0
+  },
+  "trees_detected": 4,
+  "tallest_tree_m": 25.3,
+  "closest_call": {
+   "span": "EDGE-T01",
+   "height_m": 24.9,
+   "dist_to_wire_m": 33.87,
+   "strike_margin_m": -7.96,
+   "base_local": [
+    -36.9,
+    -108.6,
+    110.82
+   ]
+  },
+  "trees": []
+ },
+ "priority": {
+  "method": "score = (clearance + probability + grow-in + fall-in + clash + air gap + consequence points) x voltage weight. Clearance: violation 40, watch 20. Probability: 30 x P(violation) from Monte Carlo. Grow-in (not yet breached): <=1 yr 15, <=3 yr 10, <=5 yr 5. Fall-in: 15 per strike tree (max 30), 5 per watch tree (max 10). Clash: violation 20, watch 10. Tower air gap: violation 20, watch 10. Consequence: points of the consequence polygons the span crosses (highest per layer). Voltage weight: 1 + kV/400.",
+  "weights": {
+   "clearance_violation": 40,
+   "clearance_watch": 20,
+   "probability": 30,
+   "grow_in_1yr": 15,
+   "grow_in_3yr": 10,
+   "grow_in_5yr": 5,
+   "fall_in_strike": 15,
+   "fall_in_strike_max": 30,
+   "fall_in_watch": 5,
+   "fall_in_watch_max": 10,
+   "clash_violation": 20,
+   "clash_watch": 10,
+   "air_gap_violation": 20,
+   "air_gap_watch": 10,
+   "voltage_divisor_kv": 400
+  },
+  "spans": [
+   {
+    "span": "T01-T02",
+    "score": 23.2,
+    "drivers": [
+     "clash",
+     "air_gap"
+    ],
+    "rank": 1
+   },
+   {
+    "span": "EDGE-T01",
+    "score": 0.0,
+    "drivers": [],
+    "rank": 2
+   },
+   {
+    "span": "T02-EDGE",
+    "score": 0.0,
+    "drivers": [],
+    "rank": 3
+   }
+  ]
+ },
+ "air_gap": {
+  "method": "Suspension strings swing by the insulator swing angle in every wind case; the swung conductor end is checked against the tower's own LiDAR points. Required gap: the phase-earth value of the clash rules (demo values, not regulatory).",
+  "spans_checked": 1
+ },
+ "surroundings_points": {
+  "vegetation": 17244,
+  "building": 33988,
+  "ground": 252097,
+  "road": 0,
+  "railway": 0,
+  "water": 0,
+  "tower": 70150
+ },
+ "spans": [
+  {
+   "span": "T01-T02",
+   "kind": "full",
+   "voltage_kv": 65.0,
+   "required_m": {
+    "voltage_class_kv": 66.0,
+    "vegetation": 4.0,
+    "building": 4.0,
+    "building_horizontal": 2.3,
+    "ground": 5.5,
+    "road": 11.6,
+    "railway": 15.56,
+    "water": 6.5
+   },
+   "environments": {
+    "survey": {
+     "wires": [
+      {
+       "wire": "T01-T02/E1",
+       "type": "earth_wire",
+       "state": {
+        "h_kn": 8.02,
+        "a_m": 1156.5,
+        "sag_m": 4.04,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 33.35,
+         "required_m": 4.0,
+         "margin_m": 29.35,
+         "risk": "ok",
+         "at_local": [
+          -30.06,
+          -28.55,
+          185.88
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "ground": {
+         "clearance_m": 24.03,
+         "required_m": 5.5,
+         "margin_m": 18.53,
+         "risk": "ok",
+         "at_local": [
+          -22.22,
+          38.99,
+          197.32
+         ],
+         "object_local": [
+          -22.22,
+          38.99,
+          173.3
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W2",
+       "type": "conductor",
+       "state": {
+        "h_kn": 16.94,
+        "a_m": 1100.1,
+        "sag_m": 4.25,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 28.92,
+         "required_m": 4.0,
+         "margin_m": 24.92,
+         "risk": "ok",
+         "at_local": [
+          -27.4,
+          -28.86,
+          180.92
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 36.32,
+         "required_m": 2.3,
+         "margin_m": 34.02,
+         "risk": "ok",
+         "at_local": [
+          -17.5,
+          57.07,
+          195.91
+         ],
+         "object_local": [
+          -53.58,
+          61.28,
+          192.62
+         ]
+        },
+        "ground": {
+         "clearance_m": 19.94,
+         "required_m": 5.5,
+         "margin_m": 14.44,
+         "risk": "ok",
+         "at_local": [
+          -18.53,
+          48.13,
+          194.03
+         ],
+         "object_local": [
+          -18.53,
+          48.13,
+          174.09
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W3",
+       "type": "conductor",
+       "state": {
+        "h_kn": 16.85,
+        "a_m": 1094.7,
+        "sag_m": 4.27,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 28.49,
+         "required_m": 4.0,
+         "margin_m": 24.49,
+         "risk": "ok",
+         "at_local": [
+          -32.77,
+          -28.24,
+          180.92
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 31.12,
+         "required_m": 2.3,
+         "margin_m": 28.82,
+         "risk": "ok",
+         "at_local": [
+          -22.67,
+          57.67,
+          195.88
+         ],
+         "object_local": [
+          -53.58,
+          61.28,
+          192.62
+         ]
+        },
+        "ground": {
+         "clearance_m": 17.76,
+         "required_m": 5.5,
+         "margin_m": 12.26,
+         "risk": "ok",
+         "at_local": [
+          -24.42,
+          42.77,
+          192.79
+         ],
+         "object_local": [
+          -24.42,
+          42.77,
+          175.03
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W4",
+       "type": "conductor",
+       "state": {
+        "h_kn": 17.01,
+        "a_m": 1104.6,
+        "sag_m": 4.23,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 26.13,
+         "required_m": 4.0,
+         "margin_m": 22.13,
+         "risk": "ok",
+         "at_local": [
+          -25.92,
+          -29.04,
+          177.61
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 34.35,
+         "required_m": 2.3,
+         "margin_m": 32.05,
+         "risk": "ok",
+         "at_local": [
+          -13.94,
+          75.78,
+          196.85
+         ],
+         "object_local": [
+          -48.08,
+          79.61,
+          192.87
+         ]
+        },
+        "ground": {
+         "clearance_m": 17.04,
+         "required_m": 5.5,
+         "margin_m": 11.54,
+         "risk": "ok",
+         "at_local": [
+          -16.83,
+          50.45,
+          191.26
+         ],
+         "object_local": [
+          -16.83,
+          50.45,
+          174.22
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W5",
+       "type": "conductor",
+       "state": {
+        "h_kn": 17.29,
+        "a_m": 1123.0,
+        "sag_m": 4.16,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 25.39,
+         "required_m": 4.0,
+         "margin_m": 21.39,
+         "risk": "ok",
+         "at_local": [
+          -34.25,
+          -28.07,
+          177.61
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 26.25,
+         "required_m": 2.3,
+         "margin_m": 23.95,
+         "risk": "ok",
+         "at_local": [
+          -21.84,
+          76.7,
+          196.89
+         ],
+         "object_local": [
+          -47.89,
+          79.96,
+          192.9
+         ]
+        },
+        "ground": {
+         "clearance_m": 13.9,
+         "required_m": 5.5,
+         "margin_m": 8.4,
+         "risk": "ok",
+         "at_local": [
+          -26.55,
+          36.98,
+          188.39
+         ],
+         "object_local": [
+          -26.55,
+          36.98,
+          174.5
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W6",
+       "type": "conductor",
+       "state": {
+        "h_kn": 16.72,
+        "a_m": 1085.7,
+        "sag_m": 4.3,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 22.89,
+         "required_m": 4.0,
+         "margin_m": 18.89,
+         "risk": "ok",
+         "at_local": [
+          -26.95,
+          -28.92,
+          174.34
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 29.1,
+         "required_m": 2.3,
+         "margin_m": 26.8,
+         "risk": "ok",
+         "at_local": [
+          -13.2,
+          90.8,
+          197.07
+         ],
+         "object_local": [
+          -42.13,
+          93.91,
+          193.1
+         ]
+        },
+        "ground": {
+         "clearance_m": 13.47,
+         "required_m": 5.5,
+         "margin_m": 7.97,
+         "risk": "ok",
+         "at_local": [
+          -18.11,
+          48.08,
+          187.39
+         ],
+         "object_local": [
+          -18.11,
+          48.08,
+          173.93
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W7",
+       "type": "conductor",
+       "state": {
+        "h_kn": 16.87,
+        "a_m": 1095.9,
+        "sag_m": 4.26,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 22.25,
+         "required_m": 4.0,
+         "margin_m": 18.25,
+         "risk": "ok",
+         "at_local": [
+          -33.21,
+          -28.19,
+          174.33
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 23.08,
+         "required_m": 2.3,
+         "margin_m": 20.78,
+         "risk": "ok",
+         "at_local": [
+          -19.21,
+          90.49,
+          196.84
+         ],
+         "object_local": [
+          -42.11,
+          93.38,
+          192.86
+         ]
+        },
+        "ground": {
+         "clearance_m": 10.65,
+         "required_m": 5.5,
+         "margin_m": 5.15,
+         "risk": "ok",
+         "at_local": [
+          -25.42,
+          37.86,
+          185.22
+         ],
+         "object_local": [
+          -25.42,
+          37.86,
+          174.57
+         ]
+        }
+       }
+      }
+     ],
+     "worst": {
+      "wire": "T01-T02/W7",
+      "class": "ground",
+      "clearance_m": 10.65,
+      "required_m": 5.5,
+      "margin_m": 5.15,
+      "risk": "ok",
+      "at_local": [
+       -25.42,
+       37.86,
+       185.22
+      ],
+      "object_local": [
+       -25.42,
+       37.86,
+       174.57
+      ]
+     }
+    },
+    "hot": {
+     "wires": [
+      {
+       "wire": "T01-T02/E1",
+       "type": "earth_wire",
+       "state": {
+        "h_kn": 6.03,
+        "a_m": 869.6,
+        "sag_m": 5.37,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 33.35,
+         "required_m": 4.0,
+         "margin_m": 29.35,
+         "risk": "ok",
+         "at_local": [
+          -30.06,
+          -28.55,
+          185.88
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "ground": {
+         "clearance_m": 22.78,
+         "required_m": 5.5,
+         "margin_m": 17.28,
+         "risk": "ok",
+         "at_local": [
+          -20.95,
+          49.92,
+          198.26
+         ],
+         "object_local": [
+          -20.95,
+          49.92,
+          175.49
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W2",
+       "type": "conductor",
+       "state": {
+        "h_kn": 11.8,
+        "a_m": 766.4,
+        "sag_m": 6.1,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 28.92,
+         "required_m": 4.0,
+         "margin_m": 24.92,
+         "risk": "ok",
+         "at_local": [
+          -27.4,
+          -28.86,
+          180.92
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 34.87,
+         "required_m": 2.3,
+         "margin_m": 32.57,
+         "risk": "ok",
+         "at_local": [
+          -16.07,
+          69.49,
+          196.8
+         ],
+         "object_local": [
+          -50.71,
+          73.52,
+          192.85
+         ]
+        },
+        "ground": {
+         "clearance_m": 18.16,
+         "required_m": 5.5,
+         "margin_m": 12.66,
+         "risk": "ok",
+         "at_local": [
+          -18.53,
+          48.13,
+          192.25
+         ],
+         "object_local": [
+          -18.53,
+          48.13,
+          174.09
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W3",
+       "type": "conductor",
+       "state": {
+        "h_kn": 11.77,
+        "a_m": 764.3,
+        "sag_m": 6.12,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 28.49,
+         "required_m": 4.0,
+         "margin_m": 24.49,
+         "risk": "ok",
+         "at_local": [
+          -32.77,
+          -28.24,
+          180.92
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 29.68,
+         "required_m": 2.3,
+         "margin_m": 27.38,
+         "risk": "ok",
+         "at_local": [
+          -21.16,
+          70.58,
+          196.89
+         ],
+         "object_local": [
+          -50.63,
+          74.05,
+          192.89
+         ]
+        },
+        "ground": {
+         "clearance_m": 16.03,
+         "required_m": 5.5,
+         "margin_m": 10.53,
+         "risk": "ok",
+         "at_local": [
+          -24.42,
+          42.77,
+          191.07
+         ],
+         "object_local": [
+          -24.42,
+          42.77,
+          175.03
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W4",
+       "type": "conductor",
+       "state": {
+        "h_kn": 11.83,
+        "a_m": 768.1,
+        "sag_m": 6.09,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 26.13,
+         "required_m": 4.0,
+         "margin_m": 22.13,
+         "risk": "ok",
+         "at_local": [
+          -25.92,
+          -29.04,
+          177.61
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 32.0,
+         "required_m": 2.3,
+         "margin_m": 29.7,
+         "risk": "ok",
+         "at_local": [
+          -13.03,
+          83.73,
+          196.93
+         ],
+         "object_local": [
+          -44.8,
+          87.55,
+          192.95
+         ]
+        },
+        "ground": {
+         "clearance_m": 15.23,
+         "required_m": 5.5,
+         "margin_m": 9.73,
+         "risk": "ok",
+         "at_local": [
+          -16.83,
+          50.45,
+          189.45
+         ],
+         "object_local": [
+          -16.83,
+          50.45,
+          174.22
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W5",
+       "type": "conductor",
+       "state": {
+        "h_kn": 11.93,
+        "a_m": 775.1,
+        "sag_m": 6.03,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 25.39,
+         "required_m": 4.0,
+         "margin_m": 21.39,
+         "risk": "ok",
+         "at_local": [
+          -34.25,
+          -28.07,
+          177.61
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 24.19,
+         "required_m": 2.3,
+         "margin_m": 21.89,
+         "risk": "ok",
+         "at_local": [
+          -20.9,
+          84.65,
+          196.96
+         ],
+         "object_local": [
+          -44.95,
+          87.27,
+          192.96
+         ]
+        },
+        "ground": {
+         "clearance_m": 12.22,
+         "required_m": 5.5,
+         "margin_m": 6.72,
+         "risk": "ok",
+         "at_local": [
+          -26.55,
+          36.98,
+          186.72
+         ],
+         "object_local": [
+          -26.55,
+          36.98,
+          174.5
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W6",
+       "type": "conductor",
+       "state": {
+        "h_kn": 11.71,
+        "a_m": 760.8,
+        "sag_m": 6.14,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 22.89,
+         "required_m": 4.0,
+         "margin_m": 18.89,
+         "risk": "ok",
+         "at_local": [
+          -26.95,
+          -28.92,
+          174.34
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 27.02,
+         "required_m": 2.3,
+         "margin_m": 24.72,
+         "risk": "ok",
+         "at_local": [
+          -12.52,
+          96.76,
+          196.9
+         ],
+         "object_local": [
+          -39.39,
+          99.63,
+          192.93
+         ]
+        },
+        "ground": {
+         "clearance_m": 11.7,
+         "required_m": 5.5,
+         "margin_m": 6.2,
+         "risk": "ok",
+         "at_local": [
+          -18.11,
+          48.08,
+          185.62
+         ],
+         "object_local": [
+          -18.11,
+          48.08,
+          173.93
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W7",
+       "type": "conductor",
+       "state": {
+        "h_kn": 11.77,
+        "a_m": 764.8,
+        "sag_m": 6.11,
+        "swing_deg": 0.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 22.25,
+         "required_m": 4.0,
+         "margin_m": 18.25,
+         "risk": "ok",
+         "at_local": [
+          -33.21,
+          -28.19,
+          174.33
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 21.11,
+         "required_m": 2.3,
+         "margin_m": 18.81,
+         "risk": "ok",
+         "at_local": [
+          -18.45,
+          96.95,
+          196.77
+         ],
+         "object_local": [
+          -39.39,
+          99.63,
+          192.93
+         ]
+        },
+        "ground": {
+         "clearance_m": 8.98,
+         "required_m": 5.5,
+         "margin_m": 3.48,
+         "risk": "ok",
+         "at_local": [
+          -25.42,
+          37.86,
+          183.54
+         ],
+         "object_local": [
+          -25.42,
+          37.86,
+          174.57
+         ]
+        }
+       }
+      }
+     ],
+     "worst": {
+      "wire": "T01-T02/W7",
+      "class": "ground",
+      "clearance_m": 8.98,
+      "required_m": 5.5,
+      "margin_m": 3.48,
+      "risk": "ok",
+      "at_local": [
+       -25.42,
+       37.86,
+       183.54
+      ],
+      "object_local": [
+       -25.42,
+       37.86,
+       174.57
+      ]
+     }
+    },
+    "blowout_left": {
+     "wires": [
+      {
+       "wire": "T01-T02/E1",
+       "type": "earth_wire",
+       "state": {
+        "h_kn": 11.29,
+        "a_m": 1066.4,
+        "sag_m": 4.38,
+        "swing_deg": 49.1
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 33.35,
+         "required_m": 4.0,
+         "margin_m": 29.35,
+         "risk": "ok",
+         "at_local": [
+          -30.06,
+          -28.55,
+          185.88
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "ground": {
+         "clearance_m": 23.52,
+         "required_m": 5.5,
+         "margin_m": 18.02,
+         "risk": "ok",
+         "at_local": [
+          -25.37,
+          37.85,
+          198.09
+         ],
+         "object_local": [
+          -25.37,
+          37.85,
+          174.57
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W2",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.53,
+        "a_m": 1029.4,
+        "sag_m": 4.54,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 29.1,
+         "required_m": 4.0,
+         "margin_m": 25.1,
+         "risk": "ok",
+         "at_local": [
+          -28.27,
+          -28.76,
+          181.27
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 33.98,
+         "required_m": 2.3,
+         "margin_m": 31.68,
+         "risk": "ok",
+         "at_local": [
+          -21.76,
+          55.55,
+          196.87
+         ],
+         "object_local": [
+          -55.53,
+          59.38,
+          192.87
+         ]
+        },
+        "ground": {
+         "clearance_m": 19.53,
+         "required_m": 5.5,
+         "margin_m": 14.03,
+         "risk": "ok",
+         "at_local": [
+          -22.49,
+          48.59,
+          195.39
+         ],
+         "object_local": [
+          -22.49,
+          48.59,
+          175.86
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W3",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.43,
+        "a_m": 1025.1,
+        "sag_m": 4.56,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 28.84,
+         "required_m": 4.0,
+         "margin_m": 24.84,
+         "risk": "ok",
+         "at_local": [
+          -33.64,
+          -28.14,
+          181.27
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 28.76,
+         "required_m": 2.3,
+         "margin_m": 26.46,
+         "risk": "ok",
+         "at_local": [
+          -26.95,
+          56.16,
+          196.85
+         ],
+         "object_local": [
+          -55.53,
+          59.38,
+          192.87
+         ]
+        },
+        "ground": {
+         "clearance_m": 17.56,
+         "required_m": 5.5,
+         "margin_m": 12.06,
+         "risk": "ok",
+         "at_local": [
+          -28.5,
+          41.23,
+          193.72
+         ],
+         "object_local": [
+          -28.5,
+          41.23,
+          176.16
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W4",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.61,
+        "a_m": 1033.0,
+        "sag_m": 4.52,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 26.25,
+         "required_m": 4.0,
+         "margin_m": 22.25,
+         "risk": "ok",
+         "at_local": [
+          -26.79,
+          -28.93,
+          177.95
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 32.17,
+         "required_m": 2.3,
+         "margin_m": 29.87,
+         "risk": "ok",
+         "at_local": [
+          -18.68,
+          70.29,
+          196.87
+         ],
+         "object_local": [
+          -50.63,
+          74.05,
+          192.89
+         ]
+        },
+        "ground": {
+         "clearance_m": 16.83,
+         "required_m": 5.5,
+         "margin_m": 11.33,
+         "risk": "ok",
+         "at_local": [
+          -22.63,
+          31.99,
+          188.73
+         ],
+         "object_local": [
+          -22.63,
+          31.99,
+          171.91
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W5",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.92,
+        "a_m": 1047.6,
+        "sag_m": 4.46,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 25.8,
+         "required_m": 4.0,
+         "margin_m": 21.8,
+         "risk": "ok",
+         "at_local": [
+          -35.13,
+          -27.96,
+          177.95
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building": {
+         "clearance_m": 23.13,
+         "required_m": 4.0,
+         "margin_m": 19.13,
+         "risk": "ok",
+         "at_local": [
+          -15.85,
+          143.96,
+          215.25
+         ],
+         "object_local": [
+          -18.1,
+          144.27,
+          192.11
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 23.97,
+         "required_m": 2.3,
+         "margin_m": 21.67,
+         "risk": "ok",
+         "at_local": [
+          -26.56,
+          71.21,
+          196.89
+         ],
+         "object_local": [
+          -50.34,
+          74.28,
+          192.89
+         ]
+        },
+        "ground": {
+         "clearance_m": 13.86,
+         "required_m": 5.5,
+         "margin_m": 8.36,
+         "risk": "ok",
+         "at_local": [
+          -29.66,
+          43.38,
+          190.88
+         ],
+         "object_local": [
+          -29.66,
+          43.38,
+          177.01
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W6",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.27,
+        "a_m": 1017.9,
+        "sag_m": 4.59,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 23.01,
+         "required_m": 4.0,
+         "margin_m": 19.01,
+         "risk": "ok",
+         "at_local": [
+          -27.82,
+          -28.81,
+          174.68
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 26.59,
+         "required_m": 2.3,
+         "margin_m": 24.29,
+         "risk": "ok",
+         "at_local": [
+          -17.94,
+          84.81,
+          196.87
+         ],
+         "object_local": [
+          -44.31,
+          88.17,
+          192.92
+         ]
+        },
+        "ground": {
+         "clearance_m": 12.94,
+         "required_m": 5.5,
+         "margin_m": 7.44,
+         "risk": "ok",
+         "at_local": [
+          -23.03,
+          39.09,
+          186.82
+         ],
+         "object_local": [
+          -23.03,
+          39.09,
+          173.87
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W7",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.45,
+        "a_m": 1026.0,
+        "sag_m": 4.55,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 22.62,
+         "required_m": 4.0,
+         "margin_m": 18.62,
+         "risk": "ok",
+         "at_local": [
+          -34.08,
+          -28.09,
+          174.67
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 20.66,
+         "required_m": 2.3,
+         "margin_m": 18.36,
+         "risk": "ok",
+         "at_local": [
+          -23.82,
+          85.49,
+          196.87
+         ],
+         "object_local": [
+          -44.31,
+          88.17,
+          192.92
+         ]
+        },
+        "ground": {
+         "clearance_m": 10.86,
+         "required_m": 5.5,
+         "margin_m": 5.36,
+         "risk": "ok",
+         "at_local": [
+          -29.25,
+          37.8,
+          186.42
+         ],
+         "object_local": [
+          -29.25,
+          37.8,
+          175.56
+         ]
+        }
+       }
+      }
+     ],
+     "worst": {
+      "wire": "T01-T02/W7",
+      "class": "ground",
+      "clearance_m": 10.86,
+      "required_m": 5.5,
+      "margin_m": 5.36,
+      "risk": "ok",
+      "at_local": [
+       -29.25,
+       37.8,
+       186.42
+      ],
+      "object_local": [
+       -29.25,
+       37.8,
+       175.56
+      ]
+     }
+    },
+    "blowout_right": {
+     "wires": [
+      {
+       "wire": "T01-T02/E1",
+       "type": "earth_wire",
+       "state": {
+        "h_kn": 11.29,
+        "a_m": 1066.4,
+        "sag_m": 4.38,
+        "swing_deg": 49.1
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 33.35,
+         "required_m": 4.0,
+         "margin_m": 29.35,
+         "risk": "ok",
+         "at_local": [
+          -30.06,
+          -28.55,
+          185.88
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "ground": {
+         "clearance_m": 26.46,
+         "required_m": 5.5,
+         "margin_m": 20.96,
+         "risk": "ok",
+         "at_local": [
+          -18.48,
+          44.09,
+          199.53
+         ],
+         "object_local": [
+          -18.48,
+          44.09,
+          173.07
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W2",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.53,
+        "a_m": 1029.4,
+        "sag_m": 4.54,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 29.4,
+         "required_m": 4.0,
+         "margin_m": 25.4,
+         "risk": "ok",
+         "at_local": [
+          -26.53,
+          -28.96,
+          181.27
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 41.89,
+         "required_m": 2.3,
+         "margin_m": 39.59,
+         "risk": "ok",
+         "at_local": [
+          -13.7,
+          54.61,
+          196.87
+         ],
+         "object_local": [
+          -55.29,
+          59.58,
+          192.87
+         ]
+        },
+        "ground": {
+         "clearance_m": 22.85,
+         "required_m": 5.5,
+         "margin_m": 17.35,
+         "risk": "ok",
+         "at_local": [
+          -14.7,
+          46.68,
+          195.18
+         ],
+         "object_local": [
+          -14.7,
+          46.68,
+          172.33
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W3",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.43,
+        "a_m": 1025.1,
+        "sag_m": 4.56,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 28.82,
+         "required_m": 4.0,
+         "margin_m": 24.82,
+         "risk": "ok",
+         "at_local": [
+          -31.89,
+          -28.34,
+          181.27
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 36.5,
+         "required_m": 2.3,
+         "margin_m": 34.2,
+         "risk": "ok",
+         "at_local": [
+          -18.86,
+          55.21,
+          196.85
+         ],
+         "object_local": [
+          -55.05,
+          59.99,
+          192.85
+         ]
+        },
+        "ground": {
+         "clearance_m": 20.75,
+         "required_m": 5.5,
+         "margin_m": 15.25,
+         "risk": "ok",
+         "at_local": [
+          -20.47,
+          42.82,
+          194.23
+         ],
+         "object_local": [
+          -20.47,
+          42.82,
+          173.48
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W4",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.61,
+        "a_m": 1033.0,
+        "sag_m": 4.52,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 26.68,
+         "required_m": 4.0,
+         "margin_m": 22.68,
+         "risk": "ok",
+         "at_local": [
+          -25.04,
+          -29.14,
+          177.95
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 40.35,
+         "required_m": 2.3,
+         "margin_m": 38.05,
+         "risk": "ok",
+         "at_local": [
+          -10.56,
+          69.35,
+          196.87
+         ],
+         "object_local": [
+          -50.63,
+          74.05,
+          192.89
+         ]
+        },
+        "ground": {
+         "clearance_m": 19.85,
+         "required_m": 5.5,
+         "margin_m": 14.35,
+         "risk": "ok",
+         "at_local": [
+          -20.19,
+          -1.01,
+          182.67
+         ],
+         "object_local": [
+          -20.19,
+          -1.01,
+          162.82
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W5",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.92,
+        "a_m": 1047.6,
+        "sag_m": 4.46,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 25.67,
+         "required_m": 4.0,
+         "margin_m": 21.67,
+         "risk": "ok",
+         "at_local": [
+          -33.38,
+          -28.17,
+          177.95
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 32.32,
+         "required_m": 2.3,
+         "margin_m": 30.02,
+         "risk": "ok",
+         "at_local": [
+          -18.53,
+          70.28,
+          196.89
+         ],
+         "object_local": [
+          -50.63,
+          74.05,
+          192.89
+         ]
+        },
+        "ground": {
+         "clearance_m": 16.68,
+         "required_m": 5.5,
+         "margin_m": 11.18,
+         "risk": "ok",
+         "at_local": [
+          -22.43,
+          39.52,
+          190.26
+         ],
+         "object_local": [
+          -22.43,
+          39.52,
+          173.58
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W6",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.27,
+        "a_m": 1017.9,
+        "sag_m": 4.59,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 23.43,
+         "required_m": 4.0,
+         "margin_m": 19.43,
+         "risk": "ok",
+         "at_local": [
+          -26.08,
+          -29.02,
+          174.68
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 35.05,
+         "required_m": 2.3,
+         "margin_m": 32.75,
+         "risk": "ok",
+         "at_local": [
+          -9.95,
+          83.88,
+          196.87
+         ],
+         "object_local": [
+          -44.8,
+          87.55,
+          192.95
+         ]
+        },
+        "ground": {
+         "clearance_m": 16.3,
+         "required_m": 5.5,
+         "margin_m": 10.8,
+         "risk": "ok",
+         "at_local": [
+          -14.24,
+          46.62,
+          188.56
+         ],
+         "object_local": [
+          -14.24,
+          46.62,
+          172.27
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W7",
+       "type": "conductor",
+       "state": {
+        "h_kn": 22.45,
+        "a_m": 1026.0,
+        "sag_m": 4.55,
+        "swing_deg": 45.3,
+        "insulator_swing_deg": 42.6
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 22.55,
+         "required_m": 4.0,
+         "margin_m": 18.55,
+         "risk": "ok",
+         "at_local": [
+          -32.34,
+          -28.29,
+          174.67
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 28.98,
+         "required_m": 2.3,
+         "margin_m": 26.68,
+         "risk": "ok",
+         "at_local": [
+          -15.93,
+          84.07,
+          196.75
+         ],
+         "object_local": [
+          -44.73,
+          87.34,
+          192.85
+         ]
+        },
+        "ground": {
+         "clearance_m": 13.98,
+         "required_m": 5.5,
+         "margin_m": 8.48,
+         "risk": "ok",
+         "at_local": [
+          -20.62,
+          44.85,
+          188.05
+         ],
+         "object_local": [
+          -20.62,
+          44.85,
+          174.07
+         ]
+        }
+       }
+      }
+     ],
+     "worst": {
+      "wire": "T01-T02/W7",
+      "class": "ground",
+      "clearance_m": 13.98,
+      "required_m": 5.5,
+      "margin_m": 8.48,
+      "risk": "ok",
+      "at_local": [
+       -20.62,
+       44.85,
+       188.05
+      ],
+      "object_local": [
+       -20.62,
+       44.85,
+       174.07
+      ]
+     }
+    },
+    "ice": {
+     "wires": [
+      {
+       "wire": "T01-T02/E1",
+       "type": "earth_wire",
+       "state": {
+        "h_kn": 15.17,
+        "a_m": 1063.3,
+        "sag_m": 4.39,
+        "swing_deg": 0.0,
+        "ice_mm": 10.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 33.35,
+         "required_m": 4.0,
+         "margin_m": 29.35,
+         "risk": "ok",
+         "at_local": [
+          -30.06,
+          -28.55,
+          185.88
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "ground": {
+         "clearance_m": 23.7,
+         "required_m": 5.5,
+         "margin_m": 18.2,
+         "risk": "ok",
+         "at_local": [
+          -22.22,
+          38.99,
+          197.0
+         ],
+         "object_local": [
+          -22.22,
+          38.99,
+          173.3
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W2",
+       "type": "conductor",
+       "state": {
+        "h_kn": 29.17,
+        "a_m": 1080.9,
+        "sag_m": 4.32,
+        "swing_deg": 0.0,
+        "ice_mm": 10.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 28.92,
+         "required_m": 4.0,
+         "margin_m": 24.92,
+         "risk": "ok",
+         "at_local": [
+          -27.4,
+          -28.86,
+          180.92
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 36.32,
+         "required_m": 2.3,
+         "margin_m": 34.02,
+         "risk": "ok",
+         "at_local": [
+          -17.5,
+          57.07,
+          195.84
+         ],
+         "object_local": [
+          -53.58,
+          61.28,
+          192.62
+         ]
+        },
+        "ground": {
+         "clearance_m": 19.87,
+         "required_m": 5.5,
+         "margin_m": 14.37,
+         "risk": "ok",
+         "at_local": [
+          -18.53,
+          48.13,
+          193.96
+         ],
+         "object_local": [
+          -18.53,
+          48.13,
+          174.09
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W3",
+       "type": "conductor",
+       "state": {
+        "h_kn": 29.04,
+        "a_m": 1076.3,
+        "sag_m": 4.34,
+        "swing_deg": 0.0,
+        "ice_mm": 10.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 28.49,
+         "required_m": 4.0,
+         "margin_m": 24.49,
+         "risk": "ok",
+         "at_local": [
+          -32.77,
+          -28.24,
+          180.92
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 31.12,
+         "required_m": 2.3,
+         "margin_m": 28.82,
+         "risk": "ok",
+         "at_local": [
+          -22.67,
+          57.67,
+          195.81
+         ],
+         "object_local": [
+          -53.58,
+          61.28,
+          192.62
+         ]
+        },
+        "ground": {
+         "clearance_m": 17.69,
+         "required_m": 5.5,
+         "margin_m": 12.19,
+         "risk": "ok",
+         "at_local": [
+          -24.42,
+          42.77,
+          192.72
+         ],
+         "object_local": [
+          -24.42,
+          42.77,
+          175.03
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W4",
+       "type": "conductor",
+       "state": {
+        "h_kn": 29.27,
+        "a_m": 1084.7,
+        "sag_m": 4.31,
+        "swing_deg": 0.0,
+        "ice_mm": 10.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 26.13,
+         "required_m": 4.0,
+         "margin_m": 22.13,
+         "risk": "ok",
+         "at_local": [
+          -25.92,
+          -29.04,
+          177.61
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 34.21,
+         "required_m": 2.3,
+         "margin_m": 31.91,
+         "risk": "ok",
+         "at_local": [
+          -13.88,
+          76.28,
+          196.89
+         ],
+         "object_local": [
+          -47.89,
+          79.96,
+          192.9
+         ]
+        },
+        "ground": {
+         "clearance_m": 16.96,
+         "required_m": 5.5,
+         "margin_m": 11.46,
+         "risk": "ok",
+         "at_local": [
+          -16.83,
+          50.45,
+          191.18
+         ],
+         "object_local": [
+          -16.83,
+          50.45,
+          174.22
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W5",
+       "type": "conductor",
+       "state": {
+        "h_kn": 29.69,
+        "a_m": 1100.2,
+        "sag_m": 4.25,
+        "swing_deg": 0.0,
+        "ice_mm": 10.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 25.39,
+         "required_m": 4.0,
+         "margin_m": 21.39,
+         "risk": "ok",
+         "at_local": [
+          -34.25,
+          -28.07,
+          177.61
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 26.25,
+         "required_m": 2.3,
+         "margin_m": 23.95,
+         "risk": "ok",
+         "at_local": [
+          -21.84,
+          76.7,
+          196.81
+         ],
+         "object_local": [
+          -47.89,
+          79.96,
+          192.9
+         ]
+        },
+        "ground": {
+         "clearance_m": 13.82,
+         "required_m": 5.5,
+         "margin_m": 8.32,
+         "risk": "ok",
+         "at_local": [
+          -26.55,
+          36.98,
+          188.32
+         ],
+         "object_local": [
+          -26.55,
+          36.98,
+          174.5
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W6",
+       "type": "conductor",
+       "state": {
+        "h_kn": 28.83,
+        "a_m": 1068.6,
+        "sag_m": 4.37,
+        "swing_deg": 0.0,
+        "ice_mm": 10.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 22.89,
+         "required_m": 4.0,
+         "margin_m": 18.89,
+         "risk": "ok",
+         "at_local": [
+          -26.95,
+          -28.92,
+          174.34
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 28.92,
+         "required_m": 2.3,
+         "margin_m": 26.62,
+         "risk": "ok",
+         "at_local": [
+          -13.26,
+          90.3,
+          196.88
+         ],
+         "object_local": [
+          -42.0,
+          93.54,
+          192.94
+         ]
+        },
+        "ground": {
+         "clearance_m": 13.4,
+         "required_m": 5.5,
+         "margin_m": 7.9,
+         "risk": "ok",
+         "at_local": [
+          -18.11,
+          48.08,
+          187.33
+         ],
+         "object_local": [
+          -18.11,
+          48.08,
+          173.93
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T01-T02/W7",
+       "type": "conductor",
+       "state": {
+        "h_kn": 29.07,
+        "a_m": 1077.3,
+        "sag_m": 4.34,
+        "swing_deg": 0.0,
+        "ice_mm": 10.0
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 22.25,
+         "required_m": 4.0,
+         "margin_m": 18.25,
+         "risk": "ok",
+         "at_local": [
+          -33.21,
+          -28.19,
+          174.33
+         ],
+         "object_local": [
+          -33.26,
+          -36.2,
+          153.57
+         ]
+        },
+        "building_horizontal": {
+         "clearance_m": 22.99,
+         "required_m": 2.3,
+         "margin_m": 20.69,
+         "risk": "ok",
+         "at_local": [
+          -19.15,
+          90.99,
+          196.89
+         ],
+         "object_local": [
+          -42.0,
+          93.54,
+          192.94
+         ]
+        },
+        "ground": {
+         "clearance_m": 10.58,
+         "required_m": 5.5,
+         "margin_m": 5.08,
+         "risk": "ok",
+         "at_local": [
+          -25.42,
+          37.86,
+          185.15
+         ],
+         "object_local": [
+          -25.42,
+          37.86,
+          174.57
+         ]
+        }
+       }
+      }
+     ],
+     "worst": {
+      "wire": "T01-T02/W7",
+      "class": "ground",
+      "clearance_m": 10.58,
+      "required_m": 5.5,
+      "margin_m": 5.08,
+      "risk": "ok",
+      "at_local": [
+       -25.42,
+       37.86,
+       185.15
+      ],
+      "object_local": [
+       -25.42,
+       37.86,
+       174.57
+      ]
+     }
+    }
+   },
+   "conditions": {
+    "temp_c": 15.0,
+    "sd_c": 5.0,
+    "source": "assumed (fixed config value)",
+    "capture_utc": "2024-11-05T12:39:00+00:00",
+    "environments": {
+     "survey": 15.0,
+     "hot": 80.0,
+     "blowout": 15.0,
+     "ice": 0.0
+    },
+    "conductor_max_temp_c": 80.0
+   },
+   "rating": {
+    "max_temp_c": 150.0,
+    "temp_capped": true,
+    "temp_limiting": "ground",
+    "temp_margin_at_cap_m": 2.14,
+    "temp_note": "Clearance never limits up to 150 \u00b0C; the conductor's thermal limit governs.",
+    "max_wind_pa": 1500.0,
+    "wind_capped": true,
+    "wind_limiting": "ground",
+    "wind_margin_at_cap_m": 6.51,
+    "wind_note": "Clearance holds up to the 1500 Pa search limit."
+   },
+   "monte_carlo": {
+    "n": 200,
+    "p_violation": 0.0,
+    "margin_p5_m": 3.24,
+    "margin_p50_m": 3.59,
+    "margin_p95_m": 3.85,
+    "histogram": [
+     6,
+     5,
+     2,
+     4,
+     3,
+     7,
+     15,
+     23,
+     17,
+     20,
+     18,
+     22,
+     17,
+     11,
+     13,
+     8,
+     4,
+     1,
+     3,
+     1
+    ],
+    "bin_edges_m": [
+     3.163,
+     3.205,
+     3.248,
+     3.291,
+     3.334,
+     3.377,
+     3.42,
+     3.463,
+     3.506,
+     3.548,
+     3.591,
+     3.634,
+     3.677,
+     3.72,
+     3.763,
+     3.806,
+     3.849,
+     3.892,
+     3.934,
+     3.977,
+     4.02
+    ],
+    "varied": {
+     "survey_temp_sd_c": 5.0,
+     "mass_rel_sd": 0.03,
+     "diameter_rel_sd": 0.03,
+     "ea_rel_sd": 0.1,
+     "alpha_rel_sd": 0.08
+    }
+   },
+   "profile": {
+    "x": [
+     0.0,
+     1.0,
+     2.0,
+     3.0,
+     4.0,
+     5.0,
+     6.0,
+     7.0,
+     8.0,
+     9.0,
+     10.0,
+     11.0,
+     12.0,
+     13.0,
+     14.0,
+     15.0,
+     16.0,
+     17.0,
+     18.0,
+     19.0,
+     20.0,
+     21.0,
+     22.0,
+     23.0,
+     24.0,
+     25.0,
+     26.0,
+     27.0,
+     28.0,
+     29.0,
+     30.0,
+     31.0,
+     32.0,
+     33.0,
+     34.0,
+     35.0,
+     36.0,
+     37.0,
+     38.0,
+     39.0,
+     40.0,
+     41.0,
+     42.0,
+     43.0,
+     44.0,
+     45.0,
+     46.0,
+     47.0,
+     48.0,
+     49.0,
+     50.0,
+     51.0,
+     52.0,
+     53.0,
+     54.0,
+     55.0,
+     56.0,
+     57.0,
+     58.0,
+     59.0,
+     60.0,
+     61.0,
+     62.0,
+     63.0,
+     64.0,
+     65.0,
+     66.0,
+     67.0,
+     68.0,
+     69.0,
+     70.0,
+     71.0,
+     72.0,
+     73.0,
+     74.0,
+     75.0,
+     76.0,
+     77.0,
+     78.0,
+     79.0,
+     80.0,
+     81.0,
+     82.0,
+     83.0,
+     84.0,
+     85.0,
+     86.0,
+     87.0,
+     88.0,
+     89.0,
+     90.0,
+     91.0,
+     92.0,
+     93.0,
+     94.0,
+     95.0,
+     96.0,
+     97.0,
+     98.0,
+     99.0,
+     100.0,
+     101.0,
+     102.0,
+     103.0,
+     104.0,
+     105.0,
+     106.0,
+     107.0,
+     108.0,
+     109.0,
+     110.0,
+     111.0,
+     112.0,
+     113.0,
+     114.0,
+     115.0,
+     116.0,
+     117.0,
+     118.0,
+     119.0,
+     120.0,
+     121.0,
+     122.0,
+     123.0,
+     124.0,
+     125.0,
+     126.0,
+     127.0,
+     128.0,
+     129.0,
+     130.0,
+     131.0,
+     132.0,
+     133.0,
+     134.0,
+     135.0,
+     136.0,
+     137.0,
+     138.0,
+     139.0,
+     140.0,
+     141.0,
+     142.0,
+     143.0,
+     144.0,
+     145.0,
+     146.0,
+     147.0,
+     148.0,
+     149.0,
+     150.0,
+     151.0,
+     152.0,
+     153.0,
+     154.0,
+     155.0,
+     156.0,
+     157.0,
+     158.0,
+     159.0,
+     160.0,
+     161.0,
+     162.0,
+     163.0,
+     164.0,
+     165.0,
+     166.0,
+     167.0,
+     168.0,
+     169.0,
+     170.0,
+     171.0,
+     172.0,
+     173.0,
+     174.0,
+     175.0,
+     176.0,
+     177.0,
+     178.0,
+     179.0,
+     180.0,
+     181.0,
+     182.0,
+     183.0,
+     184.0,
+     185.0,
+     186.0,
+     187.0,
+     188.0,
+     189.0,
+     190.0,
+     191.0
+    ],
+    "ground_z": [
+     156.51,
+     156.61,
+     156.94,
+     157.45,
+     157.93,
+     158.26,
+     158.6,
+     159.0,
+     159.42,
+     159.61,
+     160.08,
+     160.25,
+     160.51,
+     160.83,
+     161.11,
+     161.09,
+     161.51,
+     161.7,
+     162.13,
+     162.29,
+     162.47,
+     162.62,
+     162.96,
+     163.13,
+     163.43,
+     163.6,
+     164.1,
+     164.1,
+     164.43,
+     164.72,
+     165.03,
+     165.1,
+     165.17,
+     165.59,
+     165.73,
+     166.04,
+     166.16,
+     166.54,
+     166.66,
+     166.97,
+     167.13,
+     167.34,
+     167.41,
+     167.49,
+     167.54,
+     167.95,
+     168.34,
+     168.53,
+     168.83,
+     169.12,
+     169.24,
+     169.57,
+     169.64,
+     169.79,
+     170.02,
+     170.03,
+     170.25,
+     170.64,
+     170.81,
+     171.16,
+     171.3,
+     171.74,
+     171.66,
+     171.94,
+     172.12,
+     172.34,
+     172.62,
+     172.82,
+     173.3,
+     173.29,
+     173.57,
+     173.68,
+     173.98,
+     174.12,
+     174.38,
+     174.52,
+     174.71,
+     175.02,
+     175.12,
+     175.49,
+     175.52,
+     175.61,
+     175.7,
+     175.93,
+     176.15,
+     176.32,
+     176.49,
+     176.56,
+     176.76,
+     177.04,
+     177.15,
+     177.42,
+     177.6,
+     177.68,
+     177.95,
+     178.11,
+     178.13,
+     178.35,
+     178.62,
+     178.75,
+     179.11,
+     179.45,
+     179.61,
+     179.76,
+     179.97,
+     180.12,
+     180.27,
+     180.55,
+     180.56,
+     180.83,
+     181.06,
+     181.22,
+     181.56,
+     181.69,
+     181.9,
+     182.13,
+     182.24,
+     182.49,
+     182.7,
+     182.8,
+     183.05,
+     183.11,
+     183.39,
+     183.66,
+     183.86,
+     184.02,
+     184.13,
+     184.28,
+     184.58,
+     184.68,
+     184.97,
+     185.1,
+     185.25,
+     185.58,
+     185.75,
+     185.9,
+     186.09,
+     186.33,
+     186.51,
+     186.66,
+     186.72,
+     186.83,
+     186.89,
+     187.05,
+     187.07,
+     187.14,
+     187.11,
+     187.25,
+     187.25,
+     187.3,
+     187.35,
+     187.37,
+     187.31,
+     187.35,
+     187.37,
+     187.36,
+     187.61,
+     187.96,
+     188.15,
+     188.48,
+     188.51,
+     188.6,
+     188.63,
+     188.7,
+     188.64,
+     188.83,
+     188.51,
+     188.59,
+     188.61,
+     188.57,
+     188.57,
+     188.49,
+     188.45,
+     188.5,
+     188.56,
+     188.5,
+     188.18,
+     188.09,
+     187.89,
+     187.64,
+     187.29,
+     186.77,
+     186.47,
+     186.35,
+     186.35,
+     186.49,
+     186.51,
+     186.65,
+     186.72,
+     186.84,
+     186.98,
+     187.08
+    ],
+    "objects": {
+     "vegetation": [],
+     "building": [
+      [
+       169.14,
+       191.03
+      ],
+      [
+       162.73,
+       191.13
+      ],
+      [
+       173.05,
+       196.45
+      ],
+      [
+       162.7,
+       191.16
+      ],
+      [
+       162.38,
+       195.27
+      ],
+      [
+       165.33,
+       194.56
+      ],
+      [
+       169.4,
+       193.35
+      ],
+      [
+       174.06,
+       191.34
+      ],
+      [
+       171.79,
+       193.86
+      ],
+      [
+       162.23,
+       195.19
+      ],
+      [
+       155.97,
+       190.75
+      ],
+      [
+       163.25,
+       191.35
+      ],
+      [
+       172.95,
+       191.41
+      ],
+      [
+       169.71,
+       191.17
+      ],
+      [
+       153.18,
+       190.72
+      ],
+      [
+       171.91,
+       191.72
+      ],
+      [
+       170.22,
+       193.82
+      ],
+      [
+       163.74,
+       195.62
+      ],
+      [
+       172.06,
+       193.41
+      ],
+      [
+       171.15,
+       192.42
+      ],
+      [
+       173.98,
+       196.34
+      ],
+      [
+       162.67,
+       191.2
+      ],
+      [
+       162.28,
+       195.11
+      ],
+      [
+       174.23,
+       192.12
+      ],
+      [
+       174.09,
+       192.15
+      ],
+      [
+       159.96,
+       193.35
+      ],
+      [
+       171.8,
+       196.41
+      ],
+      [
+       163.31,
+       193.48
+      ],
+      [
+       166.12,
+       192.02
+      ],
+      [
+       168.59,
+       194.82
+      ],
+      [
+       174.47,
+       193.79
+      ],
+      [
+       165.68,
+       193.9
+      ],
+      [
+       157.15,
+       192.84
+      ],
+      [
+       172.77,
+       195.1
+      ],
+      [
+       163.29,
+       194.95
+      ],
+      [
+       173.12,
+       194.16
+      ],
+      [
+       165.13,
+       194.55
+      ],
+      [
+       173.6,
+       195.84
+      ],
+      [
+       169.96,
+       195.42
+      ],
+      [
+       172.84,
+       192.39
+      ],
+      [
+       163.97,
+       191.7
+      ],
+      [
+       158.72,
+       190.76
+      ],
+      [
+       150.85,
+       190.68
+      ],
+      [
+       173.43,
+       194.17
+      ],
+      [
+       172.54,
+       193.17
+      ],
+      [
+       158.65,
+       190.85
+      ],
+      [
+       152.63,
+       190.69
+      ],
+      [
+       173.19,
+       194.39
+      ],
+      [
+       166.41,
+       195.32
+      ],
+      [
+       163.18,
+       193.67
+      ],
+      [
+       168.16,
+       191.11
+      ],
+      [
+       165.68,
+       193.6
+      ],
+      [
+       162.74,
+       192.14
+      ],
+      [
+       168.36,
+       194.22
+      ],
+      [
+       169.35,
+       192.36
+      ],
+      [
+       162.41,
+       190.74
+      ],
+      [
+       164.49,
+       191.7
+      ],
+      [
+       159.43,
+       192.84
+      ],
+      [
+       171.12,
+       191.5
+      ],
+      [
+       172.92,
+       194.44
+      ],
+      [
+       166.34,
+       194.24
+      ],
+      [
+       163.3,
+       195.65
+      ],
+      [
+       173.85,
+       196.4
+      ],
+      [
+       173.59,
+       192.17
+      ],
+      [
+       171.22,
+       195.36
+      ],
+      [
+       174.25,
+       192.63
+      ],
+      [
+       172.58,
+       191.28
+      ],
+      [
+       164.53,
+       191.36
+      ],
+      [
+       168.35,
+       196.13
+      ],
+      [
+       165.06,
+       191.8
+      ],
+      [
+       173.98,
+       196.88
+      ],
+      [
+       166.93,
+       191.99
+      ],
+      [
+       173.08,
+       192.06
+      ],
+      [
+       172.68,
+       191.86
+      ],
+      [
+       170.3,
+       192.18
+      ],
+      [
+       168.08,
+       195.88
+      ],
+      [
+       163.27,
+       192.11
+      ],
+      [
+       162.56,
+       191.24
+      ],
+      [
+       171.96,
+       192.92
+      ],
+      [
+       168.53,
+       193.9
+      ],
+      [
+       172.33,
+       196.39
+      ],
+      [
+       173.68,
+       192.15
+      ],
+      [
+       162.74,
+       195.24
+      ],
+      [
+       163.04,
+       194.83
+      ],
+      [
+       168.57,
+       193.64
+      ],
+      [
+       171.44,
+       196.85
+      ],
+      [
+       160.21,
+       192.56
+      ],
+      [
+       168.49,
+       196.42
+      ],
+      [
+       172.62,
+       196.1
+      ],
+      [
+       171.99,
+       192.16
+      ],
+      [
+       166.48,
+       191.67
+      ],
+      [
+       173.53,
+       192.08
+      ],
+      [
+       167.49,
+       195.77
+      ],
+      [
+       171.41,
+       191.2
+      ],
+      [
+       155.5,
+       190.73
+      ],
+      [
+       173.72,
+       192.1
+      ],
+      [
+       158.01,
+       190.68
+      ],
+      [
+       172.03,
+       195.63
+      ],
+      [
+       174.15,
+       192.51
+      ],
+      [
+       172.4,
+       196.14
+      ],
+      [
+       165.82,
+       195.34
+      ],
+      [
+       172.35,
+       191.75
+      ],
+      [
+       163.3,
+       192.22
+      ],
+      [
+       166.22,
+       195.88
+      ],
+      [
+       172.38,
+       193.58
+      ],
+      [
+       158.53,
+       190.76
+      ],
+      [
+       160.15,
+       190.84
+      ],
+      [
+       172.0,
+       191.97
+      ],
+      [
+       171.77,
+       195.79
+      ],
+      [
+       159.92,
+       190.71
+      ],
+      [
+       162.47,
+       193.57
+      ],
+      [
+       161.09,
+       190.84
+      ],
+      [
+       166.66,
+       195.99
+      ],
+      [
+       161.39,
+       192.84
+      ],
+      [
+       162.22,
+       191.68
+      ],
+      [
+       171.44,
+       191.06
+      ],
+      [
+       172.7,
+       192.17
+      ],
+      [
+       158.72,
+       193.1
+      ],
+      [
+       162.15,
+       193.52
+      ],
+      [
+       161.53,
+       190.89
+      ],
+      [
+       162.19,
+       194.64
+      ],
+      [
+       156.52,
+       190.72
+      ],
+      [
+       173.18,
+       194.35
+      ],
+      [
+       161.36,
+       193.11
+      ],
+      [
+       175.12,
+       193.7
+      ],
+      [
+       171.24,
+       192.41
+      ],
+      [
+       167.35,
+       196.25
+      ],
+      [
+       162.97,
+       193.45
+      ],
+      [
+       159.97,
+       193.35
+      ],
+      [
+       170.42,
+       195.65
+      ],
+      [
+       158.41,
+       190.79
+      ],
+      [
+       173.28,
+       193.13
+      ],
+      [
+       158.83,
+       193.08
+      ],
+      [
+       170.6,
+       195.41
+      ],
+      [
+       170.03,
+       193.87
+      ],
+      [
+       166.87,
+       192.9
+      ],
+      [
+       163.91,
+       195.6
+      ],
+      [
+       173.18,
+       195.18
+      ],
+      [
+       175.25,
+       191.72
+      ],
+      [
+       163.28,
+       192.07
+      ],
+      [
+       163.2,
+       192.12
+      ],
+      [
+       158.04,
+       190.76
+      ],
+      [
+       168.99,
+       191.06
+      ],
+      [
+       173.05,
+       191.43
+      ],
+      [
+       160.89,
+       192.01
+      ],
+      [
+       173.25,
+       194.23
+      ],
+      [
+       168.6,
+       194.68
+      ],
+      [
+       166.3,
+       191.88
+      ],
+      [
+       171.56,
+       195.09
+      ],
+      [
+       169.11,
+       195.73
+      ],
+      [
+       162.6,
+       193.07
+      ],
+      [
+       172.08,
+       191.31
+      ],
+      [
+       168.23,
+       193.56
+      ],
+      [
+       172.77,
+       192.13
+      ],
+      [
+       150.17,
+       190.62
+      ],
+      [
+       162.95,
+       191.08
+      ],
+      [
+       159.46,
+       190.82
+      ],
+      [
+       163.36,
+       191.23
+      ],
+      [
+       168.25,
+       191.56
+      ],
+      [
+       170.47,
+       195.58
+      ],
+      [
+       155.18,
+       190.75
+      ],
+      [
+       167.34,
+       193.86
+      ],
+      [
+       167.33,
+       195.11
+      ],
+      [
+       172.27,
+       193.37
+      ],
+      [
+       163.89,
+       194.51
+      ],
+      [
+       162.36,
+       191.64
+      ],
+      [
+       174.2,
+       191.94
+      ],
+      [
+       172.4,
+       195.39
+      ],
+      [
+       171.77,
+       191.75
+      ],
+      [
+       164.72,
+       193.79
+      ],
+      [
+       162.82,
+       191.15
+      ],
+      [
+       172.92,
+       193.7
+      ],
+      [
+       173.69,
+       196.63
+      ],
+      [
+       169.4,
+       195.97
+      ],
+      [
+       173.53,
+       193.1
+      ],
+      [
+       164.98,
+       193.36
+      ],
+      [
+       169.51,
+       191.2
+      ],
+      [
+       164.07,
+       192.21
+      ],
+      [
+       162.42,
+       190.77
+      ],
+      [
+       152.64,
+       190.7
+      ],
+      [
+       171.83,
+       196.61
+      ],
+      [
+       170.67,
+       195.09
+      ],
+      [
+       173.0,
+       194.69
+      ],
+      [
+       160.14,
+       190.78
+      ],
+      [
+       165.09,
+       194.68
+      ],
+      [
+       171.06,
+       191.06
+      ],
+      [
+       163.32,
+       192.89
+      ],
+      [
+       164.86,
+       195.0
+      ],
+      [
+       165.41,
+       193.63
+      ],
+      [
+       171.36,
+       191.06
+      ],
+      [
+       171.11,
+       193.6
+      ],
+      [
+       172.94,
+       196.9
+      ],
+      [
+       174.21,
+       192.8
+      ],
+      [
+       171.92,
+       194.51
+      ],
+      [
+       169.15,
+       193.73
+      ],
+      [
+       152.47,
+       190.64
+      ],
+      [
+       155.31,
+       190.7
+      ],
+      [
+       171.13,
+       191.82
+      ],
+      [
+       167.79,
+       195.58
+      ],
+      [
+       173.33,
+       196.8
+      ],
+      [
+       173.98,
+       196.08
+      ],
+      [
+       171.01,
+       191.51
+      ],
+      [
+       172.91,
+       191.55
+      ],
+      [
+       166.54,
+       191.83
+      ],
+      [
+       161.08,
+       191.94
+      ],
+      [
+       162.64,
+       193.72
+      ],
+      [
+       158.74,
+       190.78
+      ],
+      [
+       156.19,
+       190.74
+      ],
+      [
+       169.73,
+       191.15
+      ],
+      [
+       170.54,
+       193.57
+      ],
+      [
+       161.64,
+       193.6
+      ],
+      [
+       162.5,
+       192.28
+      ],
+      [
+       160.62,
+       191.36
+      ],
+      [
+       167.71,
+       193.84
+      ],
+      [
+       175.75,
+       191.7
+      ],
+      [
+       165.15,
+       193.38
+      ],
+      [
+       160.95,
+       193.2
+      ],
+      [
+       171.87,
+       192.38
+      ],
+      [
+       168.24,
+       196.3
+      ],
+      [
+       169.88,
+       195.06
+      ],
+      [
+       155.67,
+       190.74
+      ],
+      [
+       163.82,
+       194.62
+      ],
+      [
+       170.69,
+       196.1
+      ],
+      [
+       165.32,
+       194.73
+      ],
+      [
+       163.36,
+       195.65
+      ],
+      [
+       161.01,
+       193.11
+      ],
+      [
+       171.9,
+       192.07
+      ],
+      [
+       174.23,
+       191.7
+      ],
+      [
+       162.75,
+       190.72
+      ],
+      [
+       171.32,
+       191.85
+      ],
+      [
+       173.34,
+       196.44
+      ],
+      [
+       170.06,
+       193.35
+      ],
+      [
+       162.3,
+       192.93
+      ],
+      [
+       174.03,
+       196.6
+      ],
+      [
+       167.43,
+       193.43
+      ],
+      [
+       172.11,
+       192.11
+      ],
+      [
+       165.91,
+       195.3
+      ],
+      [
+       165.29,
+       195.42
+      ],
+      [
+       154.67,
+       190.72
+      ],
+      [
+       162.38,
+       191.13
+      ],
+      [
+       170.5,
+       193.86
+      ],
+      [
+       171.4,
+       196.06
+      ],
+      [
+       162.36,
+       192.82
+      ],
+      [
+       159.12,
+       193.11
+      ],
+      [
+       151.21,
+       190.66
+      ],
+      [
+       165.23,
+       191.16
+      ],
+      [
+       166.87,
+       193.77
+      ],
+      [
+       174.45,
+       191.43
+      ],
+      [
+       157.63,
+       190.75
+      ],
+      [
+       174.39,
+       192.69
+      ],
+      [
+       174.74,
+       192.31
+      ],
+      [
+       168.62,
+       195.84
+      ],
+      [
+       169.91,
+       195.89
+      ],
+      [
+       172.14,
+       195.04
+      ],
+      [
+       173.05,
+       193.47
+      ],
+      [
+       172.58,
+       194.12
+      ],
+      [
+       168.86,
+       194.76
+      ],
+      [
+       169.06,
+       194.87
+      ],
+      [
+       172.03,
+       195.44
+      ],
+      [
+       168.03,
+       195.72
+      ],
+      [
+       168.4,
+       194.5
+      ],
+      [
+       162.59,
+       193.78
+      ],
+      [
+       163.29,
+       192.09
+      ],
+      [
+       162.83,
+       195.63
+      ],
+      [
+       172.06,
+       191.9
+      ],
+      [
+       164.85,
+       193.86
+      ],
+      [
+       173.45,
+       192.32
+      ],
+      [
+       164.01,
+       191.87
+      ],
+      [
+       166.48,
+       195.57
+      ],
+      [
+       163.73,
+       193.65
+      ],
+      [
+       174.23,
+       192.85
+      ],
+      [
+       164.55,
+       193.76
+      ],
+      [
+       174.84,
+       192.39
+      ],
+      [
+       164.11,
+       193.63
+      ],
+      [
+       173.34,
+       191.54
+      ],
+      [
+       169.74,
+       196.37
+      ],
+      [
+       173.44,
+       196.86
+      ],
+      [
+       163.14,
+       193.85
+      ],
+      [
+       166.94,
+       192.68
+      ],
+      [
+       161.02,
+       190.81
+      ],
+      [
+       175.54,
+       192.0
+      ],
+      [
+       166.7,
+       194.92
+      ],
+      [
+       171.37,
+       191.26
+      ],
+      [
+       174.48,
+       191.62
+      ],
+      [
+       173.63,
+       196.84
+      ],
+      [
+       172.28,
+       192.15
+      ],
+      [
+       158.33,
+       190.72
+      ],
+      [
+       163.22,
+       195.59
+      ],
+      [
+       158.36,
+       190.74
+      ],
+      [
+       165.22,
+       192.38
+      ],
+      [
+       171.43,
+       191.84
+      ],
+      [
+       168.87,
+       196.51
+      ],
+      [
+       173.77,
+       195.84
+      ],
+      [
+       173.63,
+       196.18
+      ],
+      [
+       163.97,
+       195.31
+      ],
+      [
+       157.2,
+       191.88
+      ],
+      [
+       162.76,
+       192.04
+      ],
+      [
+       172.76,
+       192.79
+      ],
+      [
+       162.64,
+       194.84
+      ],
+      [
+       172.54,
+       193.77
+      ],
+      [
+       159.62,
+       190.81
+      ],
+      [
+       166.44,
+       194.78
+      ],
+      [
+       171.73,
+       195.42
+      ],
+      [
+       173.32,
+       195.34
+      ],
+      [
+       173.31,
+       194.85
+      ],
+      [
+       163.46,
+       191.5
+      ],
+      [
+       168.03,
+       193.92
+      ],
+      [
+       173.57,
+       194.09
+      ],
+      [
+       150.65,
+       190.69
+      ],
+      [
+       170.07,
+       191.03
+      ],
+      [
+       168.26,
+       195.63
+      ],
+      [
+       164.62,
+       194.53
+      ],
+      [
+       173.92,
+       196.17
+      ],
+      [
+       169.84,
+       195.13
+      ],
+      [
+       173.29,
+       196.66
+      ],
+      [
+       168.7,
+       196.09
+      ],
+      [
+       172.5,
+       192.86
+      ],
+      [
+       162.94,
+       192.9
+      ],
+      [
+       172.94,
+       193.94
+      ],
+      [
+       172.68,
+       194.44
+      ],
+      [
+       171.62,
+       191.73
+      ],
+      [
+       171.73,
+       191.41
+      ],
+      [
+       162.98,
+       193.71
+      ],
+      [
+       163.67,
+       195.12
+      ],
+      [
+       173.21,
+       195.18
+      ],
+      [
+       168.95,
+       195.27
+      ],
+      [
+       175.65,
+       193.03
+      ],
+      [
+       172.87,
+       193.5
+      ],
+      [
+       162.68,
+       192.26
+      ],
+      [
+       169.02,
+       193.61
+      ],
+      [
+       173.11,
+       193.41
+      ],
+      [
+       168.38,
+       194.99
+      ],
+      [
+       168.87,
+       190.9
+      ],
+      [
+       171.69,
+       196.65
+      ],
+      [
+       174.95,
+       191.79
+      ],
+      [
+       171.13,
+       191.89
+      ],
+      [
+       162.93,
+       191.37
+      ],
+      [
+       174.14,
+       191.85
+      ],
+      [
+       161.69,
+       191.13
+      ],
+      [
+       167.25,
+       193.45
+      ],
+      [
+       173.68,
+       192.91
+      ],
+      [
+       164.42,
+       192.13
+      ],
+      [
+       163.14,
+       192.19
+      ],
+      [
+       167.09,
+       192.21
+      ],
+      [
+       165.88,
+       195.84
+      ],
+      [
+       157.45,
+       192.92
+      ],
+      [
+       173.57,
+       191.63
+      ],
+      [
+       171.11,
+       191.39
+      ],
+      [
+       172.69,
+       192.95
+      ],
+      [
+       165.96,
+       193.55
+      ],
+      [
+       173.8,
+       196.69
+      ],
+      [
+       169.49,
+       195.2
+      ],
+      [
+       172.89,
+       194.12
+      ],
+      [
+       165.58,
+       195.78
+      ],
+      [
+       172.57,
+       193.17
+      ],
+      [
+       175.5,
+       193.24
+      ],
+      [
+       162.06,
+       191.33
+      ],
+      [
+       173.17,
+       192.17
+      ],
+      [
+       164.69,
+       190.75
+      ],
+      [
+       162.61,
+       191.11
+      ],
+      [
+       159.93,
+       190.76
+      ],
+      [
+       171.72,
+       194.48
+      ],
+      [
+       165.5,
+       193.69
+      ],
+      [
+       167.33,
+       194.76
+      ],
+      [
+       170.79,
+       193.65
+      ],
+      [
+       162.52,
+       195.03
+      ],
+      [
+       166.95,
+       192.47
+      ],
+      [
+       172.48,
+       193.12
+      ],
+      [
+       165.26,
+       194.11
+      ],
+      [
+       172.8,
+       194.62
+      ],
+      [
+       165.02,
+       192.15
+      ],
+      [
+       172.85,
+       191.57
+      ],
+      [
+       162.36,
+       192.99
+      ],
+      [
+       166.25,
+       193.86
+      ],
+      [
+       166.92,
+       195.6
+      ],
+      [
+       173.05,
+       195.11
+      ],
+      [
+       175.25,
+       191.85
+      ],
+      [
+       163.42,
+       191.54
+      ],
+      [
+       172.36,
+       194.99
+      ],
+      [
+       167.22,
+       195.93
+      ],
+      [
+       172.0,
+       193.11
+      ],
+      [
+       169.07,
+       193.83
+      ],
+      [
+       171.85,
+       193.11
+      ],
+      [
+       162.26,
+       194.89
+      ],
+      [
+       156.31,
+       190.71
+      ],
+      [
+       173.05,
+       192.11
+      ],
+      [
+       160.46,
+       191.13
+      ],
+      [
+       170.88,
+       193.6
+      ],
+      [
+       168.76,
+       191.05
+      ],
+      [
+       166.73,
+       196.14
+      ],
+      [
+       162.38,
+       191.62
+      ],
+      [
+       162.22,
+       190.78
+      ],
+      [
+       157.33,
+       190.67
+      ],
+      [
+       164.1,
+       193.82
+      ],
+      [
+       162.47,
+       191.64
+      ],
+      [
+       166.48,
+       191.91
+      ],
+      [
+       160.83,
+       191.4
+      ],
+      [
+       160.16,
+       190.81
+      ],
+      [
+       168.83,
+       193.37
+      ],
+      [
+       162.42,
+       192.64
+      ],
+      [
+       169.8,
+       193.87
+      ],
+      [
+       161.71,
+       193.38
+      ],
+      [
+       174.01,
+       191.33
+      ],
+      [
+       174.19,
+       191.93
+      ],
+      [
+       166.77,
+       194.83
+      ],
+      [
+       163.06,
+       193.85
+      ],
+      [
+       161.9,
+       191.88
+      ],
+      [
+       165.34,
+       194.6
+      ],
+      [
+       171.96,
+       195.76
+      ],
+      [
+       162.6,
+       193.46
+      ],
+      [
+       162.07,
+       190.81
+      ],
+      [
+       155.34,
+       190.71
+      ],
+      [
+       172.89,
+       192.7
+      ],
+      [
+       175.37,
+       192.02
+      ],
+      [
+       172.32,
+       196.24
+      ],
+      [
+       163.87,
+       195.15
+      ],
+      [
+       171.39,
+       194.97
+      ],
+      [
+       172.35,
+       191.63
+      ],
+      [
+       167.75,
+       193.6
+      ],
+      [
+       175.7,
+       192.41
+      ],
+      [
+       168.44,
+       191.05
+      ],
+      [
+       163.79,
+       193.62
+      ],
+      [
+       169.46,
+       196.12
+      ],
+      [
+       172.17,
+       192.71
+      ],
+      [
+       163.69,
+       193.43
+      ],
+      [
+       162.11,
+       195.37
+      ],
+      [
+       151.39,
+       190.65
+      ],
+      [
+       169.52,
+       191.13
+      ],
+      [
+       169.13,
+       195.1
+      ],
+      [
+       167.51,
+       194.53
+      ],
+      [
+       171.36,
+       193.55
+      ],
+      [
+       164.0,
+       191.55
+      ],
+      [
+       168.23,
+       191.77
+      ],
+      [
+       167.68,
+       191.03
+      ],
+      [
+       162.75,
+       193.4
+      ],
+      [
+       158.08,
+       193.02
+      ],
+      [
+       171.61,
+       191.6
+      ],
+      [
+       155.22,
+       190.67
+      ],
+      [
+       166.32,
+       191.25
+      ],
+      [
+       159.66,
+       191.86
+      ],
+      [
+       165.79,
+       193.8
+      ],
+      [
+       170.5,
+       191.06
+      ],
+      [
+       172.68,
+       194.78
+      ],
+      [
+       173.14,
+       192.17
+      ],
+      [
+       170.16,
+       195.79
+      ],
+      [
+       175.03,
+       191.59
+      ],
+      [
+       173.96,
+       191.46
+      ],
+      [
+       162.56,
+       192.22
+      ],
+      [
+       172.83,
+       192.67
+      ],
+      [
+       173.52,
+       192.31
+      ],
+      [
+       173.15,
+       194.85
+      ],
+      [
+       172.33,
+       195.48
+      ],
+      [
+       164.86,
+       194.52
+      ],
+      [
+       170.11,
+       195.61
+      ],
+      [
+       169.37,
+       192.9
+      ],
+      [
+       159.14,
+       191.62
+      ],
+      [
+       173.08,
+       192.61
+      ],
+      [
+       161.37,
+       190.79
+      ],
+      [
+       164.68,
+       195.02
+      ],
+      [
+       173.35,
+       195.49
+      ],
+      [
+       163.16,
+       191.59
+      ],
+      [
+       164.54,
+       193.33
+      ],
+      [
+       173.94,
+       191.9
+      ],
+      [
+       163.12,
+       191.13
+      ],
+      [
+       161.24,
+       191.47
+      ],
+      [
+       158.47,
+       192.95
+      ],
+      [
+       166.47,
+       196.12
+      ],
+      [
+       166.87,
+       193.49
+      ],
+      [
+       153.71,
+       190.71
+      ],
+      [
+       163.53,
+       192.03
+      ],
+      [
+       170.91,
+       194.74
+      ],
+      [
+       172.83,
+       194.88
+      ],
+      [
+       170.32,
+       194.91
+      ],
+      [
+       173.32,
+       193.85
+      ],
+      [
+       162.27,
+       195.64
+      ],
+      [
+       162.49,
+       192.07
+      ],
+      [
+       167.08,
+       193.71
+      ],
+      [
+       171.54,
+       193.84
+      ],
+      [
+       172.07,
+       193.59
+      ],
+      [
+       166.85,
+       195.45
+      ],
+      [
+       175.26,
+       192.57
+      ],
+      [
+       173.73,
+       192.18
+      ],
+      [
+       161.13,
+       190.85
+      ],
+      [
+       170.13,
+       194.94
+      ],
+      [
+       173.68,
+       196.83
+      ],
+      [
+       162.72,
+       190.94
+      ],
+      [
+       168.02,
+       191.04
+      ],
+      [
+       171.44,
+       194.89
+      ],
+      [
+       158.39,
+       190.79
+      ],
+      [
+       172.23,
+       193.67
+      ],
+      [
+       168.58,
+       195.79
+      ],
+      [
+       173.58,
+       195.84
+      ],
+      [
+       173.51,
+       195.36
+      ],
+      [
+       161.97,
+       194.71
+      ],
+      [
+       168.11,
+       195.85
+      ],
+      [
+       173.11,
+       194.44
+      ],
+      [
+       173.42,
+       196.9
+      ],
+      [
+       171.45,
+       191.85
+      ],
+      [
+       166.64,
+       194.53
+      ],
+      [
+       173.33,
+       191.6
+      ],
+      [
+       159.76,
+       190.7
+      ],
+      [
+       155.97,
+       190.73
+      ],
+      [
+       173.54,
+       191.75
+      ],
+      [
+       172.46,
+       191.94
+      ],
+      [
+       172.85,
+       196.42
+      ],
+      [
+       163.26,
+       193.89
+      ],
+      [
+       164.67,
+       194.54
+      ],
+      [
+       170.97,
+       191.09
+      ],
+      [
+       172.7,
+       194.17
+      ],
+      [
+       168.44,
+       195.37
+      ],
+      [
+       163.58,
+       195.36
+      ],
+      [
+       155.31,
+       190.73
+      ],
+      [
+       162.71,
+       193.48
+      ],
+      [
+       174.39,
+       192.69
+      ],
+      [
+       163.78,
+       194.77
+      ],
+      [
+       166.59,
+       191.62
+      ],
+      [
+       171.49,
+       191.51
+      ],
+      [
+       166.21,
+       195.88
+      ],
+      [
+       151.74,
+       190.7
+      ],
+      [
+       171.42,
+       195.62
+      ],
+      [
+       162.74,
+       191.94
+      ],
+      [
+       156.28,
+       190.71
+      ],
+      [
+       172.91,
+       193.89
+      ],
+      [
+       168.38,
+       195.46
+      ],
+      [
+       173.75,
+       192.66
+      ],
+      [
+       161.05,
+       193.05
+      ],
+      [
+       171.3,
+       193.36
+      ],
+      [
+       175.32,
+       192.0
+      ],
+      [
+       173.2,
+       194.13
+      ],
+      [
+       173.5,
+       196.64
+      ],
+      [
+       169.74,
+       196.61
+      ],
+      [
+       174.85,
+       192.35
+      ],
+      [
+       159.42,
+       190.78
+      ],
+      [
+       171.22,
+       195.6
+      ],
+      [
+       169.61,
+       192.19
+      ],
+      [
+       165.52,
+       191.3
+      ],
+      [
+       156.55,
+       190.77
+      ],
+      [
+       171.61,
+       193.42
+      ],
+      [
+       173.0,
+       194.92
+      ],
+      [
+       173.62,
+       196.88
+      ],
+      [
+       165.15,
+       191.1
+      ],
+      [
+       169.69,
+       191.65
+      ],
+      [
+       172.11,
+       192.75
+      ],
+      [
+       152.09,
+       190.63
+      ],
+      [
+       155.7,
+       190.74
+      ],
+      [
+       174.31,
+       191.36
+      ],
+      [
+       157.67,
+       190.76
+      ],
+      [
+       170.27,
+       196.09
+      ],
+      [
+       158.11,
+       190.8
+      ],
+      [
+       172.96,
+       192.55
+      ],
+      [
+       167.64,
+       193.65
+      ],
+      [
+       161.0,
+       190.77
+      ],
+      [
+       173.16,
+       193.37
+      ],
+      [
+       173.79,
+       195.88
+      ],
+      [
+       172.86,
+       193.89
+      ],
+      [
+       165.04,
+       195.92
+      ],
+      [
+       162.24,
+       195.2
+      ],
+      [
+       174.8,
+       192.89
+      ],
+      [
+       162.38,
+       195.52
+      ],
+      [
+       162.72,
+       191.15
+      ],
+      [
+       172.1,
+       193.67
+      ],
+      [
+       169.32,
+       194.75
+      ],
+      [
+       169.69,
+       194.85
+      ],
+      [
+       166.51,
+       191.15
+      ],
+      [
+       171.77,
+       195.6
+      ],
+      [
+       162.9,
+       193.68
+      ],
+      [
+       173.05,
+       191.69
+      ],
+      [
+       165.68,
+       193.58
+      ],
+      [
+       166.72,
+       195.34
+      ],
+      [
+       166.87,
+       192.1
+      ],
+      [
+       171.61,
+       192.19
+      ],
+      [
+       170.7,
+       191.14
+      ],
+      [
+       173.19,
+       192.15
+      ],
+      [
+       172.51,
+       192.18
+      ],
+      [
+       170.59,
+       194.94
+      ],
+      [
+       167.95,
+       195.34
+      ],
+      [
+       162.14,
+       194.8
+      ],
+      [
+       162.53,
+       194.28
+      ],
+      [
+       155.32,
+       190.71
+      ],
+      [
+       169.49,
+       196.24
+      ],
+      [
+       172.96,
+       192.17
+      ],
+      [
+       174.27,
+       191.64
+      ],
+      [
+       163.69,
+       192.87
+      ],
+      [
+       175.36,
+       193.06
+      ],
+      [
+       167.17,
+       192.18
+      ],
+      [
+       168.53,
+       191.03
+      ],
+      [
+       170.62,
+       194.72
+      ],
+      [
+       166.42,
+       195.84
+      ],
+      [
+       172.6,
+       193.91
+      ],
+      [
+       174.24,
+       191.63
+      ],
+      [
+       173.24,
+       196.89
+      ],
+      [
+       162.4,
+       190.91
+      ],
+      [
+       171.32,
+       192.45
+      ],
+      [
+       165.57,
+       195.27
+      ],
+      [
+       173.1,
+       196.37
+      ],
+      [
+       172.96,
+       195.97
+      ],
+      [
+       154.33,
+       190.66
+      ],
+      [
+       172.47,
+       195.85
+      ],
+      [
+       166.58,
+       193.67
+      ],
+      [
+       167.01,
+       191.84
+      ],
+      [
+       160.67,
+       190.82
+      ],
+      [
+       159.24,
+       191.44
+      ],
+      [
+       173.07,
+       194.5
+      ],
+      [
+       166.91,
+       196.13
+      ],
+      [
+       175.03,
+       191.77
+      ],
+      [
+       170.63,
+       195.36
+      ],
+      [
+       164.12,
+       194.33
+      ],
+      [
+       172.19,
+       193.98
+      ],
+      [
+       158.87,
+       190.74
+      ],
+      [
+       171.79,
+       191.89
+      ],
+      [
+       172.33,
+       195.71
+      ],
+      [
+       164.35,
+       193.9
+      ],
+      [
+       161.47,
+       193.48
+      ],
+      [
+       165.69,
+       195.61
+      ],
+      [
+       156.13,
+       190.7
+      ],
+      [
+       172.46,
+       191.42
+      ],
+      [
+       164.7,
+       193.83
+      ],
+      [
+       161.87,
+       193.11
+      ],
+      [
+       173.08,
+       193.33
+      ],
+      [
+       173.83,
+       192.46
+      ],
+      [
+       152.63,
+       190.67
+      ],
+      [
+       170.57,
+       191.45
+      ],
+      [
+       172.88,
+       191.45
+      ],
+      [
+       166.62,
+       195.29
+      ],
+      [
+       168.33,
+       195.75
+      ],
+      [
+       169.98,
+       196.11
+      ],
+      [
+       165.55,
+       192.16
+      ],
+      [
+       152.45,
+       190.71
+      ],
+      [
+       168.96,
+       193.76
+      ],
+      [
+       156.51,
+       190.71
+      ],
+      [
+       165.24,
+       195.12
+      ],
+      [
+       171.34,
+       193.34
+      ],
+      [
+       172.96,
+       195.15
+      ],
+      [
+       173.07,
+       193.13
+      ],
+      [
+       169.32,
+       191.24
+      ],
+      [
+       162.6,
+       191.27
+      ],
+      [
+       168.39,
+       194.85
+      ],
+      [
+       166.41,
+       195.08
+      ],
+      [
+       169.71,
+       191.39
+      ],
+      [
+       165.19,
+       191.13
+      ],
+      [
+       159.28,
+       191.04
+      ],
+      [
+       171.62,
+       194.49
+      ],
+      [
+       164.42,
+       191.33
+      ],
+      [
+       175.67,
+       193.09
+      ],
+      [
+       172.22,
+       195.41
+      ],
+      [
+       175.68,
+       192.36
+      ],
+      [
+       162.95,
+       195.47
+      ],
+      [
+       165.85,
+       193.43
+      ],
+      [
+       162.72,
+       194.12
+      ],
+      [
+       162.83,
+       190.74
+      ],
+      [
+       163.35,
+       191.53
+      ],
+      [
+       162.09,
+       191.06
+      ],
+      [
+       173.71,
+       192.36
+      ],
+      [
+       160.2,
+       192.12
+      ],
+      [
+       165.11,
+       192.4
+      ],
+      [
+       171.32,
+       195.06
+      ],
+      [
+       163.31,
+       193.61
+      ],
+      [
+       160.45,
+       190.85
+      ],
+      [
+       175.11,
+       192.12
+      ],
+      [
+       166.85,
+       194.72
+      ],
+      [
+       169.47,
+       191.04
+      ],
+      [
+       169.06,
+       195.81
+      ],
+      [
+       162.77,
+       194.92
+      ],
+      [
+       173.1,
+       194.97
+      ],
+      [
+       162.35,
+       193.36
+      ],
+      [
+       164.25,
+       195.66
+      ],
+      [
+       163.72,
+       191.33
+      ],
+      [
+       171.84,
+       193.34
+      ],
+      [
+       169.72,
+       191.37
+      ],
+      [
+       164.36,
+       191.42
+      ],
+      [
+       162.58,
+       191.82
+      ],
+      [
+       168.2,
+       195.48
+      ],
+      [
+       169.82,
+       193.48
+      ],
+      [
+       170.73,
+       193.54
+      ],
+      [
+       162.59,
+       191.52
+      ],
+      [
+       167.2,
+       191.19
+      ],
+      [
+       172.44,
+       196.87
+      ],
+      [
+       166.3,
+       191.12
+      ],
+      [
+       166.72,
+       193.44
+      ],
+      [
+       160.59,
+       192.94
+      ],
+      [
+       172.84,
+       195.33
+      ],
+      [
+       162.07,
+       195.34
+      ],
+      [
+       164.88,
+       191.31
+      ],
+      [
+       164.97,
+       194.31
+      ],
+      [
+       174.35,
+       192.84
+      ],
+      [
+       171.98,
+       191.88
+      ],
+      [
+       162.81,
+       195.4
+      ],
+      [
+       163.64,
+       191.45
+      ],
+      [
+       172.27,
+       194.47
+      ],
+      [
+       168.29,
+       193.63
+      ],
+      [
+       157.02,
+       190.74
+      ],
+      [
+       172.21,
+       192.15
+      ],
+      [
+       160.79,
+       191.62
+      ],
+      [
+       170.23,
+       194.6
+      ],
+      [
+       173.78,
+       192.48
+      ],
+      [
+       173.11,
+       192.18
+      ],
+      [
+       169.52,
+       194.5
+      ],
+      [
+       167.43,
+       195.6
+      ],
+      [
+       171.33,
+       195.86
+      ],
+      [
+       152.81,
+       190.67
+      ],
+      [
+       171.56,
+       196.53
+      ],
+      [
+       165.83,
+       195.08
+      ],
+      [
+       164.2,
+       195.73
+      ],
+      [
+       171.38,
+       191.6
+      ],
+      [
+       171.56,
+       191.48
+      ],
+      [
+       166.0,
+       193.84
+      ],
+      [
+       163.06,
+       191.22
+      ],
+      [
+       172.46,
+       191.76
+      ],
+      [
+       163.26,
+       191.16
+      ],
+      [
+       166.9,
+       195.34
+      ],
+      [
+       161.7,
+       192.85
+      ],
+      [
+       173.25,
+       191.54
+      ],
+      [
+       173.34,
+       192.1
+      ],
+      [
+       173.49,
+       192.87
+      ],
+      [
+       172.64,
+       191.56
+      ],
+      [
+       152.99,
+       190.68
+      ],
+      [
+       175.71,
+       192.05
+      ],
+      [
+       173.24,
+       191.27
+      ],
+      [
+       172.56,
+       194.71
+      ],
+      [
+       173.46,
+       195.63
+      ],
+      [
+       173.44,
+       192.42
+      ],
+      [
+       154.84,
+       190.72
+      ],
+      [
+       173.24,
+       196.74
+      ],
+      [
+       172.37,
+       193.61
+      ],
+      [
+       162.57,
+       192.88
+      ],
+      [
+       171.7,
+       196.11
+      ],
+      [
+       162.46,
+       191.27
+      ],
+      [
+       171.4,
+       194.75
+      ],
+      [
+       169.89,
+       195.75
+      ],
+      [
+       174.33,
+       193.61
+      ],
+      [
+       162.87,
+       194.53
+      ],
+      [
+       159.66,
+       191.23
+      ],
+      [
+       175.26,
+       193.69
+      ],
+      [
+       163.25,
+       192.02
+      ],
+      [
+       172.59,
+       192.3
+      ],
+      [
+       172.04,
+       191.32
+      ],
+      [
+       173.06,
+       191.67
+      ],
+      [
+       168.53,
+       196.1
+      ],
+      [
+       172.8,
+       191.92
+      ],
+      [
+       161.86,
+       192.92
+      ],
+      [
+       162.06,
+       190.71
+      ],
+      [
+       171.85,
+       191.24
+      ],
+      [
+       161.5,
+       191.13
+      ],
+      [
+       169.29,
+       195.83
+      ],
+      [
+       170.54,
+       195.49
+      ],
+      [
+       171.44,
+       191.86
+      ],
+      [
+       172.15,
+       193.44
+      ],
+      [
+       163.07,
+       191.43
+      ],
+      [
+       167.06,
+       192.1
+      ],
+      [
+       166.11,
+       195.25
+      ],
+      [
+       164.96,
+       193.61
+      ],
+      [
+       172.88,
+       191.86
+      ],
+      [
+       157.41,
+       190.75
+      ],
+      [
+       167.72,
+       191.92
+      ],
+      [
+       173.38,
+       196.1
+      ],
+      [
+       168.91,
+       193.57
+      ],
+      [
+       169.42,
+       195.61
+      ],
+      [
+       164.55,
+       193.47
+      ],
+      [
+       167.42,
+       195.37
+      ],
+      [
+       170.83,
+       194.45
+      ],
+      [
+       161.04,
+       190.81
+      ],
+      [
+       162.41,
+       190.76
+      ],
+      [
+       173.74,
+       196.84
+      ],
+      [
+       169.52,
+       193.59
+      ],
+      [
+       171.17,
+       193.34
+      ],
+      [
+       159.91,
+       191.6
+      ],
+      [
+       168.69,
+       193.91
+      ],
+      [
+       164.55,
+       193.58
+      ],
+      [
+       161.56,
+       190.81
+      ],
+      [
+       173.12,
+       191.63
+      ],
+      [
+       174.0,
+       196.84
+      ],
+      [
+       170.1,
+       194.77
+      ],
+      [
+       171.7,
+       194.77
+      ],
+      [
+       163.85,
+       192.72
+      ],
+      [
+       163.01,
+       192.9
+      ],
+      [
+       173.29,
+       195.31
+      ],
+      [
+       167.22,
+       193.51
+      ],
+      [
+       166.8,
+       193.6
+      ],
+      [
+       159.75,
+       190.77
+      ],
+      [
+       172.88,
+       191.82
+      ],
+      [
+       151.33,
+       190.66
+      ],
+      [
+       169.62,
+       192.18
+      ],
+      [
+       163.47,
+       192.57
+      ],
+      [
+       169.24,
+       193.6
+      ],
+      [
+       173.33,
+       191.49
+      ],
+      [
+       166.96,
+       193.64
+      ],
+      [
+       170.94,
+       191.91
+      ],
+      [
+       173.42,
+       193.11
+      ],
+      [
+       172.54,
+       192.96
+      ],
+      [
+       164.97,
+       190.77
+      ],
+      [
+       173.68,
+       195.83
+      ],
+      [
+       164.6,
+       195.39
+      ],
+      [
+       169.14,
+       193.09
+      ],
+      [
+       172.0,
+       191.93
+      ],
+      [
+       172.53,
+       191.89
+      ],
+      [
+       167.85,
+       193.61
+      ],
+      [
+       170.13,
+       191.69
+      ],
+      [
+       164.16,
+       192.12
+      ],
+      [
+       167.22,
+       194.93
+      ],
+      [
+       173.64,
+       195.59
+      ],
+      [
+       171.79,
+       193.21
+      ],
+      [
+       172.61,
+       196.47
+      ],
+      [
+       171.34,
+       193.09
+      ],
+      [
+       165.64,
+       195.16
+      ],
+      [
+       163.82,
+       194.59
+      ],
+      [
+       160.14,
+       191.35
+      ],
+      [
+       169.67,
+       191.38
+      ],
+      [
+       162.45,
+       193.48
+      ],
+      [
+       174.0,
+       192.14
+      ],
+      [
+       161.1,
+       193.35
+      ],
+      [
+       173.22,
+       191.49
+      ],
+      [
+       171.25,
+       196.74
+      ],
+      [
+       172.96,
+       192.11
+      ],
+      [
+       166.13,
+       193.53
+      ],
+      [
+       162.58,
+       190.75
+      ],
+      [
+       171.3,
+       196.85
+      ],
+      [
+       162.26,
+       190.84
+      ],
+      [
+       161.62,
+       191.67
+      ],
+      [
+       171.11,
+       192.2
+      ],
+      [
+       172.87,
+       193.69
+      ],
+      [
+       166.95,
+       195.81
+      ],
+      [
+       168.89,
+       193.88
+      ],
+      [
+       171.78,
+       191.11
+      ],
+      [
+       168.79,
+       193.33
+      ],
+      [
+       163.63,
+       195.79
+      ],
+      [
+       172.55,
+       196.35
+      ],
+      [
+       168.75,
+       193.57
+      ],
+      [
+       162.7,
+       193.86
+      ],
+      [
+       162.09,
+       192.84
+      ],
+      [
+       171.08,
+       193.48
+      ],
+      [
+       174.4,
+       191.4
+      ],
+      [
+       174.25,
+       191.53
+      ],
+      [
+       174.95,
+       192.35
+      ],
+      [
+       162.57,
+       194.03
+      ],
+      [
+       169.68,
+       194.49
+      ],
+      [
+       169.24,
+       194.86
+      ],
+      [
+       170.71,
+       191.71
+      ],
+      [
+       172.73,
+       191.26
+      ],
+      [
+       162.67,
+       192.47
+      ],
+      [
+       162.6,
+       190.82
+      ],
+      [
+       157.4,
+       191.84
+      ],
+      [
+       169.02,
+       193.89
+      ],
+      [
+       173.04,
+       192.05
+      ],
+      [
+       173.31,
+       191.19
+      ],
+      [
+       162.09,
+       190.8
+      ],
+      [
+       151.4,
+       190.7
+      ],
+      [
+       172.86,
+       195.47
+      ],
+      [
+       166.51,
+       194.93
+      ],
+      [
+       174.07,
+       196.39
+      ],
+      [
+       167.36,
+       193.56
+      ],
+      [
+       172.16,
+       191.65
+      ],
+      [
+       161.96,
+       194.58
+      ],
+      [
+       165.55,
+       193.63
+      ],
+      [
+       164.53,
+       192.33
+      ],
+      [
+       163.2,
+       195.35
+      ],
+      [
+       172.6,
+       191.57
+      ],
+      [
+       162.63,
+       191.69
+      ],
+      [
+       165.21,
+       192.38
+      ],
+      [
+       164.21,
+       193.56
+      ],
+      [
+       169.37,
+       190.71
+      ],
+      [
+       162.39,
+       192.54
+      ],
+      [
+       173.93,
+       191.62
+      ],
+      [
+       162.51,
+       191.2
+      ],
+      [
+       167.73,
+       193.52
+      ],
+      [
+       173.1,
+       194.6
+      ],
+      [
+       163.11,
+       193.77
+      ],
+      [
+       162.64,
+       193.18
+      ],
+      [
+       171.6,
+       196.86
+      ],
+      [
+       172.0,
+       191.67
+      ],
+      [
+       166.63,
+       193.87
+      ],
+      [
+       163.51,
+       193.44
+      ],
+      [
+       172.81,
+       191.45
+      ],
+      [
+       160.48,
+       190.73
+      ],
+      [
+       173.46,
+       195.67
+      ],
+      [
+       174.37,
+       191.36
+      ],
+      [
+       175.11,
+       193.59
+      ],
+      [
+       168.01,
+       194.9
+      ],
+      [
+       173.56,
+       196.67
+      ],
+      [
+       162.3,
+       193.76
+      ],
+      [
+       171.93,
+       193.06
+      ],
+      [
+       169.72,
+       191.19
+      ],
+      [
+       169.74,
+       194.64
+      ],
+      [
+       162.28,
+       193.44
+      ],
+      [
+       148.72,
+       190.66
+      ],
+      [
+       169.87,
+       195.35
+      ],
+      [
+       162.77,
+       193.64
+      ],
+      [
+       157.63,
+       190.73
+      ],
+      [
+       171.33,
+       196.63
+      ],
+      [
+       171.23,
+       194.5
+      ],
+      [
+       173.08,
+       191.62
+      ],
+      [
+       166.65,
+       191.47
+      ],
+      [
+       169.23,
+       193.62
+      ],
+      [
+       172.71,
+       193.15
+      ],
+      [
+       162.59,
+       190.82
+      ],
+      [
+       170.47,
+       195.81
+      ],
+      [
+       159.81,
+       192.95
+      ],
+      [
+       158.54,
+       190.76
+      ],
+      [
+       173.38,
+       194.59
+      ],
+      [
+       162.52,
+       192.2
+      ],
+      [
+       170.63,
+       193.83
+      ],
+      [
+       157.32,
+       190.73
+      ],
+      [
+       173.23,
+       191.68
+      ],
+      [
+       170.16,
+       194.56
+      ],
+      [
+       162.71,
+       192.49
+      ],
+      [
+       163.49,
+       191.6
+      ],
+      [
+       172.35,
+       193.1
+      ],
+      [
+       172.43,
+       192.91
+      ],
+      [
+       169.99,
+       193.46
+      ],
+      [
+       162.22,
+       192.59
+      ],
+      [
+       173.58,
+       191.99
+      ],
+      [
+       172.9,
+       192.1
+      ],
+      [
+       164.88,
+       193.51
+      ],
+      [
+       163.64,
+       193.61
+      ],
+      [
+       172.94,
+       191.21
+      ],
+      [
+       172.91,
+       196.64
+      ],
+      [
+       170.84,
+       196.6
+      ],
+      [
+       164.08,
+       193.67
+      ],
+      [
+       167.94,
+       194.89
+      ],
+      [
+       170.77,
+       191.36
+      ],
+      [
+       166.15,
+       195.19
+      ],
+      [
+       174.69,
+       191.51
+      ],
+      [
+       159.27,
+       190.75
+      ],
+      [
+       164.44,
+       194.3
+      ],
+      [
+       174.75,
+       193.25
+      ],
+      [
+       162.22,
+       191.91
+      ],
+      [
+       162.68,
+       194.56
+      ],
+      [
+       173.58,
+       196.53
+      ],
+      [
+       162.91,
+       191.24
+      ],
+      [
+       166.55,
+       191.87
+      ],
+      [
+       170.34,
+       193.33
+      ],
+      [
+       172.08,
+       191.84
+      ],
+      [
+       162.31,
+       191.81
+      ],
+      [
+       157.2,
+       190.75
+      ],
+      [
+       170.05,
+       191.04
+      ],
+      [
+       160.18,
+       191.86
+      ],
+      [
+       162.02,
+       195.11
+      ],
+      [
+       172.57,
+       192.69
+      ],
+      [
+       171.65,
+       192.55
+      ],
+      [
+       165.19,
+       193.84
+      ],
+      [
+       165.19,
+       193.89
+      ],
+      [
+       161.1,
+       190.98
+      ],
+      [
+       173.31,
+       192.8
+      ],
+      [
+       163.27,
+       192.27
+      ],
+      [
+       160.85,
+       190.82
+      ],
+      [
+       158.37,
+       190.75
+      ],
+      [
+       169.79,
+       196.06
+      ],
+      [
+       169.15,
+       193.0
+      ],
+      [
+       174.03,
+       192.14
+      ],
+      [
+       162.88,
+       191.73
+      ],
+      [
+       169.56,
+       193.62
+      ],
+      [
+       175.11,
+       192.38
+      ],
+      [
+       173.03,
+       193.81
+      ],
+      [
+       172.65,
+       194.37
+      ],
+      [
+       173.2,
+       194.78
+      ],
+      [
+       169.14,
+       195.01
+      ],
+      [
+       173.09,
+       194.6
+      ],
+      [
+       173.22,
+       191.83
+      ],
+      [
+       172.87,
+       192.88
+      ],
+      [
+       173.87,
+       193.04
+      ],
+      [
+       172.44,
+       192.62
+      ],
+      [
+       169.61,
+       191.08
+      ],
+      [
+       162.14,
+       195.08
+      ],
+      [
+       165.43,
+       193.81
+      ],
+      [
+       169.9,
+       191.66
+      ],
+      [
+       173.57,
+       196.4
+      ],
+      [
+       171.1,
+       194.71
+      ],
+      [
+       164.79,
+       191.29
+      ],
+      [
+       169.39,
+       193.9
+      ],
+      [
+       163.04,
+       191.95
+      ],
+      [
+       167.07,
+       194.89
+      ],
+      [
+       168.7,
+       195.86
+      ],
+      [
+       166.62,
+       194.77
+      ],
+      [
+       161.69,
+       190.8
+      ],
+      [
+       170.34,
+       190.82
+      ],
+      [
+       172.84,
+       193.38
+      ],
+      [
+       162.8,
+       195.35
+      ],
+      [
+       162.41,
+       194.04
+      ],
+      [
+       164.78,
+       195.39
+      ],
+      [
+       161.32,
+       192.95
+      ],
+      [
+       168.97,
+       191.05
+      ],
+      [
+       167.71,
+       195.21
+      ],
+      [
+       173.06,
+       191.56
+      ],
+      [
+       169.23,
+       196.23
+      ],
+      [
+       173.82,
+       195.97
+      ],
+      [
+       166.51,
+       195.44
+      ],
+      [
+       170.22,
+       193.24
+      ],
+      [
+       162.73,
+       194.89
+      ],
+      [
+       172.75,
+       195.94
+      ],
+      [
+       171.9,
+       192.12
+      ],
+      [
+       159.96,
+       193.08
+      ],
+      [
+       161.19,
+       193.36
+      ],
+      [
+       174.35,
+       192.89
+      ],
+      [
+       173.45,
+       195.86
+      ],
+      [
+       163.0,
+       195.37
+      ],
+      [
+       158.13,
+       192.85
+      ],
+      [
+       172.04,
+       195.87
+      ],
+      [
+       172.49,
+       192.82
+      ],
+      [
+       171.53,
+       192.73
+      ],
+      [
+       164.0,
+       195.22
+      ],
+      [
+       172.79,
+       194.05
+      ],
+      [
+       167.21,
+       193.61
+      ],
+      [
+       164.47,
+       192.35
+      ],
+      [
+       163.88,
+       193.86
+      ],
+      [
+       165.04,
+       193.55
+      ],
+      [
+       160.3,
+       193.31
+      ],
+      [
+       169.37,
+       193.4
+      ],
+      [
+       166.07,
+       193.91
+      ],
+      [
+       173.21,
+       193.18
+      ],
+      [
+       171.34,
+       196.14
+      ],
+      [
+       162.42,
+       193.47
+      ],
+      [
+       172.95,
+       192.11
+      ],
+      [
+       180.52,
+       191.47
+      ],
+      [
+       159.42,
+       190.77
+      ],
+      [
+       171.86,
+       191.49
+      ],
+      [
+       168.09,
+       196.11
+      ],
+      [
+       173.19,
+       195.84
+      ],
+      [
+       171.16,
+       190.83
+      ],
+      [
+       161.18,
+       192.85
+      ],
+      [
+       172.88,
+       192.15
+      ],
+      [
+       164.51,
+       192.06
+      ],
+      [
+       167.57,
+       194.91
+      ],
+      [
+       173.0,
+       191.17
+      ],
+      [
+       162.37,
+       193.23
+      ],
+      [
+       162.33,
+       194.89
+      ],
+      [
+       162.56,
+       192.91
+      ],
+      [
+       173.41,
+       193.46
+      ],
+      [
+       163.2,
+       191.86
+      ],
+      [
+       162.51,
+       192.38
+      ],
+      [
+       173.91,
+       192.79
+      ],
+      [
+       172.61,
+       193.71
+      ],
+      [
+       174.28,
+       196.69
+      ],
+      [
+       172.78,
+       194.86
+      ],
+      [
+       164.84,
+       195.59
+      ],
+      [
+       172.1,
+       195.1
+      ],
+      [
+       172.32,
+       192.12
+      ],
+      [
+       175.05,
+       192.9
+      ],
+      [
+       162.01,
+       191.52
+      ],
+      [
+       165.12,
+       191.8
+      ],
+      [
+       161.91,
+       193.61
+      ],
+      [
+       172.13,
+       193.09
+      ],
+      [
+       170.4,
+       196.14
+      ],
+      [
+       162.43,
+       190.78
+      ],
+      [
+       164.24,
+       194.87
+      ],
+      [
+       166.99,
+       193.6
+      ],
+      [
+       173.85,
+       191.39
+      ],
+      [
+       171.39,
+       194.55
+      ],
+      [
+       172.93,
+       191.73
+      ],
+      [
+       169.52,
+       196.11
+      ],
+      [
+       165.33,
+       195.1
+      ],
+      [
+       172.77,
+       194.62
+      ],
+      [
+       172.71,
+       192.56
+      ],
+      [
+       162.31,
+       195.36
+      ],
+      [
+       173.12,
+       196.84
+      ],
+      [
+       162.16,
+       194.82
+      ],
+      [
+       173.13,
+       192.11
+      ],
+      [
+       159.61,
+       191.65
+      ],
+      [
+       170.57,
+       196.1
+      ],
+      [
+       174.94,
+       192.94
+      ],
+      [
+       161.51,
+       190.82
+      ],
+      [
+       171.95,
+       192.0
+      ],
+      [
+       162.02,
+       194.56
+      ],
+      [
+       170.15,
+       192.16
+      ],
+      [
+       171.06,
+       191.7
+      ],
+      [
+       160.09,
+       190.98
+      ],
+      [
+       173.34,
+       196.31
+      ],
+      [
+       162.62,
+       193.71
+      ],
+      [
+       159.98,
+       191.28
+      ],
+      [
+       162.41,
+       193.67
+      ],
+      [
+       174.26,
+       193.48
+      ],
+      [
+       160.66,
+       190.77
+      ],
+      [
+       157.46,
+       190.73
+      ],
+      [
+       153.57,
+       190.62
+      ],
+      [
+       170.55,
+       196.34
+      ],
+      [
+       169.96,
+       192.18
+      ],
+      [
+       172.81,
+       193.65
+      ],
+      [
+       166.92,
+       193.42
+      ],
+      [
+       173.65,
+       195.66
+      ],
+      [
+       171.64,
+       192.18
+      ],
+      [
+       158.9,
+       193.12
+      ],
+      [
+       167.04,
+       193.78
+      ],
+      [
+       173.82,
+       196.36
+      ],
+      [
+       180.27,
+       191.47
+      ],
+      [
+       167.5,
+       191.76
+      ],
+      [
+       171.9,
+       194.74
+      ],
+      [
+       169.35,
+       192.76
+      ],
+      [
+       166.53,
+       195.86
+      ],
+      [
+       167.76,
+       196.12
+      ],
+      [
+       169.78,
+       195.46
+      ],
+      [
+       153.37,
+       190.73
+      ],
+      [
+       167.96,
+       190.72
+      ],
+      [
+       165.26,
+       191.09
+      ],
+      [
+       173.13,
+       194.95
+      ],
+      [
+       173.17,
+       191.64
+      ],
+      [
+       172.52,
+       195.62
+      ],
+      [
+       170.27,
+       192.17
+      ],
+      [
+       164.94,
+       195.68
+      ],
+      [
+       154.85,
+       190.69
+      ],
+      [
+       162.21,
+       193.34
+      ],
+      [
+       165.12,
+       195.96
+      ],
+      [
+       165.68,
+       194.85
+      ],
+      [
+       171.57,
+       192.06
+      ],
+      [
+       171.35,
+       195.93
+      ],
+      [
+       158.88,
+       190.76
+      ],
+      [
+       169.32,
+       195.61
+      ],
+      [
+       162.57,
+       192.12
+      ],
+      [
+       157.87,
+       190.79
+      ],
+      [
+       166.68,
+       191.27
+      ],
+      [
+       166.93,
+       193.7
+      ],
+      [
+       171.09,
+       194.96
+      ],
+      [
+       159.54,
+       191.83
+      ],
+      [
+       171.5,
+       196.61
+      ],
+      [
+       173.78,
+       192.09
+      ],
+      [
+       167.94,
+       196.22
+      ],
+      [
+       157.86,
+       192.85
+      ],
+      [
+       169.61,
+       193.35
+      ],
+      [
+       152.11,
+       190.7
+      ],
+      [
+       171.6,
+       191.89
+      ],
+      [
+       155.78,
+       190.72
+      ],
+      [
+       156.13,
+       190.67
+      ],
+      [
+       174.96,
+       192.08
+      ],
+      [
+       173.67,
+       192.45
+      ],
+      [
+       170.69,
+       196.4
+      ],
+      [
+       162.9,
+       195.54
+      ],
+      [
+       167.0,
+       195.07
+      ],
+      [
+       166.51,
+       193.61
+      ],
+      [
+       163.92,
+       195.62
+      ],
+      [
+       172.82,
+       196.64
+      ],
+      [
+       159.78,
+       190.77
+      ],
+      [
+       171.52,
+       191.9
+      ],
+      [
+       173.49,
+       195.35
+      ],
+      [
+       167.26,
+       193.42
+      ],
+      [
+       170.68,
+       191.95
+      ],
+      [
+       168.21,
+       194.51
+      ],
+      [
+       173.01,
+       192.36
+      ],
+      [
+       163.87,
+       192.52
+      ],
+      [
+       173.42,
+       195.6
+      ],
+      [
+       162.33,
+       194.78
+      ],
+      [
+       173.79,
+       196.63
+      ],
+      [
+       161.7,
+       190.77
+      ],
+      [
+       171.89,
+       195.85
+      ],
+      [
+       173.72,
+       195.78
+      ],
+      [
+       169.82,
+       195.84
+      ],
+      [
+       162.07,
+       190.79
+      ],
+      [
+       163.04,
+       191.4
+      ],
+      [
+       173.15,
+       191.51
+      ],
+      [
+       162.71,
+       192.07
+      ],
+      [
+       173.06,
+       191.04
+      ],
+      [
+       172.9,
+       191.83
+      ],
+      [
+       163.97,
+       192.25
+      ],
+      [
+       168.35,
+       193.37
+      ],
+      [
+       156.86,
+       190.77
+      ],
+      [
+       156.9,
+       190.67
+      ],
+      [
+       174.43,
+       192.71
+      ],
+      [
+       167.42,
+       195.87
+      ],
+      [
+       174.2,
+       192.74
+      ],
+      [
+       159.24,
+       190.78
+      ],
+      [
+       172.63,
+       192.64
+      ],
+      [
+       157.97,
+       190.72
+      ],
+      [
+       151.03,
+       190.71
+      ],
+      [
+       163.27,
+       193.33
+      ],
+      [
+       158.92,
+       190.78
+      ],
+      [
+       165.04,
+       194.67
+      ],
+      [
+       165.44,
+       191.19
+      ],
+      [
+       173.03,
+       193.92
+      ],
+      [
+       162.19,
+       195.09
+      ],
+      [
+       161.66,
+       192.94
+      ],
+      [
+       173.64,
+       195.55
+      ],
+      [
+       169.03,
+       193.38
+      ],
+      [
+       171.03,
+       191.4
+      ],
+      [
+       167.55,
+       195.67
+      ],
+      [
+       167.77,
+       193.47
+      ],
+      [
+       169.41,
+       191.87
+      ],
+      [
+       168.01,
+       194.77
+      ],
+      [
+       171.02,
+       196.63
+      ],
+      [
+       171.99,
+       192.63
+      ],
+      [
+       170.81,
+       195.06
+      ],
+      [
+       173.02,
+       195.35
+      ],
+      [
+       171.93,
+       195.14
+      ],
+      [
+       159.22,
+       191.08
+      ],
+      [
+       162.93,
+       192.52
+      ],
+      [
+       168.96,
+       193.5
+      ],
+      [
+       169.47,
+       196.51
+      ],
+      [
+       171.24,
+       191.19
+      ],
+      [
+       159.6,
+       190.79
+      ],
+      [
+       173.11,
+       192.03
+      ],
+      [
+       174.36,
+       192.71
+      ],
+      [
+       168.97,
+       196.1
+      ],
+      [
+       170.36,
+       193.34
+      ],
+      [
+       164.9,
+       191.71
+      ],
+      [
+       172.64,
+       192.13
+      ],
+      [
+       172.5,
+       193.39
+      ],
+      [
+       163.15,
+       191.32
+      ],
+      [
+       162.74,
+       191.8
+      ],
+      [
+       163.25,
+       193.58
+      ],
+      [
+       167.87,
+       193.87
+      ],
+      [
+       173.02,
+       191.21
+      ],
+      [
+       164.09,
+       191.52
+      ],
+      [
+       170.47,
+       194.5
+      ],
+      [
+       164.59,
+       194.61
+      ],
+      [
+       162.7,
+       193.43
+      ],
+      [
+       173.55,
+       191.91
+      ],
+      [
+       162.39,
+       191.72
+      ],
+      [
+       173.85,
+       193.11
+      ],
+      [
+       173.08,
+       194.94
+      ],
+      [
+       174.47,
+       196.87
+      ],
+      [
+       166.17,
+       191.23
+      ],
+      [
+       170.58,
+       193.27
+      ],
+      [
+       172.75,
+       196.83
+      ],
+      [
+       165.58,
+       193.86
+      ],
+      [
+       162.34,
+       193.76
+      ],
+      [
+       165.71,
+       191.88
+      ],
+      [
+       172.46,
+       193.66
+      ],
+      [
+       169.07,
+       195.33
+      ],
+      [
+       172.87,
+       192.06
+      ],
+      [
+       163.04,
+       192.05
+      ],
+      [
+       160.96,
+       193.44
+      ],
+      [
+       168.99,
+       195.9
+      ],
+      [
+       163.01,
+       193.78
+      ],
+      [
+       169.67,
+       191.08
+      ],
+      [
+       163.26,
+       195.27
+      ],
+      [
+       170.82,
+       191.72
+      ],
+      [
+       172.83,
+       194.2
+      ],
+      [
+       166.17,
+       195.96
+      ],
+      [
+       173.39,
+       193.58
+      ],
+      [
+       166.85,
+       192.38
+      ],
+      [
+       173.47,
+       195.54
+      ],
+      [
+       171.9,
+       193.55
+      ],
+      [
+       157.32,
+       190.75
+      ],
+      [
+       168.0,
+       196.39
+      ],
+      [
+       158.88,
+       190.74
+      ],
+      [
+       167.74,
+       195.9
+      ],
+      [
+       173.29,
+       195.28
+      ],
+      [
+       171.98,
+       193.84
+      ],
+      [
+       170.2,
+       195.33
+      ],
+      [
+       173.21,
+       193.62
+      ],
+      [
+       173.86,
+       192.46
+      ],
+      [
+       172.43,
+       192.02
+      ],
+      [
+       166.97,
+       196.05
+      ],
+      [
+       164.85,
+       193.9
+      ],
+      [
+       174.94,
+       192.32
+      ],
+      [
+       168.68,
+       196.28
+      ],
+      [
+       165.87,
+       193.39
+      ],
+      [
+       168.29,
+       195.97
+      ],
+      [
+       165.47,
+       191.19
+      ],
+      [
+       171.54,
+       195.67
+      ],
+      [
+       168.35,
+       195.88
+      ],
+      [
+       173.66,
+       195.71
+      ],
+      [
+       165.08,
+       193.57
+      ],
+      [
+       173.29,
+       194.53
+      ],
+      [
+       171.82,
+       193.1
+      ],
+      [
+       172.69,
+       193.13
+      ],
+      [
+       164.14,
+       192.86
+      ],
+      [
+       163.01,
+       191.64
+      ],
+      [
+       154.7,
+       190.73
+      ],
+      [
+       158.71,
+       190.75
+      ],
+      [
+       173.63,
+       192.83
+      ],
+      [
+       171.53,
+       195.41
+      ],
+      [
+       169.28,
+       196.39
+      ],
+      [
+       166.98,
+       193.87
+      ],
+      [
+       164.37,
+       195.84
+      ],
+      [
+       162.93,
+       195.11
+      ],
+      [
+       161.75,
+       193.31
+      ],
+      [
+       162.29,
+       191.2
+      ],
+      [
+       166.5,
+       192.11
+      ],
+      [
+       167.13,
+       195.55
+      ],
+      [
+       162.35,
+       193.38
+      ],
+      [
+       173.13,
+       191.52
+      ],
+      [
+       173.74,
+       192.69
+      ],
+      [
+       173.12,
+       194.75
+      ],
+      [
+       168.79,
+       195.1
+      ],
+      [
+       172.85,
+       194.63
+      ],
+      [
+       172.7,
+       191.78
+      ],
+      [
+       159.33,
+       193.1
+      ],
+      [
+       165.96,
+       194.72
+      ],
+      [
+       170.4,
+       195.91
+      ],
+      [
+       172.33,
+       192.96
+      ],
+      [
+       165.11,
+       193.44
+      ],
+      [
+       170.42,
+       193.75
+      ],
+      [
+       163.85,
+       194.91
+      ],
+      [
+       167.65,
+       194.6
+      ],
+      [
+       170.25,
+       195.89
+      ],
+      [
+       173.89,
+       192.13
+      ],
+      [
+       165.53,
+       195.86
+      ],
+      [
+       163.62,
+       195.0
+      ],
+      [
+       162.6,
+       191.05
+      ],
+      [
+       162.77,
+       193.79
+      ],
+      [
+       172.17,
+       191.9
+      ],
+      [
+       167.27,
+       195.84
+      ],
+      [
+       170.17,
+       195.53
+      ],
+      [
+       162.19,
+       193.16
+      ],
+      [
+       163.0,
+       193.4
+      ],
+      [
+       160.5,
+       190.79
+      ],
+      [
+       162.84,
+       194.35
+      ],
+      [
+       173.08,
+       193.84
+      ],
+      [
+       173.53,
+       193.61
+      ],
+      [
+       168.68,
+       193.68
+      ],
+      [
+       167.86,
+       193.6
+      ],
+      [
+       165.9,
+       195.89
+      ],
+      [
+       166.34,
+       196.1
+      ],
+      [
+       172.91,
+       193.06
+      ],
+      [
+       173.65,
+       195.59
+      ],
+      [
+       164.33,
+       193.55
+      ],
+      [
+       175.91,
+       191.62
+      ],
+      [
+       171.75,
+       196.57
+      ],
+      [
+       168.62,
+       195.11
+      ],
+      [
+       162.36,
+       191.41
+      ],
+      [
+       166.25,
+       193.64
+      ],
+      [
+       164.32,
+       192.38
+      ],
+      [
+       172.71,
+       193.4
+      ],
+      [
+       180.6,
+       191.44
+      ],
+      [
+       168.81,
+       194.84
+      ],
+      [
+       172.68,
+       193.4
+      ],
+      [
+       165.43,
+       191.6
+      ],
+      [
+       173.9,
+       196.6
+      ],
+      [
+       166.12,
+       195.49
+      ],
+      [
+       171.89,
+       191.81
+      ],
+      [
+       173.44,
+       193.39
+      ],
+      [
+       170.19,
+       196.38
+      ],
+      [
+       172.64,
+       191.52
+      ],
+      [
+       167.6,
+       193.74
+      ],
+      [
+       157.29,
+       192.88
+      ],
+      [
+       173.31,
+       191.47
+      ],
+      [
+       173.07,
+       194.51
+      ],
+      [
+       169.83,
+       191.53
+      ],
+      [
+       173.33,
+       193.4
+      ],
+      [
+       166.61,
+       191.35
+      ],
+      [
+       173.25,
+       194.88
+      ],
+      [
+       171.93,
+       196.02
+      ],
+      [
+       170.79,
+       195.15
+      ],
+      [
+       172.23,
+       196.38
+      ],
+      [
+       166.66,
+       191.34
+      ],
+      [
+       167.65,
+       195.86
+      ],
+      [
+       161.0,
+       190.75
+      ],
+      [
+       168.19,
+       193.63
+      ],
+      [
+       160.29,
+       190.72
+      ],
+      [
+       172.54,
+       195.76
+      ],
+      [
+       173.97,
+       193.83
+      ],
+      [
+       168.78,
+       191.04
+      ],
+      [
+       173.43,
+       195.17
+      ],
+      [
+       164.4,
+       193.2
+      ],
+      [
+       166.65,
+       191.91
+      ],
+      [
+       172.3,
+       191.41
+      ],
+      [
+       173.17,
+       193.66
+      ],
+      [
+       171.08,
+       195.2
+      ],
+      [
+       158.35,
+       190.76
+      ],
+      [
+       172.84,
+       192.14
+      ],
+      [
+       180.57,
+       191.5
+      ],
+      [
+       174.91,
+       191.51
+      ],
+      [
+       164.77,
+       195.62
+      ],
+      [
+       172.77,
+       194.46
+      ],
+      [
+       171.98,
+       196.75
+      ],
+      [
+       172.94,
+       195.02
+      ],
+      [
+       156.36,
+       190.76
+      ],
+      [
+       158.73,
+       190.78
+      ],
+      [
+       163.36,
+       191.79
+      ],
+      [
+       162.58,
+       191.97
+      ],
+      [
+       162.79,
+       194.53
+      ],
+      [
+       170.02,
+       194.49
+      ],
+      [
+       164.27,
+       193.85
+      ],
+      [
+       170.36,
+       194.85
+      ],
+      [
+       151.37,
+       190.69
+      ],
+      [
+       151.38,
+       190.7
+      ],
+      [
+       171.57,
+       193.48
+      ],
+      [
+       171.54,
+       193.54
+      ],
+      [
+       162.19,
+       192.05
+      ],
+      [
+       172.87,
+       196.85
+      ],
+      [
+       150.31,
+       190.7
+      ],
+      [
+       173.43,
+       195.38
+      ],
+      [
+       165.4,
+       191.45
+      ],
+      [
+       167.83,
+       193.64
+      ],
+      [
+       164.39,
+       193.87
+      ],
+      [
+       154.3,
+       190.71
+      ],
+      [
+       163.41,
+       191.93
+      ],
+      [
+       166.3,
+       193.33
+      ],
+      [
+       163.63,
+       191.12
+      ],
+      [
+       165.42,
+       193.6
+      ],
+      [
+       174.52,
+       192.53
+      ],
+      [
+       172.94,
+       191.6
+      ],
+      [
+       171.27,
+       191.52
+      ],
+      [
+       171.81,
+       193.6
+      ],
+      [
+       171.19,
+       195.71
+      ],
+      [
+       172.9,
+       192.03
+      ],
+      [
+       162.89,
+       193.62
+      ],
+      [
+       163.65,
+       193.76
+      ],
+      [
+       173.2,
+       191.05
+      ],
+      [
+       171.7,
+       195.89
+      ],
+      [
+       173.11,
+       191.84
+      ],
+      [
+       170.66,
+       194.85
+      ],
+      [
+       160.82,
+       190.86
+      ],
+      [
+       162.91,
+       192.37
+      ],
+      [
+       163.98,
+       191.47
+      ],
+      [
+       172.09,
+       191.88
+      ],
+      [
+       161.49,
+       191.52
+      ],
+      [
+       165.6,
+       194.61
+      ],
+      [
+       164.79,
+       193.67
+      ],
+      [
+       169.46,
+       191.71
+      ],
+      [
+       174.65,
+       192.96
+      ],
+      [
+       162.17,
+       193.32
+      ],
+      [
+       171.66,
+       193.85
+      ],
+      [
+       173.26,
+       195.26
+      ],
+      [
+       163.58,
+       194.85
+      ],
+      [
+       174.25,
+       191.91
+      ],
+      [
+       167.22,
+       195.41
+      ],
+      [
+       166.06,
+       193.65
+      ],
+      [
+       159.83,
+       193.28
+      ],
+      [
+       162.29,
+       191.55
+      ],
+      [
+       165.38,
+       191.69
+      ],
+      [
+       168.52,
+       193.37
+      ],
+      [
+       167.93,
+       191.36
+      ],
+      [
+       171.4,
+       194.27
+      ],
+      [
+       170.12,
+       192.2
+      ],
+      [
+       162.55,
+       191.39
+      ],
+      [
+       173.39,
+       191.95
+      ],
+      [
+       172.5,
+       192.93
+      ],
+      [
+       171.11,
+       193.43
+      ],
+      [
+       165.38,
+       193.6
+      ],
+      [
+       162.72,
+       194.68
+      ],
+      [
+       171.92,
+       191.26
+      ],
+      [
+       168.26,
+       195.15
+      ],
+      [
+       161.69,
+       190.77
+      ],
+      [
+       174.18,
+       196.61
+      ],
+      [
+       149.77,
+       190.69
+      ],
+      [
+       167.2,
+       194.51
+      ],
+      [
+       168.33,
+       191.06
+      ],
+      [
+       173.67,
+       192.42
+      ],
+      [
+       172.77,
+       193.64
+      ],
+      [
+       170.81,
+       191.02
+      ],
+      [
+       162.57,
+       192.82
+      ],
+      [
+       175.4,
+       191.51
+      ],
+      [
+       171.83,
+       191.17
+      ],
+      [
+       159.6,
+       190.75
+      ],
+      [
+       154.1,
+       190.75
+      ],
+      [
+       175.63,
+       193.16
+      ],
+      [
+       171.63,
+       195.34
+      ],
+      [
+       150.33,
+       190.67
+      ],
+      [
+       162.37,
+       191.29
+      ],
+      [
+       164.81,
+       195.61
+      ],
+      [
+       175.2,
+       191.75
+      ],
+      [
+       161.53,
+       190.7
+      ],
+      [
+       171.87,
+       191.49
+      ],
+      [
+       172.98,
+       194.82
+      ],
+      [
+       174.09,
+       191.89
+      ],
+      [
+       171.04,
+       193.54
+      ],
+      [
+       167.83,
+       195.11
+      ],
+      [
+       166.98,
+       196.1
+      ],
+      [
+       167.9,
+       193.53
+      ],
+      [
+       162.51,
+       191.05
+      ],
+      [
+       155.5,
+       190.73
+      ],
+      [
+       171.25,
+       195.4
+      ],
+      [
+       166.61,
+       193.62
+      ],
+      [
+       172.81,
+       191.34
+      ],
+      [
+       173.39,
+       196.23
+      ],
+      [
+       169.8,
+       191.49
+      ],
+      [
+       173.74,
+       192.9
+      ],
+      [
+       173.93,
+       192.92
+      ],
+      [
+       176.11,
+       191.51
+      ],
+      [
+       170.62,
+       193.44
+      ],
+      [
+       163.32,
+       191.58
+      ],
+      [
+       173.96,
+       192.14
+      ],
+      [
+       173.05,
+       192.64
+      ],
+      [
+       175.63,
+       192.44
+      ],
+      [
+       159.95,
+       190.75
+      ],
+      [
+       170.93,
+       191.76
+      ],
+      [
+       157.62,
+       190.72
+      ],
+      [
+       172.46,
+       195.62
+      ],
+      [
+       160.13,
+       193.1
+      ],
+      [
+       166.07,
+       192.09
+      ],
+      [
+       171.88,
+       191.82
+      ],
+      [
+       163.51,
+       191.82
+      ],
+      [
+       169.52,
+       191.05
+      ],
+      [
+       170.7,
+       193.32
+      ],
+      [
+       169.65,
+       191.45
+      ],
+      [
+       172.43,
+       194.9
+      ],
+      [
+       163.46,
+       192.48
+      ],
+      [
+       161.97,
+       194.88
+      ],
+      [
+       175.24,
+       191.75
+      ],
+      [
+       159.43,
+       190.81
+      ],
+      [
+       169.33,
+       191.05
+      ],
+      [
+       175.01,
+       192.14
+      ],
+      [
+       163.37,
+       193.91
+      ],
+      [
+       171.39,
+       196.35
+      ],
+      [
+       166.35,
+       193.75
+      ],
+      [
+       172.86,
+       194.43
+      ],
+      [
+       173.62,
+       196.32
+      ],
+      [
+       174.74,
+       192.36
+      ],
+      [
+       163.08,
+       193.55
+      ],
+      [
+       173.02,
+       192.05
+      ],
+      [
+       172.99,
+       193.68
+      ],
+      [
+       173.77,
+       192.41
+      ],
+      [
+       172.9,
+       192.19
+      ],
+      [
+       173.23,
+       196.83
+      ],
+      [
+       164.44,
+       194.6
+      ],
+      [
+       172.99,
+       194.56
+      ],
+      [
+       170.66,
+       195.56
+      ],
+      [
+       172.77,
+       191.7
+      ],
+      [
+       173.82,
+       191.36
+      ],
+      [
+       167.91,
+       191.02
+      ],
+      [
+       172.85,
+       196.27
+      ],
+      [
+       172.08,
+       194.71
+      ],
+      [
+       172.34,
+       193.69
+      ]
+     ]
+    },
+    "wire": "T01-T02/W6",
+    "survey_z": [
+     174.341,
+     174.474,
+     174.607,
+     174.742,
+     174.877,
+     175.014,
+     175.151,
+     175.29,
+     175.429,
+     175.569,
+     175.71,
+     175.852,
+     175.995,
+     176.139,
+     176.284,
+     176.43,
+     176.577,
+     176.724,
+     176.873,
+     177.022,
+     177.173,
+     177.324,
+     177.477,
+     177.63,
+     177.784,
+     177.939,
+     178.095,
+     178.252,
+     178.41,
+     178.569,
+     178.729,
+     178.889,
+     179.051,
+     179.214,
+     179.377,
+     179.542,
+     179.707,
+     179.873,
+     180.04,
+     180.209,
+     180.378,
+     180.548,
+     180.719,
+     180.891,
+     181.063,
+     181.237,
+     181.412,
+     181.588,
+     181.764,
+     181.942,
+     182.12,
+     182.3,
+     182.48,
+     182.661,
+     182.843,
+     183.026,
+     183.211,
+     183.396,
+     183.582,
+     183.768,
+     183.956,
+     184.145,
+     184.335,
+     184.525,
+     184.717,
+     184.909,
+     185.103,
+     185.297,
+     185.493,
+     185.689,
+     185.886,
+     186.084,
+     186.283,
+     186.483,
+     186.684,
+     186.886,
+     187.089,
+     187.293,
+     187.497,
+     187.703,
+     187.91,
+     188.117,
+     188.326,
+     188.535,
+     188.745,
+     188.957,
+     189.169,
+     189.382,
+     189.596,
+     189.811,
+     190.027,
+     190.244,
+     190.462,
+     190.681,
+     190.901,
+     191.122,
+     191.343,
+     191.566,
+     191.789,
+     192.014,
+     192.239,
+     192.466,
+     192.693,
+     192.921,
+     193.151,
+     193.381,
+     193.612,
+     193.844,
+     194.077,
+     194.311,
+     194.546,
+     194.782,
+     195.018,
+     195.256,
+     195.495,
+     195.734,
+     195.975,
+     196.216,
+     196.459,
+     196.702,
+     196.947,
+     197.192,
+     197.438,
+     197.686,
+     197.934,
+     198.183,
+     198.433,
+     198.684,
+     198.936,
+     199.189,
+     199.443,
+     199.697,
+     199.953,
+     200.21,
+     200.468,
+     200.726,
+     200.986,
+     201.246,
+     201.508,
+     201.77,
+     202.034,
+     202.298,
+     202.563,
+     202.829,
+     203.097,
+     203.365,
+     203.634,
+     203.904,
+     204.175,
+     204.447,
+     204.72,
+     204.994,
+     205.268,
+     205.544,
+     205.821,
+     206.099,
+     206.377,
+     206.657,
+     206.937,
+     207.219,
+     207.501,
+     207.785,
+     208.069,
+     208.354,
+     208.641,
+     208.928,
+     209.216,
+     209.505,
+     209.796,
+     210.087,
+     210.379,
+     210.672,
+     210.966,
+     211.261,
+     211.557,
+     211.853,
+     212.151,
+     212.45,
+     212.75,
+     213.05,
+     213.352,
+     213.655,
+     213.958,
+     214.263,
+     214.568,
+     214.875,
+     215.182,
+     215.491,
+     215.8,
+     216.11,
+     216.422,
+     216.734
+    ],
+    "hot_z": [
+     174.341,
+     174.436,
+     174.532,
+     174.629,
+     174.728,
+     174.828,
+     174.93,
+     175.033,
+     175.137,
+     175.242,
+     175.349,
+     175.457,
+     175.567,
+     175.677,
+     175.789,
+     175.903,
+     176.018,
+     176.134,
+     176.251,
+     176.37,
+     176.49,
+     176.611,
+     176.734,
+     176.858,
+     176.983,
+     177.11,
+     177.238,
+     177.367,
+     177.497,
+     177.629,
+     177.763,
+     177.897,
+     178.033,
+     178.17,
+     178.309,
+     178.449,
+     178.59,
+     178.733,
+     178.876,
+     179.022,
+     179.168,
+     179.316,
+     179.465,
+     179.616,
+     179.768,
+     179.921,
+     180.075,
+     180.231,
+     180.388,
+     180.547,
+     180.707,
+     180.868,
+     181.03,
+     181.194,
+     181.359,
+     181.526,
+     181.694,
+     181.863,
+     182.033,
+     182.205,
+     182.378,
+     182.553,
+     182.728,
+     182.906,
+     183.084,
+     183.264,
+     183.445,
+     183.628,
+     183.811,
+     183.997,
+     184.183,
+     184.371,
+     184.56,
+     184.751,
+     184.942,
+     185.136,
+     185.33,
+     185.526,
+     185.723,
+     185.922,
+     186.122,
+     186.323,
+     186.525,
+     186.729,
+     186.935,
+     187.141,
+     187.349,
+     187.558,
+     187.769,
+     187.981,
+     188.194,
+     188.409,
+     188.625,
+     188.842,
+     189.061,
+     189.281,
+     189.502,
+     189.725,
+     189.949,
+     190.175,
+     190.401,
+     190.63,
+     190.859,
+     191.09,
+     191.322,
+     191.556,
+     191.79,
+     192.027,
+     192.264,
+     192.503,
+     192.743,
+     192.985,
+     193.228,
+     193.472,
+     193.718,
+     193.965,
+     194.213,
+     194.463,
+     194.714,
+     194.967,
+     195.22,
+     195.476,
+     195.732,
+     195.99,
+     196.249,
+     196.51,
+     196.772,
+     197.035,
+     197.3,
+     197.566,
+     197.833,
+     198.102,
+     198.372,
+     198.644,
+     198.916,
+     199.191,
+     199.466,
+     199.743,
+     200.021,
+     200.301,
+     200.582,
+     200.864,
+     201.148,
+     201.433,
+     201.72,
+     202.008,
+     202.297,
+     202.587,
+     202.879,
+     203.173,
+     203.467,
+     203.763,
+     204.061,
+     204.36,
+     204.66,
+     204.961,
+     205.264,
+     205.569,
+     205.874,
+     206.181,
+     206.49,
+     206.8,
+     207.111,
+     207.423,
+     207.737,
+     208.052,
+     208.369,
+     208.687,
+     209.007,
+     209.328,
+     209.65,
+     209.973,
+     210.298,
+     210.625,
+     210.952,
+     211.281,
+     211.612,
+     211.944,
+     212.277,
+     212.612,
+     212.948,
+     213.285,
+     213.624,
+     213.964,
+     214.306,
+     214.649,
+     214.993,
+     215.339,
+     215.686,
+     216.035,
+     216.385,
+     216.736
+    ],
+    "worst": {
+     "x": 66.5,
+     "wire_z": 183.54,
+     "object_z": 174.57,
+     "clearance_m": 8.98,
+     "class": "ground",
+     "wire": "T01-T02/W7",
+     "environment": "hot"
+    }
+   },
+   "clash": {
+    "rules": {
+     "voltage_class_kv": 72.5,
+     "phase_phase": 0.8,
+     "phase_earth": 0.6
+    },
+    "cases": [
+     "survey",
+     "differential_blowout_left",
+     "differential_blowout_right",
+     "hot_cold",
+     "ice_shed"
+    ],
+    "differential_wind_frac": 0.0,
+    "pairs_checked": 21,
+    "violations": 0,
+    "worst": {
+     "a": "T01-T02/W2",
+     "b": "T01-T02/W3",
+     "kind": "phase_phase",
+     "case": "differential_blowout_right",
+     "loaded": "T01-T02/W3",
+     "gap_m": 1.72,
+     "survey_gap_m": 4.97,
+     "required_m": 0.8,
+     "margin_m": 0.92,
+     "risk": "watch",
+     "x_m": 102.5,
+     "at_local": [
+      -16.73,
+      73.09,
+      200.81
+     ],
+     "other_local": [
+      -15.62,
+      73.46,
+      199.56
+     ]
+    },
+    "pairs": [
+     {
+      "a": "T01-T02/W2",
+      "b": "T01-T02/W3",
+      "kind": "phase_phase",
+      "case": "differential_blowout_right",
+      "loaded": "T01-T02/W3",
+      "gap_m": 1.72,
+      "survey_gap_m": 4.97,
+      "required_m": 0.8,
+      "margin_m": 0.92,
+      "risk": "watch",
+      "x_m": 102.5,
+      "at_local": [
+       -16.73,
+       73.09,
+       200.81
+      ],
+      "other_local": [
+       -15.62,
+       73.46,
+       199.56
+      ]
+     },
+     {
+      "a": "T01-T02/W4",
+      "b": "T01-T02/W6",
+      "kind": "phase_phase",
+      "case": "hot_cold",
+      "loaded": "T01-T02/W4",
+      "gap_m": 1.77,
+      "survey_gap_m": 3.28,
+      "required_m": 0.8,
+      "margin_m": 0.97,
+      "risk": "watch",
+      "x_m": 98.0,
+      "at_local": [
+       -14.79,
+       68.33,
+       193.29
+      ],
+      "other_local": [
+       -15.71,
+       68.94,
+       191.9
+      ]
+     },
+     {
+      "a": "T01-T02/W5",
+      "b": "T01-T02/W7",
+      "kind": "phase_phase",
+      "case": "hot_cold",
+      "loaded": "T01-T02/W5",
+      "gap_m": 1.79,
+      "survey_gap_m": 3.27,
+      "required_m": 0.8,
+      "margin_m": 0.99,
+      "risk": "watch",
+      "x_m": 98.5,
+      "at_local": [
+       -22.67,
+       69.75,
+       193.43
+      ],
+      "other_local": [
+       -21.61,
+       70.13,
+       192.03
+      ]
+     },
+     {
+      "a": "T01-T02/W3",
+      "b": "T01-T02/W5",
+      "kind": "phase_phase",
+      "case": "hot_cold",
+      "loaded": "T01-T02/W3",
+      "gap_m": 1.94,
+      "survey_gap_m": 3.41,
+      "required_m": 0.8,
+      "margin_m": 1.14,
+      "risk": "ok",
+      "x_m": 99.5,
+      "at_local": [
+       -21.16,
+       70.58,
+       196.89
+      ],
+      "other_local": [
+       -22.49,
+       71.24,
+       195.64
+      ]
+     },
+     {
+      "a": "T01-T02/W2",
+      "b": "T01-T02/W4",
+      "kind": "phase_phase",
+      "case": "hot_cold",
+      "loaded": "T01-T02/W2",
+      "gap_m": 1.99,
+      "survey_gap_m": 3.41,
+      "required_m": 0.8,
+      "margin_m": 1.19,
+      "risk": "ok",
+      "x_m": 100.0,
+      "at_local": [
+       -15.96,
+       70.48,
+       197.03
+      ],
+      "other_local": [
+       -14.51,
+       70.81,
+       195.7
+      ]
+     },
+     {
+      "a": "T01-T02/W6",
+      "b": "T01-T02/W7",
+      "kind": "phase_phase",
+      "case": "differential_blowout_left",
+      "loaded": "T01-T02/W6",
+      "gap_m": 2.31,
+      "survey_gap_m": 5.71,
+      "required_m": 0.8,
+      "margin_m": 1.51,
+      "risk": "ok",
+      "x_m": 102.0,
+      "at_local": [
+       -19.41,
+       72.9,
+       194.1
+      ],
+      "other_local": [
+       -21.2,
+       73.61,
+       192.82
+      ]
+     },
+     {
+      "a": "T01-T02/W3",
+      "b": "T01-T02/W4",
+      "kind": "phase_phase",
+      "case": "differential_blowout_left",
+      "loaded": "T01-T02/W4",
+      "gap_m": 3.09,
+      "survey_gap_m": 7.02,
+      "required_m": 0.8,
+      "margin_m": 2.29,
+      "risk": "ok",
+      "x_m": 100.0,
+      "at_local": [
+       -18.62,
+       70.79,
+       196.98
+      ],
+      "other_local": [
+       -21.16,
+       70.58,
+       198.73
+      ]
+     },
+     {
+      "a": "T01-T02/W2",
+      "b": "T01-T02/W5",
+      "kind": "phase_phase",
+      "case": "differential_blowout_right",
+      "loaded": "T01-T02/W5",
+      "gap_m": 3.13,
+      "survey_gap_m": 7.04,
+      "required_m": 0.8,
+      "margin_m": 2.33,
+      "risk": "ok",
+      "x_m": 100.0,
+      "at_local": [
+       -18.47,
+       70.77,
+       197.0
+      ],
+      "other_local": [
+       -16.02,
+       69.98,
+       198.76
+      ]
+     },
+     {
+      "a": "T01-T02/W4",
+      "b": "T01-T02/W7",
+      "kind": "phase_phase",
+      "case": "differential_blowout_right",
+      "loaded": "T01-T02/W7",
+      "gap_m": 3.44,
+      "survey_gap_m": 7.36,
+      "required_m": 0.8,
+      "margin_m": 2.64,
+      "risk": "ok",
+      "x_m": 100.5,
+      "at_local": [
+       -17.36,
+       71.15,
+       193.77
+      ],
+      "other_local": [
+       -14.56,
+       70.32,
+       195.59
+      ]
+     },
+     {
+      "a": "T01-T02/W5",
+      "b": "T01-T02/W6",
+      "kind": "phase_phase",
+      "case": "differential_blowout_left",
+      "loaded": "T01-T02/W6",
+      "gap_m": 3.46,
+      "survey_gap_m": 7.36,
+      "required_m": 0.8,
+      "margin_m": 2.66,
+      "risk": "ok",
+      "x_m": 100.5,
+      "at_local": [
+       -19.59,
+       71.41,
+       193.77
+      ],
+      "other_local": [
+       -22.49,
+       71.24,
+       195.64
+      ]
+     },
+     {
+      "a": "T01-T02/W4",
+      "b": "T01-T02/W5",
+      "kind": "phase_phase",
+      "case": "differential_blowout_left",
+      "loaded": "T01-T02/W4",
+      "gap_m": 4.11,
+      "survey_gap_m": 7.6,
+      "required_m": 0.8,
+      "margin_m": 3.31,
+      "risk": "ok",
+      "x_m": 102.5,
+      "at_local": [
+       -18.33,
+       73.27,
+       197.54
+      ],
+      "other_local": [
+       -22.14,
+       74.22,
+       196.32
+      ]
+     },
+     {
+      "a": "T01-T02/E1",
+      "b": "T01-T02/W2",
+      "kind": "phase_earth",
+      "case": "differential_blowout_left",
+      "loaded": "T01-T02/W2",
+      "gap_m": 4.0,
+      "survey_gap_m": 5.49,
+      "required_m": 0.6,
+      "margin_m": 3.4,
+      "risk": "ok",
+      "x_m": 56.5,
+      "at_local": [
+       -24.47,
+       27.68,
+       191.15
+      ],
+      "other_local": [
+       -23.6,
+       27.07,
+       195.01
+      ]
+     }
+    ]
+   },
+   "air_gap": {
+    "required_m": 0.6,
+    "ends_checked": 6,
+    "violations": 0,
+    "worst": {
+     "wire": "T01-T02/W3",
+     "tower": "T02",
+     "case": "blowout_right",
+     "gap_m": 0.97,
+     "survey_gap_m": 1.6,
+     "required_m": 0.6,
+     "margin_m": 0.37,
+     "risk": "watch",
+     "swing_deg": 42.6,
+     "string_m": 1.3,
+     "at_local": [
+      -9.63,
+      160.86,
+      223.49
+     ],
+     "steel_local": [
+      -8.67,
+      160.84,
+      223.37
+     ]
+    },
+    "ends": [
+     {
+      "wire": "T01-T02/W3",
+      "tower": "T02",
+      "case": "blowout_right",
+      "gap_m": 0.97,
+      "survey_gap_m": 1.6,
+      "required_m": 0.6,
+      "margin_m": 0.37,
+      "risk": "watch",
+      "swing_deg": 42.6,
+      "string_m": 1.3,
+      "at_local": [
+       -9.63,
+       160.86,
+       223.49
+      ],
+      "steel_local": [
+       -8.67,
+       160.84,
+       223.37
+      ]
+     },
+     {
+      "wire": "T01-T02/W2",
+      "tower": "T02",
+      "case": "blowout_left",
+      "gap_m": 1.0,
+      "survey_gap_m": 1.6,
+      "required_m": 0.6,
+      "margin_m": 0.4,
+      "risk": "watch",
+      "swing_deg": 42.6,
+      "string_m": 1.3,
+      "at_local": [
+       -6.51,
+       160.49,
+       223.51
+      ],
+      "steel_local": [
+       -7.47,
+       160.71,
+       223.34
+      ]
+     },
+     {
+      "wire": "T01-T02/W6",
+      "tower": "T02",
+      "case": "blowout_left",
+      "gap_m": 1.02,
+      "survey_gap_m": 1.63,
+      "required_m": 0.6,
+      "margin_m": 0.42,
+      "risk": "watch",
+      "swing_deg": 42.6,
+      "string_m": 1.3,
+      "at_local": [
+       -6.12,
+       160.45,
+       216.93
+      ],
+      "steel_local": [
+       -7.13,
+       160.35,
+       216.98
+      ]
+     },
+     {
+      "wire": "T01-T02/W7",
+      "tower": "T02",
+      "case": "blowout_right",
+      "gap_m": 1.05,
+      "survey_gap_m": 1.62,
+      "required_m": 0.6,
+      "margin_m": 0.45,
+      "risk": "watch",
+      "swing_deg": 42.6,
+      "string_m": 1.3,
+      "at_local": [
+       -10.01,
+       160.4,
+       216.75
+      ],
+      "steel_local": [
+       -8.98,
+       160.52,
+       216.56
+      ]
+     },
+     {
+      "wire": "T01-T02/W5",
+      "tower": "T02",
+      "case": "blowout_right",
+      "gap_m": 1.3,
+      "survey_gap_m": 1.61,
+      "required_m": 0.6,
+      "margin_m": 0.7,
+      "risk": "watch",
+      "swing_deg": 42.6,
+      "string_m": 1.3,
+      "at_local": [
+       -10.92,
+       161.51,
+       220.32
+      ],
+      "steel_local": [
+       -10.87,
+       161.47,
+       221.61
+      ]
+     },
+     {
+      "wire": "T01-T02/W4",
+      "tower": "T02",
+      "case": "blowout_left",
+      "gap_m": 1.3,
+      "survey_gap_m": 1.6,
+      "required_m": 0.6,
+      "margin_m": 0.7,
+      "risk": "watch",
+      "swing_deg": 42.6,
+      "string_m": 1.3,
+      "at_local": [
+       -5.1,
+       160.83,
+       220.36
+      ],
+      "steel_local": [
+       -5.24,
+       160.87,
+       221.66
+      ]
+     }
+    ],
+    "note": "Not judged at T01: wire-class hardware there suggests a tension tower (no string swing). Confirm the structure type."
+   },
+   "ampacity": {
+    "standard": "IEEE Std 738-2012 steady state",
+    "weather": {
+     "ambient_c": 35.0,
+     "wind_ms": 0.61,
+     "wind_angle_deg": 90.0,
+     "solar_w_m2": 1000.0,
+     "elevation_m": 2166.0
+    },
+    "conductor": "AAAC ~570 mm\u00b2",
+    "thermal_limit_c": 80.0,
+    "thermal_limit_a": 908,
+    "clearance_limit_c": null,
+    "clearance_limit_a": null,
+    "rating_c": 80.0,
+    "rating_a": 908,
+    "limited_by": "conductor thermal limit",
+    "hot_case_a": 908,
+    "heat_balance_w_m": {
+     "q_c": 56.68,
+     "q_r": 18.07,
+     "q_s": 15.55
+    },
+    "note": "Per-phase current for one conductor; assumed resistance, emissivity and absorptivity (see Assumptions)."
+   },
+   "grow_in": {
+    "basis": "hot",
+    "growth_to_violation_m": null,
+    "years_to_violation": null,
+    "growth_m_per_year": 0.5,
+    "note": "no breach within 10 m of growth"
+   },
+   "worst": {
+    "environment": "hot",
+    "wire": "T01-T02/W7",
+    "class": "ground",
+    "clearance_m": 8.98,
+    "required_m": 5.5,
+    "margin_m": 3.48,
+    "risk": "ok",
+    "at_local": [
+     -25.42,
+     37.86,
+     183.54
+    ],
+    "object_local": [
+     -25.42,
+     37.86,
+     174.57
+    ]
+   },
+   "risk": "ok",
+   "fall_in": {
+    "strike": 0,
+    "watch": 0,
+    "worst": null
+   },
+   "priority": {
+    "score": 23.2,
+    "components": {
+     "clearance": 0,
+     "probability": 0.0,
+     "grow_in": 0,
+     "fall_in": 0,
+     "clash": 10,
+     "air_gap": 10,
+     "consequence": 0
+    },
+    "voltage_weight": 1.16,
+    "drivers": [
+     "clash",
+     "air_gap"
+    ],
+    "rank": 1
+   }
+  },
+  {
+   "span": "EDGE-T01",
+   "kind": "edge",
+   "voltage_kv": 65.0,
+   "required_m": {
+    "voltage_class_kv": 66.0,
+    "vegetation": 4.0,
+    "building": 4.0,
+    "building_horizontal": 2.3,
+    "ground": 5.5,
+    "road": 11.6,
+    "railway": 15.56,
+    "water": 6.5
+   },
+   "environments": {
+    "survey": {
+     "wires": [
+      {
+       "wire": "EDGE-T01/W1",
+       "type": "conductor",
+       "state": {
+        "a_m": 1151.1
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 16.76,
+         "required_m": 4.0,
+         "margin_m": 12.76,
+         "risk": "ok",
+         "at_local": [
+          -29.54,
+          -59.07,
+          159.99
+         ],
+         "object_local": [
+          -36.15,
+          -50.58,
+          147.15
+         ]
+        },
+        "ground": {
+         "clearance_m": 20.22,
+         "required_m": 5.5,
+         "margin_m": 14.72,
+         "risk": "ok",
+         "at_local": [
+          -28.64,
+          -51.63,
+          164.34
+         ],
+         "object_local": [
+          -28.64,
+          -51.63,
+          144.12
+         ]
+        }
+       }
+      },
+      {
+       "wire": "EDGE-T01/W2",
+       "type": "conductor",
+       "state": {
+        "a_m": 990.7
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 18.65,
+         "required_m": 4.0,
+         "margin_m": 14.65,
+         "risk": "ok",
+         "at_local": [
+          -31.16,
+          -60.31,
+          162.26
+         ],
+         "object_local": [
+          -36.15,
+          -50.58,
+          147.15
+         ]
+        },
+        "ground": {
+         "clearance_m": 23.35,
+         "required_m": 5.5,
+         "margin_m": 17.85,
+         "risk": "ok",
+         "at_local": [
+          -30.09,
+          -51.37,
+          167.52
+         ],
+         "object_local": [
+          -30.09,
+          -51.37,
+          144.17
+         ]
+        }
+       }
+      },
+      {
+       "wire": "EDGE-T01/W3",
+       "type": "conductor",
+       "state": {
+        "a_m": 1106.9
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 14.94,
+         "required_m": 4.0,
+         "margin_m": 10.94,
+         "risk": "ok",
+         "at_local": [
+          -37.67,
+          -57.29,
+          160.55
+         ],
+         "object_local": [
+          -37.07,
+          -49.96,
+          147.54
+         ]
+        },
+        "ground": {
+         "clearance_m": 19.56,
+         "required_m": 5.5,
+         "margin_m": 14.06,
+         "risk": "ok",
+         "at_local": [
+          -36.1,
+          -43.88,
+          168.39
+         ],
+         "object_local": [
+          -36.1,
+          -43.88,
+          148.83
+         ]
+        }
+       }
+      },
+      {
+       "wire": "EDGE-T01/W4",
+       "type": "conductor",
+       "state": {
+        "a_m": 1099.1
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 13.81,
+         "required_m": 4.0,
+         "margin_m": 9.81,
+         "risk": "ok",
+         "at_local": [
+          -30.37,
+          -57.29,
+          157.76
+         ],
+         "object_local": [
+          -36.15,
+          -50.58,
+          147.15
+         ]
+        },
+        "ground": {
+         "clearance_m": 16.56,
+         "required_m": 5.5,
+         "margin_m": 11.06,
+         "risk": "ok",
+         "at_local": [
+          -29.66,
+          -51.33,
+          161.22
+         ],
+         "object_local": [
+          -29.66,
+          -51.33,
+          144.66
+         ]
+        }
+       }
+      },
+      {
+       "wire": "EDGE-T01/W5",
+       "type": "conductor",
+       "state": {
+        "a_m": 988.4
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 13.36,
+         "required_m": 4.0,
+         "margin_m": 9.36,
+         "risk": "ok",
+         "at_local": [
+          -40.69,
+          -95.75,
+          141.93
+         ],
+         "object_local": [
+          -36.64,
+          -107.15,
+          136.27
+         ]
+        },
+        "ground": {
+         "clearance_m": 22.9,
+         "required_m": 5.5,
+         "margin_m": 17.4,
+         "risk": "ok",
+         "at_local": [
+          -34.56,
+          -43.61,
+          171.78
+         ],
+         "object_local": [
+          -34.56,
+          -43.61,
+          148.88
+         ]
+        }
+       }
+      },
+      {
+       "wire": "EDGE-T01/E6",
+       "type": "earth_wire",
+       "state": {
+        "a_m": 1037.8
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 5.34,
+         "required_m": 4.0,
+         "margin_m": 1.34,
+         "risk": "ok",
+         "at_local": [
+          -39.52,
+          -108.81,
+          140.45
+         ],
+         "object_local": [
+          -36.64,
+          -107.15,
+          136.27
+         ]
+        },
+        "ground": {
+         "clearance_m": 28.24,
+         "required_m": 5.5,
+         "margin_m": 22.74,
+         "risk": "ok",
+         "at_local": [
+          -31.76,
+          -42.76,
+          177.33
+         ],
+         "object_local": [
+          -31.76,
+          -42.76,
+          149.09
+         ]
+        }
+       }
+      },
+      {
+       "wire": "EDGE-T01/W7",
+       "type": "conductor",
+       "state": {
+        "a_m": 1180.2
+       },
+       "clearance": {
+        "vegetation": {
+         "clearance_m": 12.16,
+         "required_m": 4.0,
+         "margin_m": 8.16,
+         "risk": "ok",
+         "at_local": [
+          -36.47,
+          -55.86,
+          158.16
+         ],
+         "object_local": [
+          -37.07,
+          -49.96,
+          147.54
+         ]
+        },
+        "ground": {
+         "clearance_m": 16.33,
+         "required_m": 5.5,
+         "margin_m": 10.83,
+         "risk": "ok",
+         "at_local": [
+          -35.07,
+          -43.94,
+          165.14
+         ],
+         "object_local": [
+          -35.07,
+          -43.94,
+          148.82
+         ]
+        }
+       }
+      }
+     ],
+     "worst": {
+      "wire": "EDGE-T01/E6",
+      "class": "vegetation",
+      "clearance_m": 5.34,
+      "required_m": 4.0,
+      "margin_m": 1.34,
+      "risk": "ok",
+      "at_local": [
+       -39.52,
+       -108.81,
+       140.45
+      ],
+      "object_local": [
+       -36.64,
+       -107.15,
+       136.27
+      ]
+     }
+    }
+   },
+   "conditions": {
+    "temp_c": 15.0,
+    "sd_c": 5.0,
+    "source": "assumed (fixed config value)",
+    "capture_utc": "2024-11-05T12:38:40+00:00",
+    "environments": {
+     "survey": 15.0,
+     "hot": 80.0,
+     "blowout": 15.0,
+     "ice": 0.0
+    },
+    "conductor_max_temp_c": 80.0
+   },
+   "note": "Edge span: the far tower is outside the survey, so only survey-condition clearance is reported.",
+   "grow_in": {
+    "basis": "survey",
+    "growth_to_violation_m": 9.5,
+    "years_to_violation": 19.0,
+    "growth_m_per_year": 0.5,
+    "tree_local": [
+     -36.15,
+     -50.58,
+     147.15
+    ],
+    "wire_local": [
+     -36.06,
+     -52.38,
+     160.18
+    ]
+   },
+   "worst": {
+    "environment": "survey",
+    "wire": "EDGE-T01/E6",
+    "class": "vegetation",
+    "clearance_m": 5.34,
+    "required_m": 4.0,
+    "margin_m": 1.34,
+    "risk": "ok",
+    "at_local": [
+     -39.52,
+     -108.81,
+     140.45
+    ],
+    "object_local": [
+     -36.64,
+     -107.15,
+     136.27
+    ]
+   },
+   "risk": "ok",
+   "fall_in": {
+    "strike": 0,
+    "watch": 0,
+    "worst": null
+   },
+   "priority": {
+    "score": 0.0,
+    "components": {
+     "clearance": 0,
+     "probability": 0.0,
+     "grow_in": 0,
+     "fall_in": 0,
+     "clash": 0,
+     "air_gap": 0,
+     "consequence": 0
+    },
+    "voltage_weight": 1.16,
+    "drivers": [],
+    "rank": 2
+   }
+  },
+  {
+   "span": "T02-EDGE",
+   "kind": "edge",
+   "voltage_kv": 65.0,
+   "required_m": {
+    "voltage_class_kv": 66.0,
+    "vegetation": 4.0,
+    "building": 4.0,
+    "building_horizontal": 2.3,
+    "ground": 5.5,
+    "road": 11.6,
+    "railway": 15.56,
+    "water": 6.5
+   },
+   "environments": {
+    "survey": {
+     "wires": [
+      {
+       "wire": "T02-EDGE/E1",
+       "type": "earth_wire",
+       "state": {
+        "a_m": 1316.2
+       },
+       "clearance": {
+        "ground": {
+         "clearance_m": 40.01,
+         "required_m": 5.5,
+         "margin_m": 34.51,
+         "risk": "ok",
+         "at_local": [
+          -5.74,
+          180.8,
+          229.55
+         ],
+         "object_local": [
+          -5.74,
+          180.8,
+          189.53
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T02-EDGE/W2",
+       "type": "conductor",
+       "state": {
+        "a_m": 1117.3
+       },
+       "clearance": {
+        "ground": {
+         "clearance_m": 35.19,
+         "required_m": 5.5,
+         "margin_m": 29.69,
+         "risk": "ok",
+         "at_local": [
+          -2.76,
+          184.68,
+          224.33
+         ],
+         "object_local": [
+          -2.76,
+          184.68,
+          189.14
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T02-EDGE/W3",
+       "type": "conductor",
+       "state": {
+        "a_m": 1112.1
+       },
+       "clearance": {
+        "ground": {
+         "clearance_m": 33.53,
+         "required_m": 5.5,
+         "margin_m": 28.03,
+         "risk": "ok",
+         "at_local": [
+          -5.75,
+          201.72,
+          225.28
+         ],
+         "object_local": [
+          -5.75,
+          201.72,
+          191.75
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T02-EDGE/W4",
+       "type": "conductor",
+       "state": {
+        "a_m": 1127.4
+       },
+       "clearance": {
+        "ground": {
+         "clearance_m": 32.22,
+         "required_m": 5.5,
+         "margin_m": 26.72,
+         "risk": "ok",
+         "at_local": [
+          -0.84,
+          189.57,
+          221.34
+         ],
+         "object_local": [
+          -0.84,
+          189.57,
+          189.12
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T02-EDGE/W5",
+       "type": "conductor",
+       "state": {
+        "a_m": 1147.6
+       },
+       "clearance": {
+        "ground": {
+         "clearance_m": 29.79,
+         "required_m": 5.5,
+         "margin_m": 24.29,
+         "risk": "ok",
+         "at_local": [
+          -7.52,
+          197.95,
+          221.85
+         ],
+         "object_local": [
+          -7.52,
+          197.95,
+          192.06
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T02-EDGE/W6",
+       "type": "conductor",
+       "state": {
+        "a_m": 1107.2
+       },
+       "clearance": {
+        "ground": {
+         "clearance_m": 28.7,
+         "required_m": 5.5,
+         "margin_m": 23.2,
+         "risk": "ok",
+         "at_local": [
+          -2.24,
+          185.73,
+          217.8
+         ],
+         "object_local": [
+          -2.24,
+          185.73,
+          189.1
+         ]
+        }
+       }
+      },
+      {
+       "wire": "T02-EDGE/W7",
+       "type": "conductor",
+       "state": {
+        "a_m": 1112.8
+       },
+       "clearance": {
+        "ground": {
+         "clearance_m": 26.79,
+         "required_m": 5.5,
+         "margin_m": 21.29,
+         "risk": "ok",
+         "at_local": [
+          -6.1,
+          201.74,
+          218.7
+         ],
+         "object_local": [
+          -6.1,
+          201.74,
+          191.91
+         ]
+        }
+       }
+      }
+     ],
+     "worst": {
+      "wire": "T02-EDGE/W7",
+      "class": "ground",
+      "clearance_m": 26.79,
+      "required_m": 5.5,
+      "margin_m": 21.29,
+      "risk": "ok",
+      "at_local": [
+       -6.1,
+       201.74,
+       218.7
+      ],
+      "object_local": [
+       -6.1,
+       201.74,
+       191.91
+      ]
+     }
+    }
+   },
+   "conditions": {
+    "temp_c": 15.0,
+    "sd_c": 5.0,
+    "source": "assumed (fixed config value)",
+    "capture_utc": "2024-11-05T12:39:34+00:00",
+    "environments": {
+     "survey": 15.0,
+     "hot": 80.0,
+     "blowout": 15.0,
+     "ice": 0.0
+    },
+    "conductor_max_temp_c": 80.0
+   },
+   "note": "Edge span: the far tower is outside the survey, so only survey-condition clearance is reported.",
+   "grow_in": {
+    "basis": "survey",
+    "growth_to_violation_m": null,
+    "note": "no vegetation near the span"
+   },
+   "worst": {
+    "environment": "survey",
+    "wire": "T02-EDGE/W7",
+    "class": "ground",
+    "clearance_m": 26.79,
+    "required_m": 5.5,
+    "margin_m": 21.29,
+    "risk": "ok",
+    "at_local": [
+     -6.1,
+     201.74,
+     218.7
+    ],
+    "object_local": [
+     -6.1,
+     201.74,
+     191.91
+    ]
+   },
+   "risk": "ok",
+   "fall_in": {
+    "strike": 0,
+    "watch": 0,
+    "worst": null
+   },
+   "priority": {
+    "score": 0.0,
+    "components": {
+     "clearance": 0,
+     "probability": 0.0,
+     "grow_in": 0,
+     "fall_in": 0,
+     "clash": 0,
+     "air_gap": 0,
+     "consequence": 0
+    },
+    "voltage_weight": 1.16,
+    "drivers": [],
+    "rank": 3
+   }
+  }
+ ],
+ "seconds": {
+  "extract": 0.0,
+  "total": 43.5,
+  "workers": 3,
+  "cached_spans": 0
+ }
+}

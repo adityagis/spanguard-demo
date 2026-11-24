@@ -1,0 +1,148 @@
+{
+  "project": "GridNet t5c2 CEA",
+  "crs": "EPSG:32632",
+  "origin": [
+    362850.4,
+    5108580.1,
+    2010.9
+  ],
+  "axes": "x=east, y=north, z=up, metres relative to origin",
+  "classes": {
+    "0": {
+      "name": "unassigned",
+      "color": "#9AA0A6"
+    },
+    "1": {
+      "name": "tower",
+      "color": "#5B6B7F"
+    },
+    "2": {
+      "name": "conductor",
+      "color": "#1D1D1F"
+    },
+    "3": {
+      "name": "structural_cable",
+      "color": "#48484A"
+    },
+    "4": {
+      "name": "insulator",
+      "color": "#8E8CD8"
+    },
+    "5": {
+      "name": "veg_high",
+      "color": "#4F7F52"
+    },
+    "6": {
+      "name": "veg_low",
+      "color": "#7FA36B"
+    },
+    "7": {
+      "name": "veg_herb",
+      "color": "#A9BE8B"
+    },
+    "8": {
+      "name": "ground",
+      "color": "#B8AE9C"
+    },
+    "9": {
+      "name": "road",
+      "color": "#8E8E93"
+    },
+    "10": {
+      "name": "water",
+      "color": "#64A7D9"
+    },
+    "11": {
+      "name": "building",
+      "color": "#D8C3A5"
+    },
+    "12": {
+      "name": "rail",
+      "color": "#8C6A4F"
+    }
+  },
+  "overview": {
+    "file": "zone_overview.bin",
+    "count": 1397616,
+    "bytes": 22361856,
+    "layout": {
+      "positions": [
+        0,
+        16771392
+      ],
+      "classes": [
+        16771392,
+        1397616
+      ],
+      "rgb": [
+        18169008,
+        4192848
+      ]
+    },
+    "bounds_local": {
+      "min": [
+        -133.87,
+        -290.365,
+        -0.02
+      ],
+      "max": [
+        134.008,
+        290.303,
+        236.302
+      ]
+    },
+    "class_counts": {
+      "unassigned": 2649,
+      "tower": 67308,
+      "conductor": 132424,
+      "structural_cable": 30890,
+      "insulator": 15989,
+      "veg_low": 25109,
+      "veg_herb": 1054594,
+      "ground": 34657,
+      "building": 33996
+    }
+  },
+  "spans": {
+    "T01-T02": {
+      "file": "spans/T01-T02.bin",
+      "count": 400000,
+      "bytes": 6400000,
+      "layout": {
+        "positions": [
+          0,
+          4800000
+        ],
+        "classes": [
+          4800000,
+          400000
+        ],
+        "rgb": [
+          5200000,
+          1200000
+        ]
+      },
+      "bounds_local": {
+        "min": [
+          -71.471,
+          -47.924,
+          140.421
+        ],
+        "max": [
+          33.31,
+          180.45,
+          229.315
+        ]
+      },
+      "class_counts": {
+        "tower": 174417,
+        "conductor": 101908,
+        "structural_cable": 23462,
+        "insulator": 15989,
+        "veg_high": 85,
+        "ground": 65164,
+        "building": 18975
+      }
+    }
+  }
+}

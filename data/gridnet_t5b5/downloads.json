@@ -1,0 +1,58 @@
+{
+ "files": [
+  {
+   "file": "report.html",
+   "label": "Client report",
+   "note": "HTML, prints to PDF",
+   "bytes": 310464
+  },
+  {
+   "file": "gridnet_t5b5_spanguard.xlsx",
+   "label": "Workbook",
+   "note": "Excel, live formulas",
+   "bytes": 53652
+  },
+  {
+   "file": "trim_worklist.csv",
+   "label": "Work list",
+   "note": "CSV for Excel",
+   "bytes": 1287
+  },
+  {
+   "file": "trim_worklist.kmz",
+   "label": "Work list",
+   "note": "KMZ for Google Earth",
+   "bytes": 1018
+  },
+  {
+   "file": "network.geojson",
+   "label": "Network",
+   "note": "GeoJSON for QGIS / ArcGIS",
+   "bytes": 53332
+  },
+  {
+   "file": "pls_cadd_points.csv",
+   "label": "Survey points",
+   "note": "CSV for PLS-CADD import",
+   "bytes": 166205
+  },
+  {
+   "file": "gis_corrections.csv",
+   "label": "GIS corrections",
+   "note": "CSV, one fix per row",
+   "bytes": 73
+  },
+  {
+   "file": "qa_issues.csv",
+   "label": "QA issues",
+   "note": "CSV",
+   "bytes": 981
+  },
+  {
+   "file": "findings.csv",
+   "label": "Findings",
+   "note": "CSV with status",
+   "bytes": 1973
+  }
+ ]
+}

@@ -1,0 +1,141 @@
+{
+  "file": "t5c2.las",
+  "points": 30561854,
+  "point_format": 3,
+  "las_version": "1.2",
+  "crs": "EPSG:32632",
+  "bounds": {
+    "min": [
+      362716.418,
+      5108289.735,
+      2010.88
+    ],
+    "max": [
+      362984.408,
+      5108870.426,
+      2247.202
+    ],
+    "extent_m": [
+      267.99,
+      580.69,
+      236.32
+    ]
+  },
+  "footprint_area_m2": 87328.0,
+  "density_pts_per_m2": {
+    "mean": 350.0,
+    "median": 213.0,
+    "p5": 15.0,
+    "p95": 1062.0,
+    "cell_m": 1.0
+  },
+  "terrain_hole_pct": 1.04,
+  "classes": [
+    {
+      "code": 0,
+      "name": "unassigned",
+      "points": 84427,
+      "pct": 0.276,
+      "z_min": 2166.8,
+      "z_max": 2204.33
+    },
+    {
+      "code": 1,
+      "name": "tower",
+      "points": 303896,
+      "pct": 0.994,
+      "z_min": 2165.88,
+      "z_max": 2239.56
+    },
+    {
+      "code": 2,
+      "name": "conductor",
+      "points": 132424,
+      "pct": 0.433,
+      "z_min": 2151.0,
+      "z_max": 2241.55
+    },
+    {
+      "code": 3,
+      "name": "structural_cable",
+      "points": 30890,
+      "pct": 0.101,
+      "z_min": 2140.37,
+      "z_max": 2247.2
+    },
+    {
+      "code": 4,
+      "name": "insulator",
+      "points": 15989,
+      "pct": 0.052,
+      "z_min": 2184.31,
+      "z_max": 2235.82
+    },
+    {
+      "code": 6,
+      "name": "veg_low",
+      "points": 203926,
+      "pct": 0.667,
+      "z_min": 2050.14,
+      "z_max": 2209.68
+    },
+    {
+      "code": 7,
+      "name": "veg_herb",
+      "points": 27991571,
+      "pct": 91.59,
+      "z_min": 2010.88,
+      "z_max": 2221.9
+    },
+    {
+      "code": 8,
+      "name": "ground",
+      "points": 912841,
+      "pct": 2.987,
+      "z_min": 2065.49,
+      "z_max": 2206.41
+    },
+    {
+      "code": 11,
+      "name": "building",
+      "points": 885890,
+      "pct": 2.899,
+      "z_min": 2169.61,
+      "z_max": 2209.95
+    }
+  ],
+  "source_label_counts": {
+    "0": 8239,
+    "2": 295657,
+    "5": 132424,
+    "6": 30890,
+    "10": 9097,
+    "11": 6892,
+    "15": 203926,
+    "16": 27991571,
+    "17": 5362,
+    "18": 907479,
+    "21": 885890,
+    "255": 84427
+  },
+  "warnings": [
+    {
+      "level": "info",
+      "message": "No high vegetation in this zone. Clearance results will be driven by ground, low vegetation and buildings."
+    }
+  ],
+  "timings": [
+    {
+      "stage": "ingest",
+      "seconds": 41.52,
+      "points": 30561854,
+      "points_per_s": 735998
+    },
+    {
+      "stage": "export3d",
+      "seconds": 0.56,
+      "points": 1397616,
+      "points_per_s": 2482473
+    }
+  ]
+}

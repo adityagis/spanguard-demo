@@ -1,0 +1,9 @@
+id,kind,severity,status,flag,span,asset,title,measured,required,margin,unit,x,y,z,action
+QA-ea8931a6,qa:tower_hardware,warn,open,,,T01,"1 wire-class clusters at T01 (591 pts) that no span wire explains, on a straight run.",591,,,pts,362137.49,5106873.96,1597.26,"Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify)."
+QA-c9a37483,qa:tower_hardware,warn,open,,,T02,"1 wire-class clusters at T02 (548 pts) that no span wire explains, on a straight run.",548,,,pts,362218.76,5107202.65,1684.08,"Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify)."
+QA-a91b0775,qa:tower_hardware,warn,open,,,T03,"1 wire-class clusters at T03 (458 pts) that no span wire explains, on a straight run.",458,,,pts,362268.82,5107404.43,1776.03,"Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify)."
+CL-6f7cc4b5,clearance:vegetation,violation,open,,T01-T02,T01-T02/W7,vegetation clearance 2.3 m (required 5.0 m) in the hot case,2.3,5.0,-2.7,m,362196.85,5107132.39,1630.85,Restore the clearance (trim / re-tension / raise)
+CX-43616889,clash,watch,open,,T01-T02,T01-T02/W2 / T01-T02/W3,Wires T01-T02/W2 and T01-T02/W3 close to 2.89 m (required 2.2 m) in differential blowout right,2.89,2.2,0.69,m,362208.12,5107145.44,1656.09,Engineering review (phase spacing)
+TR-5ac858b7,danger_tree,strike,open,,T01-T02,TR-5ac858b7,"Tree 20.2 m tall, 20.08 m from the wire (strike)",20.08,20.2,-1.15,m,362197.5,5107131.5,1611.04,Reduce to 18.6 m or fell
+TR-13ec6940,danger_tree,watch,open,,T01-T02,TR-13ec6940,"Tree 21.3 m tall, 22.7 m from the wire (watch)",22.7,21.3,0.37,m,362196.5,5107121.5,1604.95,Monitor
+TR-e77f55f7,danger_tree,watch,open,,T01-T02,TR-e77f55f7,"Tree 17.4 m tall, 20.12 m from the wire (watch)",20.12,17.4,1.71,m,362183.5,5107119.5,1607.38,Monitor

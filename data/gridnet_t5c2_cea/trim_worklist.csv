@@ -1,0 +1,5 @@
+id,priority,span,span_rank,type,status,lon,lat,z_m,measured_m,required_m,action,due,est_cost,finding,finding_status,flag
+WL-2cb741c5,1,T01-T02,1,engineering review (wire clash),review,7.2247873,46.1176682,2211.71,1.72,0.8,T01-T02/W2 to T01-T02/W3 close to 1.72 m in differential blowout right: check phase spacing / spacers,next design review,,CX-32dea7a7,open,
+WL-76457f7e,2,T01-T02,1,engineering review (wire clash),review,7.2248138,46.1176258,2204.19,1.77,0.8,T01-T02/W4 to T01-T02/W6 close to 1.77 m in hot cold: check phase spacing / spacers,next design review,,CX-32dea7a7,open,
+WL-a8f30871,3,T01-T02,1,engineering review (wire clash),review,7.2247114,46.117637,2204.33,1.79,0.8,T01-T02/W5 to T01-T02/W7 close to 1.79 m in hot cold: check phase spacing / spacers,next design review,,CX-32dea7a7,open,
+WL-7cb50b3b,4,T01-T02,1,engineering review (tower air gap),review,7.2248662,46.1184592,2234.27,0.97,0.6,"T01-T02/W3 swings to 0.97 m from T02 steel in blowout right (42.6° string swing): check string length, weights or a V-string",next design review,,AG-9803ba51,open,

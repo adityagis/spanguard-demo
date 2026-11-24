@@ -1,0 +1,4 @@
+id,severity,check,object,span,measured,threshold,unit,message,suggestion,x,y,z
+QA-efd5df27,warn,gis_tower_offset,T01,,3.04,3.0,m,GIS record osm:n2659576650 is 3.0 m from the tower found in LiDAR.,"Update the GIS position from LiDAR (as-built), or confirm the GIS datum.",362820.359,5108551.545,2196.809
+QA-9261eb27,warn,tower_hardware,T01,,1265,,pts,"6 wire-class clusters at T01 (1265 pts) that no span wire explains, on a straight run.","Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify).",362820.359,5108551.545,2196.809
+QA-e1f89744,info,coverage,EDGE-T01/W5,EDGE-T01,12.0,10.0,m,Largest gap without points is 12 m (edge of survey).,Expected near the survey boundary; include the next tower in the capture area to model the full span.,362813.644,5108517.811,2171.616

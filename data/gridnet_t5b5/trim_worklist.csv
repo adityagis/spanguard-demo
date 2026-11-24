@@ -1,0 +1,6 @@
+id,priority,span,span_rank,type,status,lon,lat,z_m,measured_m,required_m,action,due,est_cost,finding,finding_status,flag
+WL-d2cba224,1,T01-T02,1,trim vegetation (clearance),violation,7.2169909,46.1038591,1630.85,2.3,5.0,Trim to restore at least 6.0 m; now 2.30 m in the hot case,now,4000.0,CL-6f7cc4b5,open,
+WL-8b556b70,2,T01-T02,1,top or fell tree (fall-in),strike,7.2169996,46.1038512,1611.04,20.08,20.2,"Tree TR-5ac858b7 is 20.2 m tall, 20.08 m from the wire: reduce to 18.6 m (-1.6 m) or fell",now,4000.0,TR-5ac858b7,open,
+WL-f49c4512,3,T01-T02,1,monitor tree (fall-in),watch,7.2169895,46.1037611,1604.95,22.7,21.3,"Monitor tree TR-13ec6940 (21.3 m, 22.7 m from the wire): 0.4 m more height and it could reach the wire; re-check at the next survey",2026,4000.0,TR-13ec6940,open,
+WL-59cb3ce0,4,T01-T02,1,monitor tree (fall-in),watch,7.216822,46.1037405,1607.38,20.12,17.4,"Monitor tree TR-e77f55f7 (17.4 m, 20.12 m from the wire): 1.7 m more height and it could reach the wire; re-check at the next survey",2026,4000.0,TR-e77f55f7,open,
+WL-395da7e1,5,T01-T02,1,engineering review (wire clash),review,7.2171329,46.1039788,1656.09,2.89,2.2,T01-T02/W2 to T01-T02/W3 close to 2.89 m in differential blowout right: check phase spacing / spacers,next design review,,CX-43616889,open,

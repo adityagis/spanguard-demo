@@ -1,0 +1,4 @@
+id,severity,check,object,span,measured,threshold,unit,message,suggestion,x,y,z
+QA-ea8931a6,warn,tower_hardware,T01,,591,,pts,"1 wire-class clusters at T01 (591 pts) that no span wire explains, on a straight run.","Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify).",362137.489,5106873.962,1597.26
+QA-c9a37483,warn,tower_hardware,T02,,548,,pts,"1 wire-class clusters at T02 (548 pts) that no span wire explains, on a straight run.","Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify).",362218.76,5107202.652,1684.082
+QA-a91b0775,warn,tower_hardware,T03,,458,,pts,"1 wire-class clusters at T03 (458 pts) that no span wire explains, on a straight run.","Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify).",362268.823,5107404.427,1776.029

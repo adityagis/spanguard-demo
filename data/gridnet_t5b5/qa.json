@@ -1,0 +1,645 @@
+{
+ "summary": {
+  "issues": 3,
+  "error": 0,
+  "warn": 3,
+  "info": 0,
+  "by_check": {
+   "tower_hardware": 3
+  }
+ },
+ "issues": [
+  {
+   "check": "tower_hardware",
+   "severity": "warn",
+   "object": "T01",
+   "message": "1 wire-class clusters at T01 (591 pts) that no span wire explains, on a straight run.",
+   "suggestion": "Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify).",
+   "measured": 591,
+   "threshold": null,
+   "unit": "pts",
+   "span": null,
+   "location": [
+    362137.489,
+    5106873.962,
+    1597.26
+   ],
+   "extra": {
+    "clusters": 1,
+    "loop_sized": 0
+   },
+   "id": "QA-ea8931a6",
+   "local": [
+    -79.91,
+    -253.14,
+    61.76
+   ]
+  },
+  {
+   "check": "tower_hardware",
+   "severity": "warn",
+   "object": "T02",
+   "message": "1 wire-class clusters at T02 (548 pts) that no span wire explains, on a straight run.",
+   "suggestion": "Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify).",
+   "measured": 548,
+   "threshold": null,
+   "unit": "pts",
+   "span": null,
+   "location": [
+    362218.76,
+    5107202.652,
+    1684.082
+   ],
+   "extra": {
+    "clusters": 1,
+    "loop_sized": 0
+   },
+   "id": "QA-c9a37483",
+   "local": [
+    1.36,
+    75.55,
+    148.58
+   ]
+  },
+  {
+   "check": "tower_hardware",
+   "severity": "warn",
+   "object": "T03",
+   "message": "1 wire-class clusters at T03 (458 pts) that no span wire explains, on a straight run.",
+   "suggestion": "Check in 3D: tension tower with jumpers on a straight line, droppers, or insulator/steel points labelled as conductor (reclassify).",
+   "measured": 458,
+   "threshold": null,
+   "unit": "pts",
+   "span": null,
+   "location": [
+    362268.823,
+    5107404.427,
+    1776.029
+   ],
+   "extra": {
+    "clusters": 1,
+    "loop_sized": 0
+   },
+   "id": "QA-a91b0775",
+   "local": [
+    51.42,
+    277.33,
+    240.53
+   ]
+  }
+ ],
+ "gis": {
+  "source": "osm",
+  "provenance": {
+   "source": "OpenStreetMap",
+   "fetched": "2026-11-23",
+   "scope": "Verified records along the matched power line within the T5B5 search area; area-wide API lookup unavailable.",
+   "bbox_wgs84": "46.097471858127115,7.211352154824195,46.11015872905389,7.223166884106836",
+   "way_url": "https://www.openstreetmap.org/way/373422666",
+   "node_urls": [
+    "https://www.openstreetmap.org/node/2187117494",
+    "https://www.openstreetmap.org/node/2187117501",
+    "https://www.openstreetmap.org/node/2187117667",
+    "https://www.openstreetmap.org/node/2187117719",
+    "https://www.openstreetmap.org/node/2187117861"
+   ],
+   "geometry_source": "Full OSM way geometry from the existing t5c2 Overpass cache."
+  },
+  "towers": [
+   {
+    "id": "osm:n2187117719",
+    "tags": {
+     "power": "tower"
+    },
+    "attrs": {
+     "voltage_kv": null,
+     "structure": null
+    },
+    "local": [
+     97.18,
+     457.69,
+     null
+    ]
+   },
+   {
+    "id": "osm:n2187117494",
+    "tags": {
+     "power": "tower"
+    },
+    "attrs": {
+     "voltage_kv": null,
+     "structure": null
+    },
+    "local": [
+     50.87,
+     278.03,
+     197.53
+    ]
+   },
+   {
+    "id": "osm:n2187117861",
+    "tags": {
+     "power": "tower"
+    },
+    "attrs": {
+     "voltage_kv": null,
+     "structure": null
+    },
+    "local": [
+     0.67,
+     74.95,
+     105.72
+    ]
+   },
+   {
+    "id": "osm:n2187117501",
+    "tags": {
+     "power": "tower"
+    },
+    "attrs": {
+     "voltage_kv": null,
+     "structure": null
+    },
+    "local": [
+     -78.86,
+     -252.81,
+     19.66
+    ]
+   },
+   {
+    "id": "osm:n2187117667",
+    "tags": {
+     "power": "tower"
+    },
+    "attrs": {
+     "voltage_kv": null,
+     "structure": null
+    },
+    "local": [
+     -152.27,
+     -547.64,
+     null
+    ]
+   }
+  ],
+  "lines": [
+   {
+    "id": "osm:w373422666",
+    "fid": 373422666,
+    "tags": {
+     "cables": "6",
+     "circuits": "2",
+     "power": "line",
+     "voltage": "220000"
+    },
+    "attrs": {
+     "voltage_kv": 220.0,
+     "circuits": 2,
+     "cables": 6,
+     "operator": null,
+     "name": null
+    },
+    "local_xy": [
+     [
+      -310.77,
+      5993.23
+     ],
+     [
+      -177.34,
+      5882.42
+     ],
+     [
+      -115.2,
+      5825.25
+     ],
+     [
+      -10.73,
+      5734.09
+     ],
+     [
+      205.68,
+      5552.85
+     ],
+     [
+      428.15,
+      5364.44
+     ],
+     [
+      613.47,
+      5202.49
+     ],
+     [
+      924.36,
+      4941.01
+     ],
+     [
+      938.92,
+      4928.76
+     ],
+     [
+      974.1,
+      4796.18
+     ],
+     [
+      1021.71,
+      4608.38
+     ],
+     [
+      1015.42,
+      4177.17
+     ],
+     [
+      1008.28,
+      3968.26
+     ],
+     [
+      1007.24,
+      3754.25
+     ],
+     [
+      954.59,
+      3605.43
+     ],
+     [
+      875.75,
+      3377.43
+     ],
+     [
+      811.03,
+      3189.6
+     ],
+     [
+      743.73,
+      2999.77
+     ],
+     [
+      707.58,
+      2877.59
+     ],
+     [
+      684.09,
+      2798.19
+     ],
+     [
+      556.16,
+      2398.52
+     ],
+     [
+      487.68,
+      2171.48
+     ],
+     [
+      419.08,
+      1887.0
+     ],
+     [
+      375.25,
+      1688.74
+     ],
+     [
+      314.71,
+      1429.69
+     ],
+     [
+      259.95,
+      1187.84
+     ],
+     [
+      221.56,
+      1029.55
+     ],
+     [
+      154.99,
+      725.96
+     ],
+     [
+      97.18,
+      457.69
+     ],
+     [
+      50.87,
+      278.03
+     ],
+     [
+      0.67,
+      74.95
+     ],
+     [
+      -78.86,
+      -252.81
+     ],
+     [
+      -138.07,
+      -490.63
+     ],
+     [
+      -152.27,
+      -547.64
+     ],
+     [
+      -172.76,
+      -724.21
+     ],
+     [
+      -193.42,
+      -902.33
+     ],
+     [
+      -214.85,
+      -1100.76
+     ],
+     [
+      -236.17,
+      -1254.11
+     ],
+     [
+      -119.56,
+      -1513.96
+     ],
+     [
+      37.61,
+      -1831.81
+     ],
+     [
+      238.96,
+      -2160.99
+     ],
+     [
+      307.5,
+      -2268.62
+     ],
+     [
+      479.82,
+      -2549.04
+     ],
+     [
+      552.72,
+      -2667.66
+     ],
+     [
+      696.43,
+      -2914.7
+     ],
+     [
+      861.79,
+      -3202.38
+     ],
+     [
+      1148.74,
+      -3383.33
+     ],
+     [
+      1186.16,
+      -3407.31
+     ],
+     [
+      1266.69,
+      -3458.92
+     ],
+     [
+      1333.66,
+      -3501.82
+     ],
+     [
+      1599.88,
+      -3663.89
+     ],
+     [
+      1715.96,
+      -3735.66
+     ],
+     [
+      1753.83,
+      -3766.12
+     ],
+     [
+      1986.09,
+      -3952.94
+     ],
+     [
+      2175.7,
+      -4106.89
+     ],
+     [
+      2343.92,
+      -4244.63
+     ],
+     [
+      2539.02,
+      -4402.84
+     ],
+     [
+      2761.12,
+      -4581.5
+     ],
+     [
+      2956.21,
+      -4810.64
+     ],
+     [
+      3201.63,
+      -5099.06
+     ],
+     [
+      3240.39,
+      -5145.4
+     ],
+     [
+      3348.1,
+      -5274.12
+     ],
+     [
+      3383.0,
+      -5315.82
+     ],
+     [
+      3424.92,
+      -5367.81
+     ],
+     [
+      3455.54,
+      -5402.53
+     ],
+     [
+      3705.9,
+      -5696.83
+     ],
+     [
+      3867.82,
+      -5895.08
+     ],
+     [
+      4042.12,
+      -6108.69
+     ],
+     [
+      4175.7,
+      -6268.63
+     ],
+     [
+      4389.2,
+      -6531.54
+     ],
+     [
+      4442.96,
+      -6596.52
+     ],
+     [
+      4594.39,
+      -6779.54
+     ],
+     [
+      4747.49,
+      -6958.35
+     ],
+     [
+      4905.98,
+      -7070.42
+     ],
+     [
+      4989.82,
+      -7120.45
+     ],
+     [
+      5295.8,
+      -7297.57
+     ],
+     [
+      5332.02,
+      -7349.13
+     ],
+     [
+      5423.53,
+      -7479.35
+     ],
+     [
+      5649.25,
+      -7805.43
+     ],
+     [
+      5846.2,
+      -7900.09
+     ],
+     [
+      6373.46,
+      -8061.44
+     ],
+     [
+      6769.82,
+      -8177.21
+     ]
+    ]
+   }
+  ],
+  "tower_match": {
+   "matches": [
+    {
+     "lidar": "T01",
+     "gis": "osm:n2187117501",
+     "offset_m": 1.1,
+     "dx_m": 1.05,
+     "dy_m": 0.33,
+     "status": "matched"
+    },
+    {
+     "lidar": "T02",
+     "gis": "osm:n2187117861",
+     "offset_m": 0.92,
+     "dx_m": -0.69,
+     "dy_m": -0.61,
+     "status": "matched"
+    },
+    {
+     "lidar": "T03",
+     "gis": "osm:n2187117494",
+     "offset_m": 0.89,
+     "dx_m": -0.56,
+     "dy_m": 0.7,
+     "status": "matched"
+    }
+   ],
+   "missing_in_gis": [],
+   "missing_in_lidar": [],
+   "gis_outside_coverage": 2,
+   "gis_inside_coverage": 3
+  },
+  "tower_attributes": [],
+  "line_attributes": [
+   {
+    "span": "T01-T02",
+    "gis_line": "osm:w373422666",
+    "gis_fid": 373422666,
+    "distance_m": 0.21,
+    "direction_diff_deg": 0.25,
+    "gis_voltage_kv": 220.0,
+    "gis_cables": 6,
+    "gis_circuits": 2,
+    "gis_operator": null,
+    "gis_conductor_code": null,
+    "conductor": null,
+    "conductor_known": null,
+    "lidar_conductors": 6,
+    "lidar_earth_wires": 1,
+    "cables_match": true,
+    "circuits_match": true
+   },
+   {
+    "span": "T02-T03",
+    "gis_line": "osm:w373422666",
+    "gis_fid": 373422666,
+    "distance_m": 0.62,
+    "direction_diff_deg": 0.05,
+    "gis_voltage_kv": 220.0,
+    "gis_cables": 6,
+    "gis_circuits": 2,
+    "gis_operator": null,
+    "gis_conductor_code": null,
+    "conductor": null,
+    "conductor_known": null,
+    "lidar_conductors": 6,
+    "lidar_earth_wires": 1,
+    "cables_match": true,
+    "circuits_match": true
+   }
+  ],
+  "corrections": []
+ },
+ "ids": {
+  "enabled": false,
+  "towers": {
+   "T01": {
+    "display": "T01",
+    "gis": "osm:n2187117501",
+    "status": "matched",
+    "offset_m": 1.1,
+    "x": 362137.49,
+    "y": 5106873.96
+   },
+   "T02": {
+    "display": "T02",
+    "gis": "osm:n2187117861",
+    "status": "matched",
+    "offset_m": 0.92,
+    "x": 362218.76,
+    "y": 5107202.65
+   },
+   "T03": {
+    "display": "T03",
+    "gis": "osm:n2187117494",
+    "status": "matched",
+    "offset_m": 0.89,
+    "x": 362268.82,
+    "y": 5107404.43
+   }
+  },
+  "spans": {
+   "T01-T02": "T01-T02",
+   "T02-T03": "T02-T03",
+   "EDGE-T01": "EDGE-T01",
+   "T03-EDGE": "T03-EDGE"
+  },
+  "lines": {
+   "L1": "L1"
+  }
+ }
+}

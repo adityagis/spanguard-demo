@@ -1,0 +1,970 @@
+<meta charset="utf-8">
+<title>SpanGuard Handbook</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a field handbook. Dark line-teal title band with a drawn span, then a sticky contents rail and one reading column.
+   Each pipeline stage keeps one colour everywhere it appears, so colour tells the reader which stage a passage belongs to. */
+:root {
+  --paper: #f2f5f4; --surface: #ffffff; --ink: #17231f; --muted: #55635f; --line: #d7e0dc; --soft: #e7efeb;
+  --teal: #0f5e4c; --teal-ink: #0f5e4c; --band: #10302a; --band-ink: #eaf4ef; --band-muted: #a8c4b8;
+  --intake: #2f6fde; --model: #0f7d63; --qa: #b7791f; --physics: #6a4fb3; --clear: #b3263f; --out: #3f7f4a;
+  --ok: #17704a; --warn: #9a5f07; --bad: #a82840; --info: #2f6fde; --code-bg: #eef3f1;
+  --display: "Barlow", Bahnschrift, "DIN Alternate", "Segoe UI", sans-serif;
+  --body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --mono: "JetBrains Mono", "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #111816; --surface: #19221f; --ink: #e8f1ed; --muted: #9db0a8; --line: #2b3732; --soft: #1f2b27;
+  --teal: #5fd0a4; --teal-ink: #5fd0a4; --band: #0b1714; --band-ink: #eaf4ef; --band-muted: #92b3a6;
+  --intake: #7fa8ff; --model: #4fc6a0; --qa: #e2a64a; --physics: #b39cff; --clear: #ff8297; --out: #84c98e;
+  --ok: #5fd0a4; --warn: #e2a64a; --bad: #ff8297; --info: #7fa8ff; --code-bg: #1f2b27; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #111816; --surface: #19221f; --ink: #e8f1ed; --muted: #9db0a8; --line: #2b3732; --soft: #1f2b27;
+  --teal: #5fd0a4; --teal-ink: #5fd0a4; --band: #0b1714; --band-ink: #eaf4ef; --band-muted: #92b3a6;
+  --intake: #7fa8ff; --model: #4fc6a0; --qa: #e2a64a; --physics: #b39cff; --clear: #ff8297; --out: #84c98e;
+  --ok: #5fd0a4; --warn: #e2a64a; --bad: #ff8297; --info: #7fa8ff; --code-bg: #1f2b27; color-scheme: dark }
+
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.62 var(--body); -webkit-font-smoothing: antialiased; }
+*, *::before, *::after { box-sizing: border-box; }
+a { color: var(--teal-ink); text-underline-offset: .18em; }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+h1, h2, h3, h4 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h2 { font-size: 34px; font-weight: 600; letter-spacing: -.01em; }
+h3 { font-size: 22px; font-weight: 600; margin-top: 34px; }
+h4 { font-size: 17px; font-weight: 600; margin-top: 20px; }
+p { margin: 12px 0 0; }
+.prose p, .prose li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+code, kbd, pre { font-family: var(--mono); font-size: .84em; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: var(--surface); }
+pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; line-height: 1.5; margin: 14px 0 0; }
+pre code { background: none; padding: 0; font-size: 13.5px; }
+
+/* title band */
+.band { background: var(--band); color: var(--band-ink); margin-top: calc(-1 * env(safe-area-inset-top, 0px)); padding-top: calc(env(safe-area-inset-top, 0px) + 44px); }
+.band-in { max-width: 1180px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-bottom: 28px; }
+.mark { display: flex; align-items: center; gap: 12px; font: 600 15px var(--display); color: var(--band-muted); }
+.mark svg { width: 34px; height: 34px; }
+.band h1 { font-size: clamp(44px, 7vw, 76px); font-weight: 700; letter-spacing: -.02em; margin-top: 18px; }
+.thesis { font: 400 clamp(20px, 2.4vw, 26px)/1.35 var(--display); color: var(--band-muted); max-width: 34ch; margin-top: 10px; }
+.band-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 22px; font: 500 14px var(--display); color: var(--band-muted); }
+.band-meta b { color: var(--band-ink); font-weight: 600; }
+.hero-figure { margin: 26px 0 0; }
+.hero-figure svg { width: 100%; height: auto; display: block; }
+.hero-figure figcaption { font: 400 14px/1.45 var(--display); color: var(--band-muted); margin-top: 8px; max-width: 80ch; }
+
+/* reading layout */
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px;
+  padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-block: 40px 80px; }
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; font: 500 14px/1.4 var(--display); }
+.toc p { font-weight: 600; color: var(--muted); margin: 0 0 10px; }
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: toc; }
+.toc li { counter-increment: toc; }
+.toc a { display: grid; grid-template-columns: 26px 1fr; padding: 5px 8px; border-radius: 6px; color: var(--ink); text-decoration: none; }
+.toc a::before { content: counter(toc); color: var(--muted); font-variant-numeric: tabular-nums; }
+.toc a:hover { background: var(--soft); }
+main { min-width: 0; max-width: 820px; }
+section.chapter { padding-top: 26px; margin-top: 46px; border-top: 1px solid var(--line); scroll-margin-top: 16px; }
+section.chapter:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+.chapter > header { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: baseline; }
+.chapter-no { font: 600 15px var(--display); color: var(--muted); font-variant-numeric: tabular-nums; }
+.lead { font-size: 19.5px; line-height: 1.55; margin-top: 14px; }
+
+/* stage colour coding */
+.st-intake { --st: var(--intake); } .st-model { --st: var(--model); } .st-qa { --st: var(--qa); }
+.st-physics { --st: var(--physics); } .st-clear { --st: var(--clear); } .st-out { --st: var(--out); }
+.stage { position: relative; margin-top: 30px; padding: 20px 22px 22px 26px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.stage::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 4px; border-radius: 0 3px 3px 0; background: var(--st); }
+.stage-tag { font: 600 13.5px var(--display); color: var(--st); }
+.stage h3 { margin-top: 2px; }
+.stage .io { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); font: 400 14.5px/1.45 var(--display); }
+.stage .io b { display: block; font-weight: 600; color: var(--muted); font-size: 13px; }
+
+/* formulas */
+.formula { margin: 16px 0 0; padding: 12px 16px; border-radius: 8px; background: var(--soft); font: italic 400 19px/1.5 var(--body); text-align: center; overflow-x: auto; }
+.formula small { display: block; font: 400 13.5px var(--display); color: var(--muted); margin-top: 4px; font-style: normal; }
+
+/* figures */
+figure.shot { margin: 22px 0 0; }
+figure.shot img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 10px 30px -18px rgba(16, 48, 42, .45); }
+figure.shot.narrow { max-width: 360px; }
+.pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.pair figure.shot { margin: 0; }
+figcaption { font: 400 14px/1.45 var(--display); color: var(--muted); margin-top: 8px; }
+figcaption b { color: var(--ink); font-weight: 600; }
+figure.diagram { margin: 24px 0 0; padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; color: var(--ink); }
+figure.diagram svg { display: block; width: 100%; min-width: 640px; height: auto; }
+
+/* tables */
+.table { overflow-x: auto; margin-top: 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font: 400 14.5px/1.45 var(--display); }
+th, td { text-align: left; padding: 9px 12px; vertical-align: top; border-top: 1px solid var(--line); }
+thead th { border-top: 0; background: var(--soft); font-weight: 600; font-size: 13.5px; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td code { font-size: 12.5px; }
+
+/* use cases */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+.case { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--st); border-radius: 12px; padding: 16px 18px 18px; display: grid; gap: 8px; align-content: start; }
+.case h4 { margin: 0; font-size: 18px; }
+.case .who { font: 500 13.5px var(--display); color: var(--st); }
+.case p { margin: 0; font-size: 15.5px; line-height: 1.55; text-align: left; hyphens: manual; }
+.case dl { margin: 4px 0 0; display: grid; gap: 6px; font: 400 14px/1.45 var(--display); }
+.case dt { font-weight: 600; color: var(--muted); font-size: 12.5px; }
+.case dd { margin: 0; }
+
+/* steps */
+ol.steps { list-style: none; counter-reset: step; margin: 18px 0 0; padding: 0; display: grid; gap: 14px; }
+ol.steps > li { counter-increment: step; display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 12px; }
+ol.steps > li::before { content: counter(step); width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; background: var(--soft); color: var(--teal-ink); font: 600 15px var(--display); margin-top: 1px; }
+ol.steps > li > div > p:first-child { margin-top: 2px; }
+
+/* callouts and status chips */
+.note { margin-top: 20px; padding: 14px 16px; border-radius: 10px; background: var(--soft); border-left: 4px solid var(--teal); font: 400 15.5px/1.55 var(--display); }
+.note.warn { border-left-color: var(--warn); }
+.note b { font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chip { font: 600 13px var(--display); padding: 3px 10px; border-radius: 999px; border: 1px solid currentColor; }
+.chip.ok { color: var(--ok); } .chip.warn { color: var(--warn); } .chip.bad { color: var(--bad); } .chip.grey { color: var(--muted); }
+.legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 18px; }
+.legend div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font: 400 14px/1.45 var(--display); }
+.legend b { display: block; font-size: 15px; margin-bottom: 2px; }
+.ok-t { color: var(--ok); } .warn-t { color: var(--warn); } .bad-t { color: var(--bad); } .grey-t { color: var(--muted); }
+ul.tidy { padding-left: 20px; margin: 12px 0 0; }
+ul.tidy li + li { margin-top: 6px; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.stat b { display: block; font: 600 26px var(--display); font-variant-numeric: tabular-nums; color: var(--teal-ink); }
+.stat span { font: 400 13.5px/1.35 var(--display); color: var(--muted); }
+footer.end { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--line); font: 400 14px var(--display); color: var(--muted); }
+
+@media (max-width: 980px) {
+  .wrap { grid-template-columns: 1fr; gap: 0; }
+  .toc { position: static; margin-bottom: 18px; padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  .toc ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  h2 { font-size: 28px; }
+  .cases, .pair, .stats { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stage .io { grid-template-columns: 1fr; }
+  .toc ol { grid-template-columns: 1fr; }
+  .prose p, .prose li { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+
+/* cover: the whole first screen (and the first printed page) */
+.cover { background: var(--band); color: var(--band-ink); min-height: 100svh; display: flex; margin-top: calc(-1 * env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px); }
+.cover-in { width: 100%; max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 26px;
+  padding: 34px max(20px, env(safe-area-inset-right, 0px)) 30px max(20px, env(safe-area-inset-left, 0px)); }
+.cover-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font: 500 14px var(--display); color: var(--band-muted); }
+.cover-top .mark { color: var(--band-ink); font-size: 17px; }
+.cover-art { flex: 1 1 0; min-height: clamp(170px, 26vh, 300px); position: relative; }
+.cover-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+.cover-title { margin-top: -6px; position: relative; }
+.cover h1 { font: 700 clamp(68px, 13vw, 156px)/.88 var(--display); letter-spacing: -.04em; }
+.cover .thesis { font-size: clamp(21px, 2.6vw, 30px); max-width: 30ch; margin-top: 16px; color: #cfe3da; }
+.cover .hero-figure { margin: 0; flex-shrink: 0; }
+.cover-foot { display: grid; grid-template-columns: repeat(3, minmax(0, auto)) 1fr; gap: 18px 40px; align-items: end; padding-top: 18px; border-top: 1px solid rgba(168, 196, 184, .28); font: 400 14px/1.4 var(--display); color: var(--band-muted); }
+.cover-foot b { display: block; color: var(--band-ink); font-weight: 600; font-size: 17px; }
+.pdf-btn { justify-self: end; display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border-radius: 8px; background: #7fd8b5; color: #0b2a22; font: 600 15px var(--display); text-decoration: none; }
+.pdf-btn:hover { background: #a3e6cb; }
+.pdf-btn svg { width: 18px; height: 18px; }
+.pdf-btn[hidden] { display: none; }
+
+/* back cover */
+.back { background: var(--band); color: var(--band-ink); margin-top: 70px; }
+.back-in { max-width: 1180px; margin: 0 auto; padding: 56px max(20px, env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px)); display: grid; gap: 30px; }
+.back .mark { color: var(--band-ink); font-size: 17px; }
+.back-blurb { font: 400 clamp(22px, 2.6vw, 30px)/1.32 var(--display); max-width: 36ch; margin: 0; color: #e2efe9; }
+.back-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; padding-block: 22px; border-block: 1px solid rgba(168, 196, 184, .28); }
+.back-stats b { display: block; font: 600 34px var(--display); color: #7fd8b5; font-variant-numeric: tabular-nums; }
+.back-stats span { font: 400 14px/1.4 var(--display); color: var(--band-muted); }
+.back-author { display: grid; grid-template-columns: auto 1fr; gap: 6px 40px; align-items: end; font: 400 15px/1.5 var(--display); color: var(--band-muted); }
+.back-author b { display: block; font-size: 20px; color: var(--band-ink); font-weight: 600; }
+.back-author ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; justify-self: end; }
+.back-author a { color: #a3e6cb; }
+.back-line { display: block; width: 100%; height: auto; }
+.colophon { font: 400 13px/1.5 var(--display); color: var(--band-muted); margin: 0; max-width: 90ch; }
+
+/* decisions and questions */
+.qa-list { margin-top: 18px; display: grid; gap: 12px; }
+.qa-list > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+.qa-list h4 { margin: 0; font-size: 16.5px; }
+.qa-list p { font-size: 16px; margin-top: 6px; }
+ol.path { margin: 16px 0 0; padding-left: 22px; }
+ol.path li + li { margin-top: 8px; }
+.print-only { display: none; }
+.author-head { display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 24px; align-items: center; margin-top: 22px; }
+.author-head img { width: 148px; height: 148px; border-radius: 14px; object-fit: cover; border: 1px solid var(--line); }
+.author-head h3 { margin: 0; font-size: 26px; }
+.author-head .role { font: 500 16px/1.4 var(--display); color: var(--teal-ink); margin-top: 4px; }
+.author-head .links { font: 400 14.5px/1.6 var(--display); color: var(--muted); margin-top: 8px; display: flex; flex-wrap: wrap; gap: 2px 18px; }
+.job { margin-top: 26px; padding-left: 18px; border-left: 3px solid var(--st, var(--teal)); }
+.job-head { display: flex; justify-content: space-between; gap: 6px 18px; flex-wrap: wrap; align-items: baseline; }
+.job-head h3 { margin: 0; font-size: 20px; }
+.job-head span { font: 500 14px var(--display); color: var(--muted); }
+.job .org { font: 500 15px var(--display); color: var(--st, var(--teal-ink)); margin-top: 2px; }
+.job h4 { font-size: 15.5px; margin-top: 14px; color: var(--muted); }
+.skill-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.skill-grid div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font: 400 14.5px/1.5 var(--display); }
+.skill-grid b { display: block; font-size: 15px; margin-bottom: 2px; }
+
+@media (max-width: 760px) {
+  .cover-foot { grid-template-columns: 1fr 1fr; }
+  .pdf-btn { justify-self: start; grid-column: 1 / -1; }
+  .back-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .author-head { grid-template-columns: 96px minmax(0, 1fr); gap: 16px; }
+  .author-head img { width: 96px; height: 96px; }
+  .skill-grid { grid-template-columns: 1fr; }
+  .back-author { grid-template-columns: 1fr; }
+  .back-author ul { justify-self: start; }
+}
+
+/* ---------- print: an A4 book ---------- */
+@page { size: A4; margin: 20mm 18mm 20mm 18mm;
+  @top-left { content: "SpanGuard Handbook"; font: 500 8.5pt Barlow, sans-serif; color: #55635f; }
+  @top-right { content: "Aditya Kumar Jha"; font: 500 8.5pt Barlow, sans-serif; color: #55635f; }
+  @bottom-center { content: counter(page); font: 600 9pt Barlow, sans-serif; color: #0f5e4c; }
+}
+@page cover { margin: 0; @top-left { content: none; } @top-right { content: none; } @bottom-center { content: none; } }
+@media print {
+  :root, :root[data-theme="dark"] {
+    --paper: #ffffff; --surface: #ffffff; --ink: #17231f; --muted: #55635f; --line: #d7e0dc; --soft: #eef3f1;
+    --teal: #0f5e4c; --teal-ink: #0f5e4c; --band: #10302a; --band-ink: #eaf4ef; --band-muted: #a8c4b8;
+    --intake: #2f6fde; --model: #0f7d63; --qa: #b7791f; --physics: #6a4fb3; --clear: #b3263f; --out: #3f7f4a;
+    --ok: #17704a; --warn: #9a5f07; --bad: #a82840; --info: #2f6fde; --code-bg: #eef3f1; color-scheme: light; }
+  html { scroll-behavior: auto; }
+  body { font-size: 10.6pt; line-height: 1.55; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print-only { display: block; }
+  .no-print, .toc, .pdf-btn { display: none !important; }
+  .cover, .back { page: cover; width: 210mm; height: 297mm; min-height: 0; margin: 0; overflow: hidden; break-after: page; }
+  .back { break-before: page; break-after: auto; display: flex; }
+  .cover-in { max-width: none; padding: 18mm 17mm 16mm; gap: 9mm; }
+  .cover h1 { font-size: 112pt; }
+  .cover .thesis { font-size: 20pt; }
+  .cover-foot { grid-template-columns: repeat(3, auto) 1fr; font-size: 9.5pt; }
+  .cover-foot b { font-size: 12pt; }
+  .back-in { max-width: none; width: 100%; padding: 22mm 17mm 16mm; align-content: space-between; gap: 10mm; }
+  .back-blurb { font-size: 19pt; }
+  .back-stats b { font-size: 24pt; }
+  .back-stats span, .back-author { font-size: 9.5pt; }
+  .back-author b { font-size: 14pt; }
+  .colophon { font-size: 8.5pt; }
+  .wrap { display: block; max-width: none; padding: 0; }
+  main { max-width: none; }
+  .print-toc { break-after: page; }
+  .print-toc h2 { font-size: 28pt; margin-bottom: 4mm; }
+  .print-toc ol { list-style: none; margin: 0; padding: 0; }
+  .print-toc li { display: grid; grid-template-columns: 11mm 1fr auto; align-items: baseline; gap: 2mm; padding: 1.1mm 0; border-bottom: 1px solid var(--line); font: 500 11.5pt var(--display); }
+  .print-toc li .n { color: var(--teal); font-weight: 600; }
+  .print-toc li .p { font-variant-numeric: tabular-nums; color: var(--muted); }
+  .print-toc li small { display: block; font: 400 9pt var(--display); color: var(--muted); margin-top: .5mm; }
+  .print-toc .toc-note { margin-top: 5mm; font: 400 10pt/1.5 var(--display); color: var(--muted); }
+  section.chapter { break-before: page; border-top: 0; margin-top: 0; padding-top: 0; }
+  .chapter > header { display: block; padding-bottom: 5mm; margin-bottom: 2mm; border-bottom: 2px solid var(--teal); }
+  .chapter-no { display: block; font: 700 40pt/1 var(--display); color: var(--teal); margin-bottom: 2mm; }
+  h2 { font-size: 24pt; }
+  h3 { font-size: 14pt; margin-top: 7mm; break-after: avoid; }
+  h4 { break-after: avoid; }
+  .lead { font-size: 12.5pt; }
+  figure, .stage, .case, .stat, .legend div, .formula, pre, tr, .note, .qa-list > div { break-inside: avoid; }
+  figure.shot img { box-shadow: none; max-height: 205mm; width: auto; max-width: 100%; margin-inline: auto; }
+  figure.diagram svg { min-width: 0; }
+  .table { overflow: visible; }
+  table { font-size: 9pt; }
+  .cases { gap: 4mm; }
+  .case p { font-size: 9.8pt; }
+  .cover-art { min-height: 0; }
+  .skill-grid div, .author-head, .job-head { break-inside: avoid; }
+  .job-head, .job .org, .job h4 { break-after: avoid; }
+  .job-head h3 { font-size: 13pt; }
+  .skill-grid div { font-size: 9.5pt; }
+  .qa-list p { font-size: 10pt; }
+  .qa-list h4 { font-size: 11pt; }
+  a { color: inherit; text-decoration: none; }
+  .back-author a { color: #a3e6cb; }
+}
+</style>
+
+<header class="cover">
+<div class="cover-in">
+  <div class="cover-top"><div class="mark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#1a8a6e"/><path d="M7 26 11 6l4 20M17 26l4-20 4 20M8 17h6m4 0h6M9 10c5 4 9 4 14 0" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>SpanGuard</div><span>Product handbook · November 2026</span></div>
+  <div class="cover-art"><img src="img/cover-art.svg" alt="A drone scans a power line from above. The point cloud is coloured by class: ground, trees, towers and wires; one tree near the line is marked in red."></div>
+  <div class="cover-title">
+    <h1>SpanGuard</h1>
+    <p class="thesis">From classified LiDAR to span-level clearance risk, in 3D.</p>
+  </div>
+  <figure class="hero-figure">
+    <svg viewBox="0 0 1000 300" role="img" aria-label="A span between two towers. The survey wire hangs higher; the hot-case wire sags lower and comes within 2.33 metres of a tree, against 5.0 metres required.">
+      <defs>
+        <marker id="hArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#ff9aac"/></marker>
+      </defs>
+      <path d="M0 262 C 180 250, 300 246, 470 238 S 800 240, 1000 228 L1000 300 L0 300 Z" fill="#1c3d35"/>
+      <path d="M0 262 C 180 250, 300 246, 470 238 S 800 240, 1000 228" fill="none" stroke="#3c6b5d" stroke-width="2"/>
+      <g fill="none" stroke="#a8c4b8" stroke-width="2" stroke-linejoin="round">
+        <path d="M128 258 L150 40 L172 258 M135 190 H165 M140 130 H160 M118 70 H182 M110 100 H190 M136 190 L164 130 M164 190 L136 130"/>
+        <path d="M838 236 L860 30 L882 236 M845 170 H875 M850 112 H870 M828 60 H892 M820 90 H900 M846 170 L874 112 M874 170 L846 112"/>
+      </g>
+      <path d="M118 74 Q 500 210 828 64" fill="none" stroke="#7fd8b5" stroke-width="2.6"/>
+      <path d="M118 74 Q 500 246 828 64" fill="none" stroke="#e8b04a" stroke-width="2.6" stroke-dasharray="7 5"/>
+      <g fill="#4f9a5c"><circle cx="612" cy="196" r="22"/><circle cx="630" cy="186" r="18"/><circle cx="598" cy="210" r="16"/></g>
+      <rect x="610" y="210" width="5" height="30" fill="#6b5236"/>
+      <line x1="600" y1="153" x2="610" y2="178" stroke="#ff9aac" stroke-width="2" marker-start="url(#hArrow)" marker-end="url(#hArrow)"/>
+      <g font-family="Barlow, sans-serif" font-size="13" fill="#eaf4ef">
+        <text x="150" y="24" text-anchor="middle">T01</text>
+        <text x="860" y="16" text-anchor="middle">T02</text>
+        <text x="380" y="128" fill="#7fd8b5">Survey wire (as flown)</text>
+        <text x="380" y="190" fill="#e8b04a">Hot case, 80 °C: sags lower</text>
+        <text x="650" y="150" fill="#ff9aac" font-weight="600">2.33 m to tree</text>
+        <text x="650" y="166" fill="#ff9aac">needs 5.0 m → violation</text>
+        <text x="500" y="288" text-anchor="middle" fill="#a8c4b8">339 m span · GridNet zone t5b5 · span T01-T02</text>
+      </g>
+    </svg>
+  </figure>
+  <div class="cover-foot">
+    <div><b>Aditya Kumar Jha</b>GIS Engineer · Survey of India</div>
+    <div><b>LiDAR to clearance</b>Pipeline, workspace and 3D viewer</div>
+    <div><b>Exploratory</b>Not engineering-grade; every assumption stated</div>
+    <a class="pdf-btn" href="SpanGuard-Handbook.pdf" download><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m0 0-4-4m4 4 4-4M4 16h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Download PDF</a>
+  </div>
+</div>
+</header>
+
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><p>Contents</p><ol>
+  <li><a href="#glance">At a glance</a></li>
+  <li><a href="#why">Why it exists</a></li>
+  <li><a href="#terms">Words used here</a></li>
+  <li><a href="#how">How it works</a></li>
+  <li><a href="#tech">Technology</a></li>
+  <li><a href="#decisions">Engineering decisions</a></li>
+  <li><a href="#cases">Use cases</a></li>
+  <li><a href="#use">Using SpanGuard</a></li>
+  <li><a href="#viewer">The network viewer</a></li>
+  <li><a href="#outputs">Deliverables</a></li>
+  <li><a href="#read">Reading the results</a></li>
+  <li><a href="#trust">Accuracy and checks</a></li>
+  <li><a href="#limits">Limits</a></li>
+  <li><a href="#next">What could come next</a></li>
+  <li><a href="#help">Troubleshooting</a></li>
+  <li><a href="#about">About this project</a></li>
+  <li><a href="#author">About the author</a></li>
+</ol></nav>
+
+<main class="prose">
+<nav class="print-toc print-only" aria-hidden="true"><h2>Contents</h2><ol>
+  <li><span class="n">1</span><span>At a glance<small>What SpanGuard is, in one page</small></span><span class="p" data-pg="glance">3</span></li>
+  <li><span class="n">2</span><span>Why it exists<small>Sag, heat, wind and ice, and why a survey is not enough</small></span><span class="p" data-pg="why">5</span></li>
+  <li><span class="n">3</span><span>Words used here<small>Fourteen words explained once</small></span><span class="p" data-pg="terms">6</span></li>
+  <li><span class="n">4</span><span>How it works<small>Seven stages, with the formulas behind them</small></span><span class="p" data-pg="how">7</span></li>
+  <li><span class="n">5</span><span>Technology<small>Architecture and the reason for each tool</small></span><span class="p" data-pg="tech">13</span></li>
+  <li><span class="n">6</span><span>Engineering decisions<small>Choices, alternatives and hard problems</small></span><span class="p" data-pg="decisions">15</span></li>
+  <li><span class="n">7</span><span>Use cases<small>Ten jobs, who does them and what they get</small></span><span class="p" data-pg="cases">17</span></li>
+  <li><span class="n">8</span><span>Using SpanGuard<small>Nine steps from an empty workspace to results</small></span><span class="p" data-pg="use">19</span></li>
+  <li><span class="n">9</span><span>The network viewer<small>Panels, layers, the what-if and shortcuts</small></span><span class="p" data-pg="viewer">24</span></li>
+  <li><span class="n">10</span><span>Deliverables<small>Every file a run delivers</small></span><span class="p" data-pg="outputs">28</span></li>
+  <li><span class="n">11</span><span>Reading the results<small>Clear, Watch, Violation, Unconfirmed</small></span><span class="p" data-pg="read">29</span></li>
+  <li><span class="n">12</span><span>Accuracy and checks<small>Validation results and demo zones</small></span><span class="p" data-pg="trust">31</span></li>
+  <li><span class="n">13</span><span>Limits<small>Where not to rely on the numbers</small></span><span class="p" data-pg="limits">33</span></li>
+  <li><span class="n">14</span><span>What could come next<small>Ideas towards a production tool</small></span><span class="p" data-pg="next">34</span></li>
+  <li><span class="n">15</span><span>Troubleshooting<small>Common problems and fixes</small></span><span class="p" data-pg="help">35</span></li>
+  <li><span class="n">16</span><span>About this project<small>Built with Claude: who did what, build history, demo path, questions</small></span><span class="p" data-pg="about">36</span></li>
+  <li><span class="n">17</span><span>About the author<small>Survey of India, DRDO, skills and education</small></span><span class="p" data-pg="author">39</span></li>
+</ol><p class="toc-note">Each pipeline stage keeps one colour throughout the book: <b style="color:var(--intake)">intake</b>, <b style="color:var(--model)">model</b>, <b style="color:var(--qa)">QA</b>, <b style="color:var(--physics)">physics</b>, <b style="color:var(--clear)">clearance</b> and <b style="color:var(--out)">outputs</b>.</p></nav>
+
+<!-- 1 -->
+<section class="chapter" id="glance"><header><span class="chapter-no">1</span><h2>At a glance</h2></header>
+<p class="lead">SpanGuard takes a classified LiDAR survey of an overhead power line and turns it into a checked, span-by-span answer: where the wires are, how they behave in heat, wind and ice, which spans break clearance rules, and what work should be done first.</p>
+<p>Utilities fly drones or helicopters with laser scanners along their lines. The result is hundreds of millions of 3D points, already labelled as tower, wire, tree, ground or building. That labelling is the easy half. The work that follows is what clients pay for: modelling every wire as a curve, checking the model against the client's asset records, simulating the line in its worst weather, measuring clearances, and delivering reports, spreadsheets and GIS layers. SpanGuard automates that delivery workflow end to end, in a local workspace with a 3D viewer.</p>
+<p>The drawing on the cover is the question it answers for every span: when the wire is at its hottest, swung by wind or loaded with ice, does it still keep the required distance from trees, ground and buildings? On demo zone t5b5 the answer for span T01-T02 is no. At 80 °C the wire comes within 2.33 m of a tree, where 5.0 m is required.</p>
+<div class="stats">
+  <div class="stat"><b>~1.3M</b><span>points read per second on a laptop</span></div>
+  <div class="stat"><b>4.8–6.4 cm</b><span>median wire fit error on the demo zones</span></div>
+  <div class="stat"><b>5</b><span>weather cases per span: survey, hot, ice, wind left and right</span></div>
+  <div class="stat"><b>106</b><span>automated tests, run on every push</span></div>
+</div>
+<figure class="shot"><img src="img/viewer-overview.jpg" alt="SpanGuard network viewer showing a power line in 3D with towers, fitted wires and clearance labels" width="1600" height="900"><figcaption><b>The network viewer.</b> Demo zone t5b6 in the Swiss Alps: 36.1 million points, two towers, 21 fitted wires. Labels show tower heights, the closest clearance per span and a data-quality pin.</figcaption></figure>
+</section>
+
+<!-- 2 -->
+<section class="chapter" id="why"><header><span class="chapter-no">2</span><h2>Why it exists</h2></header>
+<p class="lead">A wire that sags into a tree can start a fire or black out a town, so regulators set minimum distances, and utilities must prove every span meets them.</p>
+<p>A conductor is not a fixed object. It gets longer when it heats up, so it sags lower on a hot day or when it carries a heavy current. Wind pushes it sideways. Ice makes it heavier. A survey captures the line on one particular morning, at one temperature, in calm air. The clearance that matters is the clearance in the worst case, which nobody measured.</p>
+<p>Turning the survey into that worst case is skilled, repetitive work. An analyst has to find every tower, split the wire points into individual conductors, fit a curve to each, look up the conductor's properties, recalculate the sag for each weather case, measure distances to everything nearby, and then write it all up in the client's format. Commercial tools such as PLS-CADD and Neara exist for this. SpanGuard rebuilds the workflow from first principles to show how each step works and where each number comes from.</p>
+<div class="note"><b>Built as a portfolio project.</b> SpanGuard is a careful, tested reconstruction of an industry workflow. Conductor data, insulator strings and several clearance tables are assumptions, and every result says so. Treat its numbers as exploratory until the line's real conductor, voltage and height datum are confirmed.</div>
+</section>
+
+<!-- 3 -->
+<section class="chapter" id="terms"><header><span class="chapter-no">3</span><h2>Words used here</h2></header>
+<p class="lead">Fourteen terms carry most of this handbook. Each is explained once here.</p>
+<div class="table"><table>
+<thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><b>Span</b></td><td>The stretch of line between two neighbouring towers. Results are reported per span.</td></tr>
+<tr><td><b>Edge span</b></td><td>A span cut by the edge of the survey, so its far tower is missing. Checked at survey conditions only.</td></tr>
+<tr><td><b>Conductor / earth wire</b></td><td>Conductors carry the current (phases). The earth wire runs on top to catch lightning.</td></tr>
+<tr><td><b>Catenary</b></td><td>The curve a hanging cable makes. Its shape is set by one number, <i>a</i> = tension ÷ weight per metre.</td></tr>
+<tr><td><b>Sag</b></td><td>How far the wire drops below the straight line between its two attachment points.</td></tr>
+<tr><td><b>Ruling span</b></td><td>One equivalent span length for a run of spans between tension towers. Used to recalculate tension.</td></tr>
+<tr><td><b>Clearance</b></td><td>The distance from a wire to an object: trees, ground, roads, railways, water, buildings.</td></tr>
+<tr><td><b>Required distance</b></td><td>The minimum the rules allow for that object and that voltage.</td></tr>
+<tr><td><b>Margin</b></td><td>Clearance minus required distance. Positive is safe, negative is a violation.</td></tr>
+<tr><td><b>Blowout</b></td><td>The wire swung sideways by wind, at an angle φ = atan(wind force ÷ weight).</td></tr>
+<tr><td><b>Weather case</b></td><td>A condition the line is simulated in: survey, hot (maximum operating temperature), ice, wind left, wind right.</td></tr>
+<tr><td><b>Classification / class map</b></td><td>The label on each LiDAR point (tower, conductor, tree…) and the table that says which code means what.</td></tr>
+<tr><td><b>CRS / vertical datum</b></td><td>The coordinate system of the points, and what their heights are measured from (ellipsoid, geoid, sea level).</td></tr>
+<tr><td><b>Finding</b></td><td>Anything that needs a decision: a violation, a danger tree, a data issue. Each has a stable ID across surveys.</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- 4 -->
+<section class="chapter" id="how"><header><span class="chapter-no">4</span><h2>How it works</h2></header>
+<p class="lead">Seven stages run in order. Each stage writes files the next one reads, so any stage can be re-run, checked or replaced on its own.</p>
+<figure class="diagram">
+  <svg viewBox="0 0 1000 330" role="img" aria-label="Pipeline: LAS tiles go through check and audit, then automodel; the model feeds QA with GIS and physics; physics feeds clearance and risk; QA and clearance both feed findings and deliverables.">
+    <defs><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="currentColor"/></marker></defs>
+    <g font-family="Barlow, sans-serif" font-size="13" fill="currentColor">
+      <rect x="10" y="40" width="120" height="70" rx="8" fill="none" stroke="currentColor" stroke-dasharray="4 4"/>
+      <text x="70" y="70" text-anchor="middle" font-weight="600">LAS / LAZ</text><text x="70" y="88" text-anchor="middle">tiles + GIS</text>
+      <rect x="170" y="40" width="150" height="70" rx="8" fill-opacity=".14" style="fill:var(--intake);stroke:var(--intake)"/>
+      <text x="245" y="66" text-anchor="middle" font-weight="600">1–2 Check, audit</text><text x="245" y="84" text-anchor="middle">1M-point sample</text><text x="245" y="100" text-anchor="middle">density, holes, 3D tiles</text>
+      <rect x="360" y="40" width="150" height="70" rx="8" fill-opacity=".14" style="fill:var(--model);stroke:var(--model)"/>
+      <text x="435" y="66" text-anchor="middle" font-weight="600">3 Automodel</text><text x="435" y="84" text-anchor="middle">towers, spans,</text><text x="435" y="100" text-anchor="middle">wire curves</text>
+      <rect x="560" y="10" width="160" height="62" rx="8" fill-opacity=".14" style="fill:var(--qa);stroke:var(--qa)"/>
+      <text x="640" y="36" text-anchor="middle" font-weight="600">4 Model QA + GIS</text><text x="640" y="54" text-anchor="middle">9 checks, asset match</text>
+      <rect x="560" y="96" width="160" height="62" rx="8" fill-opacity=".14" style="fill:var(--physics);stroke:var(--physics)"/>
+      <text x="640" y="122" text-anchor="middle" font-weight="600">5 Physics</text><text x="640" y="140" text-anchor="middle">survey → hot, ice, wind</text>
+      <rect x="560" y="200" width="160" height="80" rx="8" fill-opacity=".12" style="fill:var(--clear);stroke:var(--clear)"/>
+      <text x="640" y="226" text-anchor="middle" font-weight="600">6 Clearance + risk</text><text x="640" y="244" text-anchor="middle">distances, ratings,</text><text x="640" y="260" text-anchor="middle">trees, clash, priority</text>
+      <rect x="790" y="110" width="200" height="90" rx="8" fill-opacity=".14" style="fill:var(--out);stroke:var(--out)"/>
+      <text x="890" y="138" text-anchor="middle" font-weight="600">7 Findings + outputs</text><text x="890" y="156" text-anchor="middle">report, Excel, GeoJSON,</text><text x="890" y="172" text-anchor="middle">work list, viewer data</text>
+      <g stroke="currentColor" stroke-width="1.4" fill="none" marker-end="url(#pa)">
+        <path d="M130 75 H166"/><path d="M320 75 H356"/>
+        <path d="M510 66 C 535 50, 540 42, 556 42"/><path d="M510 86 C 535 112, 540 127, 556 127"/>
+        <path d="M640 158 V196"/>
+        <path d="M720 41 C 760 41, 770 130, 786 140"/><path d="M720 240 C 760 240, 770 185, 786 178"/>
+      </g>
+      <text x="148" y="66" text-anchor="middle" font-size="11.5" style="fill:var(--muted)">read</text>
+      <text x="338" y="66" text-anchor="middle" font-size="11.5" style="fill:var(--muted)">points</text>
+      <text x="520" y="34" font-size="11.5" style="fill:var(--muted)">model</text>
+      <text x="508" y="132" font-size="11.5" style="fill:var(--muted)">curves</text>
+      <text x="648" y="182" font-size="11.5" style="fill:var(--muted)">wires per case</text>
+      <text x="742" y="72" font-size="11.5" style="fill:var(--muted)">issues</text>
+      <text x="740" y="232" font-size="11.5" style="fill:var(--muted)">margins</text>
+      <text x="250" y="168" text-anchor="middle" font-size="12.5" style="fill:var(--muted)">Stops early with one clear message</text>
+      <text x="250" y="184" text-anchor="middle" font-size="12.5" style="fill:var(--muted)">when the data cannot work</text>
+      <path d="M245 112 V150" stroke-dasharray="3 3" fill="none" style="stroke:var(--intake)"/>
+    </g>
+  </svg>
+  <figcaption>The seven stages. QA and physics both start from the fitted model; clearance needs the simulated wires; every result ends up as a finding with a stable ID.</figcaption>
+</figure>
+
+<div class="stage st-intake"><span class="stage-tag">Stage 1 · Intake</span><h3>Pre-flight check</h3>
+<p>Before any long job, SpanGuard reads the file header and an evenly spread sample of about one million points. On a 37-million-point file this takes about four seconds. It stops at once, with one message and a fix, if the file has no coordinate system, if the class labels are in a field that does not exist or holds only one code, if there are no wire or tower points, or if most codes are unknown. When the labels sit in another field, the workspace now suggests it by name.</p>
+<div class="io"><div><b>Reads</b>LAS or LAZ header, a 1M-point sample, the class map</div><div><b>Writes</b>A pass or fail report with fixes; source code → class table</div></div></div>
+
+<div class="stage st-intake"><span class="stage-tag">Stage 2 · Intake</span><h3>Audit and 3D overview</h3>
+<p>The full survey is streamed in chunks, so a file larger than memory still works. The audit counts points per class, measures density per square metre and finds holes in the terrain. Memory follows the corridor rather than the bounding box: grids are sparse 256 × 256 blocks. For the viewer, the cloud is thinned to a 0.35 m voxel grid while every conductor, insulator and earth-wire point is kept, which turns 36 million points into about 1.9 million that a browser can draw.</p>
+<div class="io"><div><b>Reads</b>Every point, tile by tile</div><div><b>Writes</b>Audit (density, holes, class counts), 3D overview tile, dense per-span tiles</div></div></div>
+
+<div class="stage st-model"><span class="stage-tag">Stage 3 · Model</span><h3>Automodel: towers, spans and wires</h3>
+<p><b>Towers.</b> Tower and insulator points are clustered in plan with DBSCAN. Each cluster at least 8 m tall becomes a tower; its lean is the shift between the centres of its lower and upper body.</p>
+<p><b>Spans.</b> Two towers are joined only when wire points actually run between them: at least 80% of the 2 m bins across the middle of the span must hold wire points within 12 m of the tower-to-tower line. This lets bends, parallel lines, tee-offs and crossings come out as surveyed, not as a guessed straight chain.</p>
+<p><b>Wires.</b> In each span the points are rotated into a frame along the span, separated by their position across it, and each wire is fitted with a catenary. The fit uses a robust loss, so up to about 5% stray points do not pull the curve.</p>
+<div class="formula">z(x) = z<sub>0</sub> + a [ cosh((x − x<sub>0</sub>) / a) − 1 ],&nbsp;&nbsp;&nbsp; a = H / w<small>z is height, x distance along the span, H horizontal tension, w weight per metre</small></div>
+<div class="formula">L<sub>r</sub> = √( Σ L<sub>i</sub><sup>3</sup> / Σ L<sub>i</sub> )<small>ruling span of a tension section, from the lengths L<sub>i</sub> of its spans</small></div>
+<div class="io"><div><b>Reads</b>Tower, insulator and wire-class points</div><div><b>Writes</b>Towers, lines, sections, spans, wire curves with fit error, coverage and sag</div></div></div>
+
+<div class="stage st-qa"><span class="stage-tag">Stage 4 · QA</span><h3>Model QA and GIS reconciliation</h3>
+<p>Nine checks look for the mistakes an automatic model makes: a poor curve fit, gaps in a wire, a wire end that misses its tower, a phase whose sag disagrees with its sister phases, wires too close together, wire points no curve explains (often jumpers at a tension tower), tower lean over 1.5°, the structure type, and towers with no span. Each issue carries the measured value, the threshold and a suggested fix.</p>
+<p>When the client supplies its asset register (GeoPackage, GeoJSON or CSV), towers are matched one-to-one with the Hungarian method. Matched towers take the client's asset IDs in every output. Offsets over 3 m, records missing on either side, and mismatched voltage, height or conductor counts become a corrections list for the GIS team.</p>
+<div class="io"><div><b>Reads</b>The model; the client register or OpenStreetMap (opt-in)</div><div><b>Writes</b>QA issues, GIS matches, <code>gis_corrections.csv</code>, client asset IDs</div></div></div>
+
+<div class="stage st-physics"><span class="stage-tag">Stage 5 · Physics</span><h3>From the survey to any weather</h3>
+<p>The fitted curve gives the survey tension directly: H<sub>1</sub> = a · w. The change-of-state equation then finds the tension H<sub>2</sub> at a new temperature and load, over the ruling span. The new curve is hung through both measured attachment points, so the towers stay where they are.</p>
+<div class="formula">H<sub>2</sub> − H<sub>1</sub> + EA·w<sub>1</sub><sup>2</sup>L<sup>2</sup> / 24H<sub>1</sub><sup>2</sup> + EA·α·(t<sub>2</sub> − t<sub>1</sub>) − EA·w<sub>2</sub><sup>2</sup>L<sup>2</sup> / 24H<sub>2</sub><sup>2</sup> = 0<small>EA axial stiffness, α thermal expansion, L ruling span, t temperature, w load per metre (weight + ice, combined with wind)</small></div>
+<p>The starting temperature matters most, because every case is computed from the measured sag. When weather and load data are given, SpanGuard reads each span's capture time from the LAS GPS time and runs the IEEE 738 heat balance backwards to find the conductor temperature at that moment. Without them it assumes 15 ± 5 °C and labels the result "assumed".</p>
+<div class="table"><table><thead><tr><th>Case</th><th>What changes</th></tr></thead><tbody>
+<tr><td>Survey</td><td>The wire as flown</td></tr>
+<tr><td>Hot</td><td>Conductor at its maximum operating temperature (80 °C for the assumed AAAC), still air: maximum sag</td></tr>
+<tr><td>Ice</td><td>10 mm radial ice at 0 °C: weight ρ·g·π·t·(d + t) per metre, wider wind area</td></tr>
+<tr><td>Wind left / right</td><td>500 Pa (about 103 km/h) at 15 °C; the wire swings by φ = atan(P·d / w)</td></tr>
+</tbody></table></div>
+<div class="io"><div><b>Reads</b>Wire curves, conductor catalogue, optional weather and load series</div><div><b>Writes</b>Simulated wire curves for every span and case; current rating (IEEE 738)</div></div></div>
+
+<div class="stage st-clear"><span class="stage-tag">Stage 6 · Clearance and risk</span><h3>Distances, ratings and priority</h3>
+<p><b>Distances.</b> Vegetation is measured in 3D. Ground, roads, railways and water are measured vertically, only where they lie under the wire. Buildings get both a vertical and a horizontal check, and fail only when a part is inside both, as the CEA and NESC rules describe. The nearest-point search is exact: a coarse KD-tree pass finds candidates, a fine pass on a 0.5 m curve settles the minimum.</p>
+<p><b>Rules.</b> The required distance comes from a table chosen by voltage. Two are built in: a generic demonstration table, and the Indian CEA 2023 regulations with page references to the Gazette of 8 June 2023. A project can enter its own.</p>
+<p><b>Beyond a single distance.</b></p>
+<ul class="tidy">
+<li><b>Ratings:</b> the hottest temperature and strongest wind each span survives, and the current that keeps clearance (in amps).</li>
+<li><b>Monte Carlo:</b> 200 runs that vary the survey temperature and the assumed conductor data, giving the probability of a violation and a 5–95% margin range.</li>
+<li><b>Tree grow-in:</b> years until nearby trees grow into the hot-case clearance, at 0.5 m per year or the growth measured between two surveys.</li>
+<li><b>Danger trees:</b> trees tall enough to hit a wire if they fall, from a canopy height model.</li>
+<li><b>Wire clash:</b> two wires of the same span swung differently by wind, or one hot and one cold, checked against phase spacing.</li>
+<li><b>Tower air gap:</b> a wind-swung conductor measured to its own tower's steel.</li>
+</ul>
+<div class="formula">priority = (clearance + probability + grow-in + fall-in + clash + air gap + consequence points) × (1 + kV / 400)<small>every weight is editable per project; consequence points come from polygons such as fire zones</small></div>
+<div class="io"><div><b>Reads</b>Simulated wires, corridor objects per span, rule table</div><div><b>Writes</b>Clearance per span and case, ratings, trees, clash pairs, priority rank</div></div></div>
+
+<div class="stage st-out"><span class="stage-tag">Stage 7 · Outputs</span><h3>Findings and deliverables</h3>
+<p>Every result that needs a decision becomes a finding. Its ID comes from what and where it is, so the same tree keeps the same ID in next year's survey. Reviewers record a status (open, confirmed, false positive, scheduled, done…), and SpanGuard respects it: a false positive stays hidden unless it gets more than 0.5 m worse; a job reported done but still measured as a violation is flagged. The run is frozen with its settings, input file hashes and software version, so any number can be traced.</p>
+<div class="io"><div><b>Reads</b>Everything above, plus earlier reviews</div><div><b>Writes</b>Report, workbook, GeoJSON, work list, field package, PLS-CADD points, viewer data</div></div></div>
+</section>
+
+<!-- 5 -->
+<section class="chapter" id="tech"><header><span class="chapter-no">5</span><h2>Technology</h2></header>
+<p class="lead">A Python pipeline does the heavy work; a small local server stores projects and runs jobs; the browser draws the results and repeats the physics live.</p>
+<figure class="diagram">
+  <svg viewBox="0 0 1000 300" role="img" aria-label="Architecture: the browser talks to a local server over HTTP on this computer; the server stores projects and starts the Python pipeline as a background process; the pipeline writes result files that the viewer loads.">
+    <defs><marker id="ta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="currentColor"/></marker></defs>
+    <g font-family="Barlow, sans-serif" font-size="13" fill="currentColor">
+      <rect x="10" y="20" width="290" height="260" rx="12" fill="none" stroke="currentColor"/>
+      <text x="26" y="46" font-weight="600" font-size="15">Browser</text>
+      <rect x="30" y="64" width="250" height="84" rx="8" fill-opacity=".1" style="fill:var(--teal);stroke:var(--teal)"/>
+      <text x="44" y="88" font-weight="600">Workspace pages</text><text x="44" y="106">projects, surveys, settings,</text><text x="44" y="124">run review, comparison</text>
+      <rect x="30" y="162" width="250" height="100" rx="8" fill-opacity=".1" style="fill:var(--physics);stroke:var(--physics)"/>
+      <text x="44" y="186" font-weight="600">Network viewer</text><text x="44" y="204">three.js 3D, Leaflet 2D map,</text><text x="44" y="222">live physics in JavaScript</text><text x="44" y="240">(a port of the Python)</text>
+      <rect x="370" y="60" width="260" height="190" rx="12" fill="none" stroke="currentColor"/>
+      <text x="386" y="86" font-weight="600" font-size="15">Local server · serve.py</text>
+      <text x="386" y="110">127.0.0.1 only, Python stdlib HTTP</text>
+      <text x="386" y="132">Accounts and roles (SQLite)</text>
+      <text x="386" y="154">Projects, surveys, uploads in</text><text x="386" y="172">data/workspace/</text>
+      <text x="386" y="196">Resumable 8 MB chunked uploads</text>
+      <text x="386" y="218">One background job at a time</text>
+      <rect x="700" y="20" width="290" height="120" rx="12" fill-opacity=".1" style="fill:var(--model);stroke:var(--model)"/>
+      <text x="716" y="46" font-weight="600" font-size="15">Pipeline · spanguard run</text>
+      <text x="716" y="70">laspy, NumPy, SciPy, scikit-learn,</text><text x="716" y="88">pyproj, pydantic, openpyxl, Jinja2</text>
+      <text x="716" y="112">per-span parallel processes</text>
+      <rect x="700" y="170" width="290" height="110" rx="12" fill-opacity=".1" style="fill:var(--out);stroke:var(--out)"/>
+      <text x="716" y="196" font-weight="600" font-size="15">Run folder</text>
+      <text x="716" y="220">model.json, clearance.json, whatif.json</text><text x="716" y="238">point tiles (.bin), report.html, .xlsx,</text><text x="716" y="256">GeoJSON, KMZ, GeoPackage, run.json</text>
+      <g stroke="currentColor" stroke-width="1.4" fill="none">
+        <path d="M280 104 H366" marker-start="url(#ta)" marker-end="url(#ta)"/>
+        <path d="M630 100 C 665 100, 665 80, 696 80" marker-end="url(#ta)"/>
+        <path d="M845 140 V166" marker-end="url(#ta)"/>
+        <path d="M696 236 C 520 290, 380 290, 284 230" marker-end="url(#ta)"/>
+      </g>
+      <g font-size="11.5" style="fill:var(--muted)">
+        <text x="323" y="96" text-anchor="middle">JSON API</text>
+        <text x="663" y="70" text-anchor="middle">starts job</text>
+        <text x="852" y="158">writes</text>
+        <text x="490" y="290" text-anchor="middle">viewer loads results by URL (only for project members)</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>Everything runs on one computer. Survey files never leave it, and the 2D map loads no outside basemap for workspace runs.</figcaption>
+</figure>
+<div class="table"><table><thead><tr><th>Part</th><th>Technology</th><th>Why this choice</th></tr></thead><tbody>
+<tr><td>Point reading</td><td>laspy (with LAZ via lazrs)</td><td>Streams LAS and LAZ in chunks; reads extra fields such as <code>ground_truth</code></td></tr>
+<tr><td>Numerics</td><td>NumPy, SciPy</td><td>Vector maths, KD-trees, robust curve fitting, Brent root finding</td></tr>
+<tr><td>Clustering</td><td>scikit-learn DBSCAN</td><td>Finds towers without knowing how many there are</td></tr>
+<tr><td>Coordinates</td><td>pyproj</td><td>CRS checks, WGS84 export for GeoJSON and KMZ</td></tr>
+<tr><td>Settings</td><td>YAML + pydantic</td><td>One file per zone; typos and bad values are errors at load time</td></tr>
+<tr><td>Reports</td><td>Jinja2, openpyxl</td><td>Single-file HTML report; Excel with live formulas (0 errors on recalculation in Excel)</td></tr>
+<tr><td>Server</td><td>Python standard library, SQLite</td><td>No framework to install; salted password hashes, session cookies, optional OpenID Connect sign-in</td></tr>
+<tr><td>3D viewer</td><td>three.js with a custom point shader</td><td>Millions of points coloured by class, true colour or height; round points sized in metres</td></tr>
+<tr><td>2D map</td><td>Leaflet</td><td>Spans coloured by risk over satellite imagery or an offline grid</td></tr>
+<tr><td>Live what-if</td><td>Plain JavaScript (<code>physics.js</code>)</td><td>The same physics as Python, checked by a parity test; 25–265 ms per update</td></tr>
+<tr><td>Quality</td><td>pytest, GitHub Actions, Playwright</td><td>106 tests on every push; browser tests of every screen</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- decisions -->
+<section class="chapter" id="decisions"><header><span class="chapter-no">6</span><h2>Engineering decisions</h2></header>
+<p class="lead">The choices that shaped SpanGuard, the alternative each one replaced, and the reason. These are the answers to most "why did you…" questions.</p>
+<div class="table"><table><thead><tr><th>Decision</th><th>Instead of</th><th>Why</th></tr></thead><tbody>
+<tr><td><b>Fit a true catenary</b></td><td>A parabola</td><td>Exact for long and steep spans, and its parameter <i>a</i> = H/w gives the survey tension directly, which the physics stage needs.</td></tr>
+<tr><td><b>Robust (soft-L1) curve fit</b></td><td>Plain least squares</td><td>Classification is never perfect. A few stray points (birds, hardware, vegetation) must not pull the wire down.</td></tr>
+<tr><td><b>Spans from wire evidence</b></td><td>Joining nearest towers in order</td><td>Chaining invents spans at bends, tee-offs and crossings. Requiring wire points along 80% of the span gives the network as built.</td></tr>
+<tr><td><b>Weather cases from the measured sag</b></td><td>Stringing charts or design tension</td><td>A survey rarely comes with design data. The change-of-state equation over the ruling span needs only the fitted curve and the conductor type.</td></tr>
+<tr><td><b>Monte Carlo on the assumptions</b></td><td>One deterministic answer</td><td>Conductor data and survey temperature are uncertain. A probability of violation tells the reader how much to trust a margin.</td></tr>
+<tr><td><b>"Unconfirmed" when inputs are missing</b></td><td>Assuming a voltage or height datum</td><td>A wrong pass is worse than no answer. Distances are still measured, but the verdict waits for the two facts that decide it.</td></tr>
+<tr><td><b>Stream tiles, sparse grids</b></td><td>Loading the whole cloud</td><td>Memory follows the corridor, not its bounding box, so a long tiled line runs on a laptop.</td></tr>
+<tr><td><b>Stable finding IDs from content</b></td><td>Row numbers or random IDs</td><td>The same tree keeps the same ID next year, so reviews carry over and finished work can be verified.</td></tr>
+<tr><td><b>Physics ported to JavaScript, with a parity test</b></td><td>Calling the server for each slider move</td><td>The what-if answers in a fraction of a second and works offline; the test stops the two versions drifting apart.</td></tr>
+<tr><td><b>Local-first server on the standard library</b></td><td>A cloud app or a web framework</td><td>Survey data stays on the client's computer, and nothing extra has to be installed or secured.</td></tr>
+</tbody></table></div>
+<h3>Hard problems along the way</h3>
+<ul class="tidy">
+<li><b>Labels in an unexpected field.</b> The GridNet-HD files keep their class labels in an extra field, <code>ground_truth</code>, while the standard field holds one code. The pre-flight check now detects this in seconds and names the right field, instead of failing an hour later.</li>
+<li><b>Scale.</b> A 7.65 km tiled corridor exposed memory and speed limits. Streaming tiles, sparse 256 × 256 grids, a per-span corridor cache, and parallel, resumable clearance fixed it. Earlier, per-span search trees, an exact coarse-then-fine nearest search and batched rating queries had already made the clearance stage three times faster.</li>
+<li><b>Phantom spans.</b> The first network builder joined towers in order and drew spans that do not exist at bends and crossings. Five synthetic network shapes in the tests now prove the wire-evidence rule.</li>
+<li><b>Two copies of the physics.</b> The browser and Python must give the same tension and sag. A parity test runs both on the same spans on every push.</li>
+</ul>
+</section>
+
+<!-- 6 -->
+<section class="chapter" id="cases"><header><span class="chapter-no">7</span><h2>Use cases</h2></header>
+<p class="lead">Ten jobs SpanGuard does, each with who does it, what triggers it, and what they get. The colour of each card is the pipeline stage that answers it.</p>
+<div class="cases">
+  <article class="case st-clear"><span class="who">Vegetation manager</span><h4>Plan tree trimming</h4><p>Find every span where trees are, or will soon be, too close to a hot wire, and schedule the cutting before they are.</p><dl><dt>Trigger</dt><dd>A new survey of the corridor</dd><dt>They get</dt><dd>Grow-in years per span, a trim work list (CSV and KMZ) with due dates, target heights for danger trees</dd></dl></article>
+  <article class="case st-clear"><span class="who">Compliance engineer</span><h4>Prove clearance compliance</h4><p>Show the regulator that every span keeps its required distance from ground, roads, railways, rivers and buildings.</p><dl><dt>Trigger</dt><dd>An audit, or a new rule edition</dd><dt>They get</dt><dd>Margins per span and object under CEA 2023 or the utility's own table, with the rule source named in the report</dd></dl></article>
+  <article class="case st-physics"><span class="who">Asset planner</span><h4>Check a line rating</h4><p>Find how much current a line can carry before sag breaks clearance, before approving more load or an uprating.</p><dl><dt>Trigger</dt><dd>A request for more capacity</dd><dt>They get</dt><dd>Temperature and wind ratings per span and an IEEE 738 rating in amps, limited by clearance or the conductor's thermal limit</dd></dl></article>
+  <article class="case st-physics"><span class="who">Protection or design engineer</span><h4>Storm and clash risk</h4><p>Find spans where wind or uneven ice could swing two wires close enough to flash over, or push a wire into its tower.</p><dl><dt>Trigger</dt><dd>Faults after storms</dd><dt>They get</dt><dd>Wire-clash pairs with gaps, tower air gaps, ice-drop cases, all drawn in 3D</dd></dl></article>
+  <article class="case st-clear"><span class="who">Wildfire risk team</span><h4>Find danger trees</h4><p>Trees outside the clearance zone can still fall onto the line. List those tall enough to reach a wire.</p><dl><dt>Trigger</dt><dd>Fire season preparation</dd><dt>They get</dt><dd>Strike and watch trees per span with height and distance, priority raised inside fire-weather polygons</dd></dl></article>
+  <article class="case st-qa"><span class="who">GIS team</span><h4>Correct the asset register</h4><p>Compare where the register says towers are with where the survey found them, and fix the records.</p><dl><dt>Trigger</dt><dd>Register clean-up, or a mismatch in the field</dd><dt>They get</dt><dd><code>gis_corrections.csv</code>: offsets, missing records, ghost records, wrong heights, voltages or conductor codes</dd></dl></article>
+  <article class="case st-out"><span class="who">Asset manager</span><h4>Compare surveys year on year</h4><p>See what changed since the last flight: trees that grew, trees cut, wires that sag more for reasons temperature cannot explain.</p><dl><dt>Trigger</dt><dd>The next survey of the same line</dd><dt>They get</dt><dd>Measured growth per tree, new, closed and worsened findings, verification that reported work was done</dd></dl></article>
+  <article class="case st-out"><span class="who">Field crew lead</span><h4>Take work to the field</h4><p>Give crews exactly where to go and what to do, readable on a phone or in Google Earth.</p><dl><dt>Trigger</dt><dd>Approved work</dd><dt>They get</dt><dd>KMZ work list, GeoPackage with towers, spans and findings, a review CSV to bring decisions back</dd></dl></article>
+  <article class="case st-qa"><span class="who">Reviewer or approver</span><h4>Review and sign off findings</h4><p>Check each finding against the 3D evidence and record a decision with a reason, before anything goes to the client.</p><dl><dt>Trigger</dt><dd>A completed run</dd><dt>They get</dt><dd>Review dialog with history, statuses that carry to the next survey, a review log for audit</dd></dl></article>
+  <article class="case st-physics"><span class="who">Engineer in a meeting</span><h4>Answer "what if" live</h4><p>Drag temperature, wind and ice sliders on one span and watch the wire, the profile and the verdict change.</p><dl><dt>Trigger</dt><dd>A question about one span</dd><dt>They get</dt><dd>Tension, sag, swing, current and clearance per object, updated in a fraction of a second</dd></dl></article>
+</div>
+</section>
+
+<!-- 7 -->
+<section class="chapter" id="use"><header><span class="chapter-no">8</span><h2>Using SpanGuard</h2></header>
+<p class="lead">From an empty workspace to reviewed results takes nine steps. Steps 3 to 6 are guided on screen by the survey page's progress line and its "Next step" panel.</p>
+<ol class="steps">
+<li><div><h4>Start the workspace</h4><p>Double-click <code>Run-SpanGuard.bat</code> in the SpanGuard folder. It starts the server with the project's own Python and opens <b>http://localhost:8775</b> in the browser. Keep its window open while you work. From a terminal the same thing is:</p>
+<pre><code>.\.venv\Scripts\python.exe scripts\serve.py 8774</code></pre></div></li>
+<li><div><h4>Create the owner account and a project</h4><p>The first visit asks for an owner email and a password of at least 15 characters. Then choose <b>New project</b>, give it a name, a corridor or line reference, and notes such as the client and scope.</p>
+<figure class="shot"><img src="img/ws-projects.jpg" alt="Projects page with summary tiles, search, status filter, sort and a project row" width="1440" height="900" loading="lazy"><figcaption><b>Projects.</b> Summary tiles, search across names and notes, a status filter (results ready, processing, need attention, archived) and sorting. The ⋯ menu edits, archives, deletes or downloads a summary CSV.</figcaption></figure></div></li>
+<li><div><h4>Add a survey and upload tiles</h4><p>Inside the project, choose <b>Add survey</b> and give its capture date. Drop the classified LAS or LAZ tiles on the page, or use <b>Browse files</b> or <b>Add folder</b>. Uploads go in 8 MB chunks with checksums; if one stops, choose the same file again and it resumes. Optionally add a GIS tower or line register, capture weather or load data.</p></div></li>
+<li><div><h4>Choose the settings</h4><p>Every setting is a dropdown of sensible values with an <i>Other (type your own)</i> option. The four that matter most:</p>
+<div class="table"><table><thead><tr><th>Setting</th><th>What to choose</th></tr></thead><tbody>
+<tr><td><b>LiDAR label field</b></td><td>The field that holds each point's class. The list shows extra fields found in your file; GridNet files keep labels in <code>ground_truth</code>.</td></tr>
+<tr><td><b>Class mapping</b></td><td>ASPRS LAS 1.4 for standard deliveries, GridNet-HD for the demo data, or your own codes under Advanced settings.</td></tr>
+<tr><td><b>Line voltage</b></td><td>Sets the required distances. Without it, results stay "Unconfirmed".</td></tr>
+<tr><td><b>Vertical reference</b></td><td>The height datum (ellipsoid, EGM2008, mean sea level…). Needed to confirm pass or fail and to compare surveys.</td></tr>
+</tbody></table></div>
+<figure class="shot"><img src="img/ws-survey.jpg" alt="Survey page with a four-step progress line drawn as a power-line span, input tiles, settings and a next-step panel" width="1440" height="900" loading="lazy"><figcaption><b>The survey page.</b> The progress line is drawn as a span: towers for Add tiles, Check settings, Process and Review results. The panel on the right always shows the one action to take next.</figcaption></figure></div></li>
+<li><div><h4>Check the settings</h4><p>Choose <b>Check settings</b>. The check reads a sample of the file with your settings and lists anything to fix, in the form's own words. A common one: "100% of points map to tower" means the labels are in another field, and the check names it. When it passes, <b>Start processing</b> becomes available.</p></div></li>
+<li><div><h4>Process</h4><p>Processing runs in the background; you can leave the page. A 36-million-point zone takes a few minutes on a laptop. The run log shows the current stage, and a run can be cancelled at a stage boundary. When it finishes, the page opens the run overview.</p></div></li>
+<li><div><h4>Review the run</h4><p>The run overview shows towers, spans, findings, violations and how many await review, with the network viewer embedded. Each finding opens a review dialog: choose a decision (needs review, verified, dismissed), give a reason, and it is kept with its history.</p>
+<figure class="shot"><img src="img/ws-run.jpg" alt="Run overview with summary numbers, embedded network viewer, findings list, exports and sources" width="1440" height="2400" loading="lazy"><figcaption><b>Run overview.</b> Numbers on top, the viewer in the middle, then findings with review status, every export, and the sources and settings the run used.</figcaption></figure></div></li>
+<li><div><h4>Download and deliver</h4><p>Exports sit on the run overview and in the viewer's Files tab: client report, workbook, work list, GeoJSON, field review GeoPackage, PLS-CADD points, QA and findings CSVs, and the review log. Chapter 10 describes each.</p></div></li>
+<li><div><h4>Next survey of the same line</h4><p>Add a new survey to the same project with its new capture date and process it with the same settings. On the project page, <b>Compare surveys</b> lists what changed between two dated runs. Both runs need the same CRS, vertical reference and analysis settings; if one differs, the message names it.</p></div></li>
+</ol>
+<h3>Managing projects</h3>
+<p>Owners can edit a project's name, corridor and notes, archive it to hide it from the list without losing anything, or delete it. Deleting asks you to type the project name exactly and removes its surveys, files, runs and reviews from the computer; a project with a job still running cannot be deleted. Surveys and individual runs can be renamed or deleted the same way. Analysts add surveys and process them; reviewers read results and record decisions.</p>
+<h3>For power users: the command line</h3>
+<p>Everything the workspace does is also a command, driven by one YAML file per zone.</p>
+<pre><code>spanguard init  --las D:\delivery\line42.laz --out clients\line42.yaml   # draft settings from the file
+spanguard check --config clients\line42.yaml    # seconds: can this data work?
+spanguard run   --config clients\line42.yaml    # every stage, saved as a versioned run
+spanguard compare --config clients\line42.yaml --base 2025 --new latest
+spanguard export-audit --config clients\line42.yaml --run latest</code></pre>
+</section>
+
+<!-- 8 -->
+<section class="chapter" id="viewer"><header><span class="chapter-no">9</span><h2>The network viewer</h2></header>
+<p class="lead">The viewer is where results are checked by eye. It shows the point cloud, the fitted model and every finding in 3D, a 2D map, and a live what-if for any span.</p>
+<div class="pair">
+  <figure class="shot"><img src="img/panel-layers.jpg" alt="Left rail with project card and layer switches grouped as analysis overlays, labels in scene and LiDAR classes" width="272" height="900" loading="lazy"><figcaption><b>Layers.</b> Analysis overlays, labels in the scene (each kind switches off on its own) and LiDAR classes with All / None.</figcaption></figure>
+  <figure class="shot"><img src="img/panel-clearance.jpg" alt="Clearance tab showing span T01-T02 in violation with -2.7 m margin and its details" width="344" height="810" loading="lazy"><figcaption><b>Clearance tab.</b> Span T01-T02 of zone t5b5: −2.7 m margin to vegetation in the hot case, one danger tree, 100% probability of a violation, priority 1 of 4.</figcaption></figure>
+</div>
+<figure class="shot"><img src="img/viewer-inspector.jpg" alt="Span what-if inspector with profile chart, sliders and readouts showing a failure by 2.67 m" width="1600" height="900" loading="lazy"><figcaption><b>Span what-if.</b> At 80 °C the lowest conductor sags to 2.33 m from the trees, against 5 m required: "Fails by 2.67 m". The same 80 °C needs 925 A in 35 °C air. Slide the temperature down and the verdict changes as you drag.</figcaption></figure>
+<div class="pair">
+  <figure class="shot"><img src="img/viewer-map.jpg" alt="2D map over satellite imagery with spans coloured by clearance, LiDAR towers and GIS tower records" width="1600" height="900" loading="lazy"><figcaption><b>2D map.</b> Spans coloured by clearance, LiDAR towers, GIS tower records with their offsets in metres (2.2 m and 1.4 m here), and OpenStreetMap lines.</figcaption></figure>
+  <figure class="shot"><img src="img/viewer-dark.jpg" alt="Viewer in dark appearance" width="1600" height="900" loading="lazy"><figcaption><b>Dark appearance.</b> Wires switch to light colours so they stay visible against the darker ground.</figcaption></figure>
+</div>
+<div class="table"><table><thead><tr><th>Control</th><th>What it does</th></tr></thead><tbody>
+<tr><td><kbd>Drag</kbd> / <kbd>Right-drag</kbd> / <kbd>Scroll</kbd></td><td>Orbit, pan, zoom the 3D scene</td></tr>
+<tr><td><kbd>L</kbd> or the tag button</td><td>Hide or show every label in the scene</td></tr>
+<tr><td><kbd>M</kbd> or the ruler button</td><td>Measure between two LiDAR points: 3D, horizontal and vertical distance</td></tr>
+<tr><td><kbd>Esc</kbd></td><td>Close the span what-if or stop measuring</td></tr>
+<tr><td>Scenario bar</td><td>Show the wires in survey, hot, ice or wind conditions, with the clearance leaders for that case</td></tr>
+<tr><td>Colour by</td><td>Class, true colour from the imagery, or height</td></tr>
+<tr><td>Span or tower in the list</td><td>Fly to it; a full span loads its dense points and opens the what-if</td></tr>
+<tr><td>Shared link</td><td><code>#p=project&amp;s=span&amp;e=hot</code> opens the same project, span and scenario for a colleague</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- 9 -->
+<section class="chapter" id="outputs"><header><span class="chapter-no">10</span><h2>Deliverables</h2></header>
+<p class="lead">Each run writes the same set of files, in the client's asset IDs when a register was supplied.</p>
+<div class="table"><table><thead><tr><th>File</th><th>For</th><th>What it holds</th></tr></thead><tbody>
+<tr><td><code>report.html</code></td><td>Client</td><td>Key findings in words, a clearance table, a side profile per span, ratings, Monte Carlo, QA, GIS reconciliation, method and limits; prints cleanly to PDF</td></tr>
+<tr><td><code>&lt;project&gt;_spanguard.xlsx</code></td><td>Engineers</td><td>Summary, Rules, Spans, Clearances, Towers, Wires, QA, Priority, Findings, Assumptions. Margins and risks are live formulas: change a rule and the summary updates without re-running</td></tr>
+<tr><td><code>trim_worklist.csv</code> / <code>.kmz</code></td><td>Field crews</td><td>Trims, tree removals, monitoring and reviews with due dates, in WGS84 for Google Earth</td></tr>
+<tr><td><code>network.geojson</code></td><td>GIS</td><td>Towers, spans with risk, 3D wires and QA issues for QGIS or ArcGIS</td></tr>
+<tr><td><code>field_review.gpkg</code></td><td>Field review</td><td>Towers, spans and findings in one GeoPackage, with a review CSV template to bring decisions back</td></tr>
+<tr><td><code>pls_cadd_points.csv</code></td><td>Design software</td><td>Coded survey points (structure, attachment, conductor, earth, tree, clearance) in the project CRS</td></tr>
+<tr><td><code>gis_corrections.csv</code></td><td>GIS team</td><td>One fix per row: offset, missing, ghost, attribute mismatch, unknown conductor code</td></tr>
+<tr><td><code>qa_issues.csv</code>, <code>findings.csv</code></td><td>Reviewers</td><td>Flat lists with stable IDs and status</td></tr>
+<tr><td><code>run.json</code> and the audit pack</td><td>Audit</td><td>Software version and commit, the resolved settings, input file hashes, timings</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- 10 -->
+<section class="chapter" id="read"><header><span class="chapter-no">11</span><h2>Reading the results</h2></header>
+<p class="lead">Four words describe every span, and the same colours mean the same thing in the viewer, the map, the report and the workbook.</p>
+<div class="legend">
+  <div><b class="ok-t">Clear</b>Every checked case keeps the required distance.</div>
+  <div><b class="warn-t">Watch</b>Within 1 m of the required distance in at least one case.</div>
+  <div><b class="bad-t">Violation</b>Closer than required in at least one case. Margin is negative.</div>
+  <div><b class="grey-t">Unconfirmed</b>Distances are measured, but the pass or fail rule needs the voltage and height datum.</div>
+</div>
+<p>Wire clash, tower air gap and danger trees are separate checks from clearance to objects. A span can be "Unconfirmed" for clearance and still show "2 failing" for clash and air gap, in red, because those checks do not depend on the height datum.</p>
+<p><b>Margin</b> is always measured distance minus required distance, in the worst weather case. <b>Uncertainty</b> gives the share of 200 simulated runs that violate, and the range the margin falls in for 90% of them. <b>Current rating</b> is the highest current that keeps clearance, or "none" when even a cold wire fails.</p>
+<figure class="shot"><img src="img/viewer-hot.jpg" alt="Viewer in the hot scenario showing simulated wires and clearance labels" width="1600" height="900" loading="lazy"><figcaption><b>Hot scenario on zone t5b5.</b> The scenario bar swaps the wires for their hot-case shape and redraws each span's closest clearance.</figcaption></figure>
+</section>
+
+<!-- 11 -->
+<section class="chapter" id="trust"><header><span class="chapter-no">12</span><h2>Accuracy and checks</h2></header>
+<p class="lead">Every number below is reproduced by the test suite, which runs on every push, or by re-running the demo zones.</p>
+<div class="table"><table><thead><tr><th>What</th><th>Check</th><th>Result</th></tr></thead><tbody>
+<tr><td>Catenary fit</td><td>Recover a known curve with 5% stray points</td><td>Recovered</td></tr>
+<tr><td>Demo wire fits</td><td>Median error, full-span coverage</td><td>t5b6: 6.4 cm, 100%. t5c2: 4.8 cm, 100%</td></tr>
+<tr><td>IEEE 738 rating</td><td>The standard's Drake example</td><td>1025.5 A against 1025 A published</td></tr>
+<tr><td>Browser vs Python</td><td>Parity test on tension, sag, clearance</td><td>Identical tension and sag; clearance within 0.1–0.3 m</td></tr>
+<tr><td>Tiled vs single file</td><td>16 tiles against one file</td><td>Same towers, wires within 1 cm, same clearances</td></tr>
+<tr><td>Network shapes</td><td>Straight, bend, parallel, tee, crossing</td><td>Exact spans, no phantom edges</td></tr>
+<tr><td>GIS register</td><td>Five seeded errors</td><td>All five reported</td></tr>
+<tr><td>Repeat survey</td><td>Synthetic line, 0.6 m tree growth, two cut trees</td><td>0.6 m/yr measured, cuts verified</td></tr>
+<tr><td>Tower air gap</td><td>Zone t5c2, tower T02</td><td>0.97 m measured; geometry predicts 0.96 m</td></tr>
+<tr><td>Excel</td><td>Full recalculation in Microsoft Excel</td><td>0 formula errors</td></tr>
+<tr><td>Workspace</td><td>Browser tests of every screen and flow</td><td>Upload to comparison, project management, viewer at six screen sizes</td></tr>
+</tbody></table></div>
+<h3>Demo results</h3>
+<div class="table"><table><thead><tr><th>Zone</th><th>Line</th><th>Worst span</th><th class="num">Margin</th><th>Notes</th></tr></thead><tbody>
+<tr><td>t5b5</td><td>220 kV (245 kV rule class)</td><td>T01-T02, vegetation, hot</td><td class="num bad-t">−2.7 m</td><td>One danger tree, no safe current rating, priority 1</td></tr>
+<tr><td>t5b6</td><td>220 kV, two circuits</td><td>T01-T02, ground, hot</td><td class="num ok-t">+2.8 m</td><td>Trees grow into the hot-case clearance in about 6–7 years</td></tr>
+<tr><td>t5c2</td><td>65 kV</td><td>T01-T02, ground, hot</td><td class="num ok-t">+3.1 m</td><td>Under CEA 2023: +3.59 m to ground on 5.5 m required</td></tr>
+</tbody></table></div>
+<p>Demo data: <a href="https://hf.co/datasets/heig-vd-geo/GridNet-HD">GridNet-HD</a> (CC-BY-4.0), drone LiDAR with manual labels, Valais, Switzerland, EPSG:32632.</p>
+</section>
+
+<!-- 12 -->
+<section class="chapter" id="limits"><header><span class="chapter-no">13</span><h2>Limits</h2></header>
+<p class="lead">These limits are stated in every report. Read them before relying on any number.</p>
+<ul class="tidy">
+<li><b>Not engineering-grade.</b> Conductor data, insulator strings, clash gaps and air gaps are assumed. Errors in these inputs can be as large as the clearances themselves; the Monte Carlo shows how much they matter, but not every error.</li>
+<li><b>Ruling-span model.</b> No finite-element analysis. Very uneven sections, or long spans on steep slopes, are less accurate.</li>
+<li><b>No creep.</b> Initial and final sag are the same. A newly strung line will sag more over ten years.</li>
+<li><b>Simple wind.</b> Wind swings the wire as a plane. Ice drop is static, and galloping is an assumed ellipse, off by default.</li>
+<li><b>Classes are trusted.</b> Misclassified hardware, birds or poles become false findings. Reviewers can mark them false positive.</li>
+<li><b>Trees.</b> A tree's base is taken to be under its top; lean direction and slope are ignored; dense canopy merges trees.</li>
+<li><b>Distribution lines</b> work on synthetic data only so far; service drops and pole-top equipment are not modelled.</li>
+<li><b>Rules.</b> CEA 2023 values are copied from the Gazette with page references. NESC and NERC FAC-003 are not included yet. Check the current edition before relying on any value.</li>
+<li><b>Single computer.</b> The workspace serves only this computer. A shared deployment needs HTTPS and its own setup.</li>
+</ul>
+</section>
+
+<!-- 13 -->
+<section class="chapter" id="next"><header><span class="chapter-no">14</span><h2>What could come next</h2></header>
+<p class="lead">Ideas that would move SpanGuard closer to a production tool, roughly in order of value.</p>
+<div class="table"><table><thead><tr><th>Idea</th><th>Why it matters</th></tr></thead><tbody>
+<tr><td>NESC and NERC FAC-003 rule presets</td><td>Opens US utilities; values must be copied from the official texts</td></tr>
+<tr><td>Real conductor and insulator data from the register</td><td>Removes the largest assumption behind every sag number</td></tr>
+<tr><td>Creep and final sag</td><td>Gives correct long-term clearance on newly strung lines</td></tr>
+<tr><td>Classification QA with a small learned model</td><td>Catches mislabelled hardware before it becomes a false finding</td></tr>
+<tr><td>Shared server deployment</td><td>Teams across offices on one workspace, with HTTPS and organisation sign-in</td></tr>
+<tr><td>Cloud processing for long corridors</td><td>Hundreds of kilometres in parallel instead of one laptop</td></tr>
+<tr><td>Field app for crews</td><td>Work list on a phone with photos and decisions synced back</td></tr>
+<tr><td>Species-aware growth rates</td><td>Grow-in years from tree type and climate rather than one rate</td></tr>
+<tr><td>Satellite change detection between flights</td><td>Flags fast-growing vegetation or new buildings between LiDAR surveys</td></tr>
+<tr><td>Direct ArcGIS and SAP integration</td><td>Findings flow into the systems where work orders are raised</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- 14 -->
+<section class="chapter" id="help"><header><span class="chapter-no">15</span><h2>Troubleshooting</h2></header>
+<p class="lead">The problems seen most often, and their fixes.</p>
+<div class="table"><table><thead><tr><th>You see</th><th>Cause</th><th>Fix</th></tr></thead><tbody>
+<tr><td>"100% of points map to tower (source code 0)"</td><td>Labels are in another field</td><td>Choose the field the check suggests (for GridNet, <code>ground_truth</code>) and check again</td></tr>
+<tr><td>"No conductor points"</td><td>The class mapping does not know the vendor's wire code</td><td>Map the code under Advanced settings, for example <code>{"64":"conductor"}</code></td></tr>
+<tr><td>"No module named 'spanguard'"</td><td>The server was started with a Python that lacks the package</td><td>Start it with <code>Run-SpanGuard.bat</code> or <code>.venv\Scripts\python.exe</code>; the server now refuses to start otherwise</td></tr>
+<tr><td>Every span "Unconfirmed"</td><td>Voltage or vertical reference not set</td><td>Set both in the survey settings, check and process again</td></tr>
+<tr><td>Comparison refused</td><td>The two runs used different settings</td><td>The message names the setting; process both with the same values</td></tr>
+<tr><td>Delete refused: "files are open"</td><td>A result file is open in Excel or another program</td><td>Close it and try again; nothing was removed</td></tr>
+<tr><td>3D view does not start</td><td>The browser blocked WebGL</td><td>The 2D map opens instead; restart the browser to re-enable 3D</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- about -->
+<section class="chapter" id="about"><header><span class="chapter-no">16</span><h2>About this project</h2></header>
+<p class="lead">SpanGuard was built by Aditya Kumar Jha together with Claude, Anthropic's AI model, as a portfolio project: the full chain from a raw LiDAR delivery to a reviewed, client-ready result, done the way a utility survey team would need it.</p>
+<p>Claude worked as the coding partner through Claude Code, Anthropic's AI tool for software development. Aditya set the direction and the engineering standard, and Claude did most of the writing of code, tests and documents. Nothing was kept on trust: every change had to pass the test suite and the browser tests, and every number was checked against the physics before it went into the product or this handbook.</p>
+<div class="stats">
+  <div class="stat"><b>46</b><span>Python modules in the pipeline, about 8,100 lines</span></div>
+  <div class="stat"><b>~3,500</b><span>lines of browser code: 3D viewer, map, live physics, workspace</span></div>
+  <div class="stat"><b>~1,700</b><span>lines for the local server, accounts and job runner</span></div>
+  <div class="stat"><b>106</b><span>automated tests, plus browser tests of every screen</span></div>
+</div>
+<h3>Who did what</h3>
+<div class="table"><table><thead><tr><th>Aditya Kumar Jha</th><th>Claude (through Claude Code)</th></tr></thead><tbody>
+<tr><td>Chose the problem: clearance risk from utility LiDAR, and the workflow a survey team delivers</td><td>Turned each requirement into working Python, JavaScript and server code</td></tr>
+<tr><td>Brought the domain knowledge: LiDAR classes, coordinate systems and vertical datums, CEA 2023 rules, how utilities use the results</td><td>Implemented the methods: catenary fitting, change of state, IEEE 738, Monte Carlo, clearance search</td></tr>
+<tr><td>Picked the demo data and judged whether each result made physical sense</td><td>Wrote the 106 automated tests and the browser tests, and ran them after every change</td></tr>
+<tr><td>Ordered the plan, reviewed the product as a user, and decided what to fix next</td><td>Wrote the product review, the method notes and this handbook as drafts for review</td></tr>
+<tr><td>Accepted or rejected every change</td><td>Designed the screens and the viewer to the brief given</td></tr>
+</tbody></table></div>
+<p>Building this way made it possible for one person to take a product of this size from idea to a tested, documented tool. The judgement about what is right for a power line, and the responsibility for every result, stayed with the engineer.</p>
+<h3>How it was built</h3>
+<p>The work moved from a working prototype, through a written review of its gaps, to a product. Each step is its own commit in the repository, with its own tests.</p>
+<ol class="path">
+<li><b>Prototype.</b> Pipeline stages, the 3D viewer, the live what-if inspector and the 2D map.</li>
+<li><b>Extensions.</b> Continuous integration, the browser–Python parity test, the 3D measure tool, ice and insulator swing, wire clash, danger trees, priority ranking, the CEA 2023 preset and IEEE 738 ratings.</li>
+<li><b>Product review.</b> More than fifty user-facing gaps written down with evidence, then put into a dependency-ordered plan.</li>
+<li><b>Safe intake.</b> ASPRS class maps, vendor code overrides and the four-second pre-flight check.</li>
+<li><b>Scale.</b> Tiled input, sparse grids, per-span caches, parallel and resumable clearance, tested on a 7.65 km corridor.</li>
+<li><b>Network topology.</b> The network built from wire evidence, proven on five synthetic shapes.</li>
+<li><b>Client GIS.</b> Register matching, client asset IDs and the corrections list.</li>
+<li><b>Engineering correctness.</b> Buildings checked in two directions, exact clearance search, conductor temperature at capture time.</li>
+<li><b>Repeat surveys.</b> Versioned runs, finding status that carries over, and survey comparison.</li>
+<li><b>Workspace.</b> Accounts and roles, projects and surveys in the browser, guided processing, project management and the redesigned viewer.</li>
+</ol>
+<h3>What it demonstrates</h3>
+<ul class="tidy">
+<li><b>Geospatial data:</b> LAS/LAZ at scale, coordinate systems and vertical datums, GeoJSON, GeoPackage and KMZ, matching against an asset register.</li>
+<li><b>Engineering maths:</b> catenary fitting, the change-of-state equation, the IEEE 738 heat balance, Monte Carlo, exact nearest-distance search.</li>
+<li><b>Domain knowledge:</b> clearance regulations (CEA 2023, with Gazette page references), vegetation management, a utility's survey-to-delivery workflow.</li>
+<li><b>Software:</b> a tested Python package with a command line, a local web server with accounts and roles, a WebGL viewer, CI on every push.</li>
+<li><b>Working with AI:</b> directing an AI coding partner on a large, technical codebase, and checking its work with tests and engineering judgement rather than taking it on trust.</li>
+</ul>
+<h3>A ten-minute walkthrough</h3>
+<p>For a live demo, this order answers the usual questions one at a time.</p>
+<ol class="path">
+<li><b>The data.</b> Run <code>spanguard check</code> on a zone: a bad delivery stops in seconds with one clear message.</li>
+<li><b>The model.</b> Fly to a span, colour by class, press <kbd>M</kbd> and measure a wire-to-tree distance by hand.</li>
+<li><b>QA.</b> Open a QA issue and a GIS offset on zone t5c2; each comes with a suggested fix.</li>
+<li><b>Physics.</b> On t5b6 T01-T02, drag temperature, wind and ice, and read tension and sag change live.</li>
+<li><b>Risk.</b> On t5b5 T01-T02: worst case, Monte Carlo, "no safe current", priority 1, the danger tree.</li>
+<li><b>Standards.</b> The same zone under CEA 2023; change one value in the Excel Rules sheet and the summary updates.</li>
+<li><b>Next year.</b> Stable IDs, status history and the comparison: growth measured, cuts verified.</li>
+</ol>
+<h3>Questions often asked</h3>
+<div class="qa-list">
+<div><h4>How much of this did the AI do?</h4><p>Claude wrote most of the code, the tests and the documents. The choice of problem, the domain rules, the review of every result and the decision on every change were Aditya's. The 106 tests and the browser tests are how that work was checked, and they can be run by anyone with the repository.</p></div>
+<div><h4>Why not just use PLS-CADD?</h4><p>PLS-CADD is the design standard. SpanGuard is the delivery and QA layer around a survey, and it exports coded attachment points that PLS-CADD can read.</p></div>
+<div><h4>How wrong can the sag be?</h4><p>Errors in the conductor data can be as large as the clearances themselves. That is why the conductor is labelled "assumed" in every output and the Monte Carlo spread is reported next to each margin.</p></div>
+<div><h4>Does it scale?</h4><p>Input is tiled, work is split per span across processes, and a stopped run resumes. A synthetic 7.65 km corridor runs end to end on a laptop.</p></div>
+<div><h4>Does it work for distribution lines?</h4><p>Not yet on real data: poles fall below the tower height filter. This is listed in the limits.</p></div>
+<div><h4>What would you build next?</h4><p>Creep and final sag, a library of weather cases, streaming of very large clouds, and validation against a utility's own PLS-CADD model of the same line.</p></div>
+</div>
+</section>
+
+
+<!-- author -->
+<section class="chapter" id="author"><header><span class="chapter-no">17</span><h2>About the author</h2></header>
+<div class="author-head">
+  <img src="img/author.jpg" alt="Portrait of Aditya Kumar Jha" width="560" height="560">
+  <div>
+    <h3>Aditya Kumar Jha</h3>
+    <p class="role">GIS Engineer, Survey of India · Geodetic &amp; Research Branch, Dehradun</p>
+    <p class="links"><span>adityajha976@gmail.com</span><a href="https://adityagis.github.io/Portfolio/">adityagis.github.io/Portfolio</a><a href="https://www.linkedin.com/in/adityaashujha">linkedin.com/in/adityaashujha</a><a href="https://github.com/adityagis">github.com/adityagis</a></p>
+  </div>
+</div>
+<p class="lead">Aditya Kumar Jha is a geoinformatics engineer at Survey of India's Geodetic &amp; Research Branch. The work covers GNSS data from more than 1,023 CORS reference stations and levelling data for India's national vertical datum, and the Python software that automates both. Before Survey of India, Aditya worked on LiDAR, hyperspectral data and flood risk mapping at DRDO.</p>
+<p>SpanGuard brings both together: the LiDAR point-cloud processing from DRDO, and the care for height datums, network adjustment and quality control that national geodetic work demands.</p>
+
+<div class="job st-model">
+  <div class="job-head"><h3>GIS Engineer</h3><span>June 2025 – present · Dehradun</span></div>
+  <p class="org">Survey of India · Geodetic &amp; Research Branch (G&amp;RB)</p>
+  <h4>High Precision Levelling (HPL) Wing</h4>
+  <ul class="tidy">
+    <li>Built levelling network adjustment software for the HPL Wing that adjusts more than 1,00,000 unique observations together, in real time. Earlier software could not adjust all observations at once; HPL computation is now about 100 times faster.</li>
+    <li>Processed and validated levelling data for 1,00,780 ground control points across India: height datum computation, loop closure analysis and systematic error correction.</li>
+    <li>Automated geopotential numbers, standard deviations and Helmert orthometric heights, with QA/QC (Tau test, global statistical validation) built in.</li>
+  </ul>
+  <h4>NSRF Wing · GNSS CORS network</h4>
+  <ul class="tidy">
+    <li>Wrote Python pipelines for GNSS data download, preprocessing and 365-day batch processing, cutting processing from 7 days to 3 days per station and saving 12 hours of manual work every week.</li>
+    <li>Processed multi-day GNSS data with GAMIT/GLOBK and PRIDE PPP-AR to centimetre-level station coordinates, in static and kinematic modes.</li>
+    <li>Checked every observation file for cycle slips, data completeness and satellite geometry before processing.</li>
+    <li>Worked with a team of five geodetic engineers to standardise data collection across more than 1,023 reference stations.</li>
+  </ul>
+</div>
+
+<div class="job st-physics">
+  <div class="job-head"><h3>Research Intern</h3><span>July – December 2024 · Chandigarh</span></div>
+  <p class="org">DRDO · Defence Geoinformatics Research Establishment (DGRE)</p>
+  <ul class="tidy">
+    <li>Processed about 3 million LiDAR points and 32 hyperspectral bands in Python, using laspy and Spectral Python.</li>
+    <li>Built flood inundation models in QGIS to find areas vulnerable to a sea level rise of 1 m and above, combining more than five layers (terrain, elevation, drainage) for defence planning.</li>
+  </ul>
+</div>
+
+<h3>Skills</h3>
+<div class="skill-grid">
+  <div><b>Programming</b>Python (NumPy, SciPy, Pandas, GeoPandas, Rasterio, laspy, Spectral Python, GDAL/OGR, ArcPy, FastAPI), PyTorch, JavaScript</div>
+  <div><b>GNSS and geodesy</b>GAMIT/GLOBK, PRIDE PPP-AR, RINEX, levelling network adjustment, Helmert orthometric heights</div>
+  <div><b>GIS and remote sensing</b>ArcGIS Pro, QGIS, Google Earth Engine, ENVI, ERDAS Imagine, Pix4Dmapper, GeoServer, MATLAB, AutoCAD</div>
+  <div><b>Data</b>PostgreSQL/PostGIS, LiDAR point clouds, hyperspectral imagery, GeoJSON, Shapefile, Geodatabase, KML/KMZ</div>
+</div>
+
+<h3>Education</h3>
+<div class="job st-intake">
+  <div class="job-head"><h3>B.Tech, GeoInformatics</h3><span>2021 – 2025 · Delhi</span></div>
+  <p class="org">Netaji Subhas University of Technology (NSUT)</p>
+  <p>Founded the Geospatial Technology Club at NSUT and grew it to more than 200 members from across India.</p>
+</div>
+
+<h3>Certifications</h3>
+<ul class="tidy">
+  <li>ArcGIS Pro Specialist (Esri Training)</li>
+  <li>Spatial Data Analysis with Google Earth Engine (CEPT University)</li>
+  <li>Drones and Drone Data Processing (CoELAM, Mysuru)</li>
+  <li>RS &amp; GIS Application in Natural Resource Management (IIRS, Dehradun)</li>
+</ul>
+</section>
+
+</main>
+</div>
+
+<footer class="back">
+<div class="back-in">
+  <div class="mark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#1a8a6e"/><path d="M7 26 11 6l4 20M17 26l4-20 4 20M8 17h6m4 0h6M9 10c5 4 9 4 14 0" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>SpanGuard</div>
+  <p class="back-blurb">A classified LiDAR survey goes in. A checked, span-by-span answer comes out: where every wire is, how it behaves in heat, wind and ice, which spans break clearance rules, and what work should be done first.</p>
+  <svg class="back-line" viewBox="0 0 1000 120" role="img" aria-label="A row of four towers with wires hanging between them.">
+    <g fill="none" stroke="#3c6b5d" stroke-width="2" stroke-linejoin="round">
+      <path d="M90 116 L110 10 L130 116 M96 40 H124 M86 26 H134"/>
+      <path d="M370 116 L390 14 L410 116 M376 44 H404 M366 30 H414"/>
+      <path d="M650 116 L670 8 L690 116 M656 38 H684 M646 24 H694"/>
+      <path d="M930 116 L950 16 L970 116 M936 46 H964 M926 32 H974"/>
+    </g>
+    <g fill="none" stroke="#7fd8b5" stroke-width="2">
+      <path d="M86 28 Q 250 78 366 32"/><path d="M414 32 Q 530 82 646 26"/><path d="M694 26 Q 810 80 926 34"/>
+    </g>
+    <path d="M0 117 H1000" stroke="#3c6b5d" stroke-width="2"/>
+  </svg>
+  <div class="back-stats">
+    <div><b>7</b><span>pipeline stages, each re-runnable on its own</span></div>
+    <div><b>5</b><span>weather cases for every span</span></div>
+    <div><b>3</b><span>demo zones of real drone LiDAR from the Swiss Alps</span></div>
+    <div><b>106</b><span>automated tests on every push</span></div>
+  </div>
+  <div class="back-author">
+    <div><b>Aditya Kumar Jha</b>GIS Engineer, Survey of India · author of SpanGuard</div>
+    <ul>
+      <li><a href="https://adityagis.github.io/Portfolio/">adityagis.github.io/Portfolio</a></li>
+      <li><a href="https://www.linkedin.com/in/adityaashujha">linkedin.com/in/adityaashujha</a></li>
+      <li><a href="https://github.com/adityagis">github.com/adityagis</a></li>
+    </ul>
+  </div>
+  <p class="colophon">SpanGuard Handbook, November 2026. SpanGuard was built by Aditya Kumar Jha with Claude (Anthropic) through Claude Code. Set in Barlow, Source Serif 4 and JetBrains Mono. Screenshots are from the running software with GridNet-HD demo data (CC-BY-4.0, HEIG-VD). Formulas, assumptions and rule sources in full: docs/methodology.md. Onboarding a new client zone: docs/playbook.md.</p>
+</div>
+</footer>
+
+<script>
+(() => {
+  const btn = document.querySelector('.pdf-btn');
+  if (!btn || !window.claude || !window.claude.use) return;
+  btn.hidden = true;
+  window.claude.use('downloads').then((downloads) => {
+    if (!downloads) return;
+    btn.hidden = false;
+    const label = btn.lastChild;
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      if (btn.dataset.busy) return;
+      btn.dataset.busy = '1'; label.textContent = 'Preparing PDF…';
+      try {
+        const res = await fetch(btn.getAttribute('href'));
+        if (!res.ok) throw new Error('fetch');
+        await downloads.save({ filename: 'SpanGuard-Handbook.pdf', data: await res.blob() });
+        label.textContent = 'Download PDF';
+      } catch (err) {
+        label.textContent = err && err.code === 'declined' ? 'Download PDF' : (err && err.code === 'rate_limited' ? 'Try again in a moment' : 'Download not available here');
+      } finally { delete btn.dataset.busy; }
+    });
+  });
+})();
+</script>

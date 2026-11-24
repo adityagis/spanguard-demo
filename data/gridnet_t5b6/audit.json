@@ -1,0 +1,145 @@
+{
+  "file": "t5b6.las",
+  "points": 36126027,
+  "point_format": 3,
+  "las_version": "1.2",
+  "crs": "EPSG:32632",
+  "bounds": {
+    "min": [
+      362591.435,
+      5109055.055,
+      2164.375
+    ],
+    "max": [
+      362919.794,
+      5109802.257,
+      2387.461
+    ],
+    "extent_m": [
+      328.36,
+      747.2,
+      223.09
+    ]
+  },
+  "footprint_area_m2": 101949.0,
+  "density_pts_per_m2": {
+    "mean": 354.4,
+    "median": 200.0,
+    "p5": 12.0,
+    "p95": 1066.0,
+    "cell_m": 1.0
+  },
+  "terrain_hole_pct": 0.04,
+  "classes": [
+    {
+      "code": 0,
+      "name": "unassigned",
+      "points": 1087,
+      "pct": 0.003,
+      "z_min": 2315.3,
+      "z_max": 2343.32
+    },
+    {
+      "code": 1,
+      "name": "tower",
+      "points": 510368,
+      "pct": 1.413,
+      "z_min": 2296.43,
+      "z_max": 2387.46
+    },
+    {
+      "code": 2,
+      "name": "conductor",
+      "points": 155269,
+      "pct": 0.43,
+      "z_min": 2274.56,
+      "z_max": 2377.41
+    },
+    {
+      "code": 3,
+      "name": "structural_cable",
+      "points": 37633,
+      "pct": 0.104,
+      "z_min": 2294.46,
+      "z_max": 2387.38
+    },
+    {
+      "code": 4,
+      "name": "insulator",
+      "points": 71598,
+      "pct": 0.198,
+      "z_min": 2328.45,
+      "z_max": 2378.93
+    },
+    {
+      "code": 5,
+      "name": "veg_high",
+      "points": 1106209,
+      "pct": 3.062,
+      "z_min": 2184.97,
+      "z_max": 2354.07
+    },
+    {
+      "code": 6,
+      "name": "veg_low",
+      "points": 521785,
+      "pct": 1.444,
+      "z_min": 2164.76,
+      "z_max": 2352.25
+    },
+    {
+      "code": 7,
+      "name": "veg_herb",
+      "points": 32309088,
+      "pct": 89.434,
+      "z_min": 2164.38,
+      "z_max": 2362.1
+    },
+    {
+      "code": 8,
+      "name": "ground",
+      "points": 1404038,
+      "pct": 3.886,
+      "z_min": 2267.18,
+      "z_max": 2357.04
+    },
+    {
+      "code": 11,
+      "name": "building",
+      "points": 8952,
+      "pct": 0.025,
+      "z_min": 2265.97,
+      "z_max": 2351.3
+    }
+  ],
+  "source_label_counts": {
+    "0": 10179,
+    "2": 500189,
+    "5": 155269,
+    "6": 37633,
+    "10": 22338,
+    "11": 49260,
+    "14": 1106209,
+    "15": 521785,
+    "16": 32309088,
+    "17": 375691,
+    "18": 1028347,
+    "21": 8952,
+    "255": 1087
+  },
+  "warnings": [],
+  "timings": [
+    {
+      "stage": "ingest",
+      "seconds": 50.73,
+      "points": 36126027,
+      "points_per_s": 712073
+    },
+    {
+      "stage": "export3d",
+      "seconds": 0.61,
+      "points": 1881273,
+      "points_per_s": 3059115
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+kind,internal_id,display_id,gis_id,status,offset_m,x,y
+tower,T01,T01,osm:n2659576650,offset,3.04,362820.36,5108551.54
+tower,T02,T02,osm:n2659576651,matched,2.15,362842.43,5108741.21
+span,T01-T02,T01-T02,,,,,
+span,EDGE-T01,EDGE-T01,,,,,
+span,T02-EDGE,T02-EDGE,,,,,
+line,L1,L1,,,,,
